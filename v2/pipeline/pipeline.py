@@ -17,6 +17,7 @@ Step 4 保存（Save）：将文章保存为独立 JSON 文件到 knowledge/arti
 import argparse
 import json
 import logging
+import os
 import re
 import sys
 from datetime import datetime, timezone
@@ -26,7 +27,7 @@ from typing import Any
 import httpx
 import yaml
 
-from model_client import create_provider, chat_with_retry, LLMProvider
+from model_client import create_provider, chat_with_retry, load_dotenv, LLMProvider
 
 logger = logging.getLogger(__name__)
 
@@ -381,8 +382,16 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 
 def main(argv: list[str] | None = None) -> None:
     args = parse_args(argv)
+    load_dotenv()
+    env_level = os.getenv("LOG_LEVEL", "").strip().upper()
+    if args.verbose:
+        level = logging.DEBUG
+    elif env_level in {"DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"}:
+        level = getattr(logging, env_level)
+    else:
+        level = logging.INFO
     logging.basicConfig(
-        level=logging.DEBUG if args.verbose else logging.INFO,
+        level=level,
         format="%(asctime)s %(levelname)s %(name)s: %(message)s",
     )
 

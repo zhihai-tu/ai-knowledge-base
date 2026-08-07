@@ -44,15 +44,13 @@ jobs:
           [ -z "$files" ] && echo "无增量，跳过校验" && exit 0
           echo "本次校验文件:"
           echo "$files"
-          cd v2
-          python hooks/validate_json.py $files
+          python v2/hooks/validate_json.py $files
 
       - name: Check quality
         run: |
           files=$(git status --porcelain -- 'v2/knowledge/articles/*.json' | awk '{print $2}')
           [ -z "$files" ] && echo "无增量，跳过质量检查" && exit 0
-          cd v2
-          python hooks/check_quality.py $files
+          python v2/hooks/check_quality.py $files
 
       - name: Commit changes
         id: commit

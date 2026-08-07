@@ -14,6 +14,7 @@ V1：采集-分析流水线可用，MCP 本地检索服务已完成（已知问�
 - [x] Agent / skill 定义（`.opencode/agents/`、`.opencode/skills/`）
 - [x] AGENTS.md 项目记忆
 - [x] MCP 检索服务 `mcp_knowledge_server.py`：JSON-RPC 2.0 over stdio，支持 initialize / tools/list / tools/call / ping，3 个工具（search_articles / get_article / knowledge_stats），过滤 `test-` 前缀测试文件（已用管道模拟 stdio 验证）
+- [x] 日志级别可配置：默认 INFO（`--verbose` 强制 DEBUG），可通过 `.env` 的 `LOG_LEVEL` 调整（已验证 DEBUG/WARNING/INFO 生效）
 
 ## 进行中
 
