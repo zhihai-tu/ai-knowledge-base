@@ -186,7 +186,7 @@ def _fetch_single_rss(client: httpx.Client, url: str, source_name: str,
 
 
 def collect_rss(limit: int) -> list[dict[str, Any]]:
-    """遍历 rss_sources.yaml 中所有已启用的源进行采集。"""
+    """遍历 rss_sources.yaml 中已启用的源采集，累计最多 limit 条。"""
     sources = load_rss_sources()
     if not sources:
         logger.warning("无可用 RSS 源，跳过采集")
@@ -196,11 +196,14 @@ def collect_rss(limit: int) -> list[dict[str, Any]]:
     seq = _next_seq("rss", datetime.now(timezone.utc).strftime("%Y%m%d"))
     with httpx.Client(timeout=30.0, transport=httpx.HTTPTransport(proxy=None)) as client:
         for source in sources:
+            remaining = limit - len(items)
+            if remaining <= 0:
+                break
             name = source.get("name", "unknown")
             url = source.get("url", "")
             try:
                 logger.info("采集 RSS 源: %s", name)
-                new_items = _fetch_single_rss(client, url, name, limit, seq)
+                new_items = _fetch_single_rss(client, url, name, remaining, seq)
                 items.extend(new_items)
                 seq += len(new_items)
                 logger.info("  %s: 采集 %d 条", name, len(new_items))
@@ -383,7 +386,7 @@ def main(argv: list[str] | None = None) -> None:
                      ", ".join(invalid), ", ".join(sorted(VALID_SOURCES)))
         sys.exit(1)
 
-    # Step 1: 采集
+    # Step 1: 采集（每个源各采集 limit 条，RSS 内部子源累计不超 limit）
     collected: list[dict[str, Any]] = []
     for source in sources:
         try:
