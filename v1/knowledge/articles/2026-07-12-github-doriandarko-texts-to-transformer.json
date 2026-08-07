@@ -1,0 +1,26 @@
+{
+  "id": "gh-trending-20260712-005",
+  "title": "Doriandarko/texts-to-transformer",
+  "source_url": "https://github.com/Doriandarko/texts-to-transformer",
+  "source_type": "github_trending",
+  "summary": "将文本转换为Transformer模型的工具，支持Apple Silicon和本地部署",
+  "tags": ["transformer", "apple-silicon", "mlx", "local-deployment"],
+  "category": "inference",
+  "status": "analyzed",
+  "collected_at": "2026-07-12T10:00:00Z",
+  "analyzed_at": "2026-07-12T10:30:00Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "highlights": [
+      "使用MLX框架支持Apple Silicon",
+      "支持本地部署和高效推理",
+      "提供便捷的模型转换和部署方案"
+    ],
+    "score": 6,
+    "score_reason": "值得了解，本地部署方案"
+  }
+}

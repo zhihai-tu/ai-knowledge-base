@@ -1,0 +1,30 @@
+{
+  "id": "gh-trending-20260711-001",
+  "title": "ECC",
+  "source_url": "https://github.com/affaan-m/ECC",
+  "source_type": "github_trending",
+  "summary": "ECC是一个Agent harness性能优化系统，为Claude Code、Codex、OpenCode、Cursor等多种AI编程工具提供统一的配置和技能管理。该系统包含技能、本能、记忆优化、安全扫描和研究优先开发等功能，支持12+语言生态系统和跨harness工作流。通过GitHub App可将仓库历史转化为可复用的默认配置，实现AgentShield会话扫描。2.0.0稳定版发布后，项目在一周内获得大量关注，成为开发者管理多Agent工作流的首选工具。其核心价值在于解决了当前AI编程工具碎片化的问题，通过统一管理层让开发者能够更高效地在不同Agent之间切换和协作。",
+  "tags": ["agent", "tool", "framework"],
+  "category": "agent",
+  "status": "analyzed",
+  "collected_at": "2026-07-11T00:00:00Z",
+  "analyzed_at": "2026-07-11T00:00:00Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "stars": 226164,
+    "forks": 32500,
+    "language": null,
+    "author": "affaan-m",
+    "highlights": [
+      "统一配置管理：为多种AI编程工具提供集中式配置和技能管理，解决工具碎片化问题",
+      "跨harness工作流：支持12+语言生态系统，实现不同Agent之间的无缝协作",
+      "GitHub App集成：可将仓库历史转化为可复用的默认配置，简化设置流程"
+    ],
+    "score": 8,
+    "score_reason": "直接解决多Agent管理痛点，对使用多种AI编程工具的开发者有直接帮助"
+  }
+}

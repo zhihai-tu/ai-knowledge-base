@@ -1,0 +1,27 @@
+{
+  "id": "rss-20260804-008",
+  "title": "CollectWise (YC F24) Is Hiring",
+  "source_url": "https://www.ycombinator.com/companies/collectwise/jobs/oEAfzBS-ai-agent-engineer",
+  "source_type": "rss",
+  "summary": "CollectWise（YC F24）正在招聘AI Agent工程师。该职位信息发布在Y Combinator的招聘页面上，隶属于CollectWise公司。岗位要求候选人具备构建AI智能体的经验，负责设计、开发和部署智能体解决方案。CollectWise是一家获得YC孵化支持的初创公司，专注于利用AI技术解决实际问题。此次招聘反映了AI Agent领域的人才需求增长，也体现出YC系公司对智能体技术的重视。",
+  "tags": [
+    "hiring",
+    "agent",
+    "YC"
+  ],
+  "category": "agent",
+  "status": "review",
+  "collected_at": "2026-08-04T11:50:20Z",
+  "analyzed_at": "2026-08-04T11:53:00Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Tue, 04 Aug 2026 07:01:26 +0000",
+    "highlights": [],
+    "score": 6,
+    "score_reason": "招聘信息本身技术内容有限，但反映出AI Agent工程师岗位的行业趋势，具有一定参考价值。"
+  }
+}

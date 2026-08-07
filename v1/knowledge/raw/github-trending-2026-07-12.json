@@ -1,0 +1,127 @@
+{
+  "source": "github_trending",
+  "skill": "github-trending",
+  "collected_at": "2026-07-12T10:00:00Z",
+  "items": [
+    {
+      "name": "Robbyant/lingbot-video",
+      "url": "https://github.com/Robbyant/lingbot-video",
+      "summary": "lingbot-video 是一个基于混合专家模型的视频预训练项目，专注于具身智能的视频生成。它使用 Python 实现，支持图像到视频的转换，采用 Mixture-of-Experts 架构提升视频生成效率。该项目适合 AI 视频生成研究人员和开发者，为具身智能领域提供了高效的视频预训练方案。",
+      "stars": 705,
+      "language": "Python",
+      "topics": ["image-to-video", "lingbot-video", "video-generation", "world-models"]
+    },
+    {
+      "name": "Robbyant/lingbot-vision",
+      "url": "https://github.com/Robbyant/lingbot-vision",
+      "summary": "lingbot-vision 是一个用于空间感知的自监督学习模型，专注于计算机视觉领域。它使用 Python 实现，提供了模型训练和推理功能，通过自监督学习方法提升空间感知能力。该项目适合计算机视觉研究人员，为机器人导航和场景理解提供技术支持。",
+      "stars": 658,
+      "language": "Python",
+      "topics": []
+    },
+    {
+      "name": "op7418/guizang-material-illustration",
+      "url": "https://github.com/op7418/guizang-material-illustration",
+      "summary": "guizang-material-illustration 是一个用于生成材质插画的 AI 技能，支持图表美化和解释图生成。它集成了 Claude Code 和图像生成技术，能够自动生成高质量的材质插画和可视化图表。该项目适合内容创作者和设计师，提供了便捷的 AI 辅助设计工具。",
+      "stars": 579,
+      "language": null,
+      "topics": ["agent", "chart-visualization", "chinese", "claude-code", "codex", "data-visualization", "explainer", "illustration", "image-generation", "material-illustration", "skill", "social-media"]
+    },
+    {
+      "name": "Nanako0129/pilotfish",
+      "url": "https://github.com/Nanako0129/pilotfish",
+      "summary": "pilotfish 是一个多 AI 代理编排框架，专注于 Claude 代码的协作和 orchestration。它提供了代理之间的通信和任务分配机制，支持多代理协作完成复杂任务。该项目适合 AI 代理开发者和研究人员，为构建复杂的 AI 系统提供了基础设施。",
+      "stars": 372,
+      "language": null,
+      "topics": ["ai-agents", "anthropic", "claude", "claude-code", "multi-agent", "orchestration"]
+    },
+    {
+      "name": "Doriandarko/texts-to-transformer",
+      "url": "https://github.com/Doriandarko/texts-to-transformer",
+      "summary": "texts-to-transformer 是一个将文本转换为 Transformer 模型的工具，支持 Apple Silicon 和本地部署。它使用 MLX 框架，提供了高效的模型推理能力，能够在本地设备上运行 Transformer 模型。该项目适合需要在本地运行 Transformer 模型的开发者，提供了便捷的模型转换和部署方案。",
+      "stars": 360,
+      "language": "Python",
+      "topics": ["apple-silicon", "imessage", "local-first", "machine-learning", "mlx", "transformer"]
+    },
+    {
+      "name": "ronak-create/FableCut",
+      "url": "https://github.com/ronak-create/FableCut",
+      "summary": "FableCut 是一个基于 AI 代理和 LLM 的视频编辑工具，允许用户通过自然语言指令进行视频剪辑。它集成了 Claude 和 FFmpeg，支持智能剪辑、字幕生成等功能。该项目适合内容创作者和视频编辑者，提供了便捷的 AI 辅助编辑体验。",
+      "stars": 351,
+      "language": "JavaScript",
+      "topics": ["ai-agent", "canvas", "claude", "ffmpeg", "javascript", "llm", "mcp", "nle", "reels", "video-editing", "video-editor", "zero-dependency"]
+    },
+    {
+      "name": "Raymondhou0917/speak-human-tw",
+      "url": "https://github.com/Raymondhou0917/speak-human-tw",
+      "summary": "speak-human-tw 是一个 AI 写作工具，专注于繁体中文内容的生成和优化。它集成了 Claude Code 和提示工程技术，提供了人性化的写作辅助，能够生成自然流畅的中文内容。该项目适合中文内容创作者，为繁体中文写作提供了智能化支持。",
+      "stars": 346,
+      "language": null,
+      "topics": ["agent-skills", "ai-writing", "claude-code", "codex", "cursor", "humanizer", "prompt-engineering", "traditional-chinese", "writing-tools", "zh-tw"]
+    },
+    {
+      "name": "Sahir619/fable-method",
+      "url": "https://github.com/Sahir619/fable-method",
+      "summary": "fable-method 是一个用于评估 AI 代理技能的框架，专注于 Claude Code 和 LLM 的性能测试。它提供了标准化的评估方法，帮助开发者优化代理的编码能力和推理能力。该项目适合 AI 代理开发者和研究人员，为代理性能评估提供了系统化的解决方案。",
+      "stars": 256,
+      "language": "JavaScript",
+      "topics": ["agent-skills", "ai-agents", "claude", "claude-code", "claude-md", "coding-agent", "evaluation", "fable", "llm"]
+    },
+    {
+      "name": "Moore-developers/moore-wechat-article-downloader",
+      "url": "https://github.com/Moore-developers/moore-wechat-article-downloader",
+      "summary": "moore-wechat-article-downloader 是一个 AI 代理项目，用于下载和分析微信文章。它集成了内容分析和知识库功能，支持本地优先的 Markdown 处理，能够自动下载和分析微信公众号文章。该项目适合内容分析师和研究人员，为微信内容管理提供了智能化工具。",
+      "stars": 248,
+      "language": "Python",
+      "topics": ["ai-agent", "claude-code", "codex-skill", "content-analysis", "knowledge-base", "local-first", "markdown", "wechat", "wechat-articles", "wechat-mp"]
+    },
+    {
+      "name": "ninjahawk/Subtext",
+      "url": "https://github.com/ninjahawk/Subtext",
+      "summary": "Subtext 是一个专注于大型语言模型可解释性的工具，提供了机械可解释性分析功能。它使用 PyTorch 和 Transformers 库，支持模型内部状态的可视化和分析，帮助研究者理解 LLM 的工作机制。该项目适合 AI 研究人员和模型开发者，为 LLM 可解释性研究提供了实用工具。",
+      "stars": 186,
+      "language": "HTML",
+      "topics": ["interpretability", "llm", "mechanistic-interpretability", "pytorch", "qwen", "transformers", "visualization"]
+    },
+    {
+      "name": "Matchameleon/moneyclaw",
+      "url": "https://github.com/Matchameleon/moneyclaw",
+      "summary": "moneyclaw 是一个基于 AI 代理的金融管理工具，支持卡片代理、钱包代理和 OTP 代理功能。它使用 JavaScript 开发，提供了智能化的金融交易和资产管理体验，能够自动化处理金融任务。该项目适合金融科技开发者和用户，为个人金融管理提供了 AI 解决方案。",
+      "stars": 153,
+      "language": "JavaScript",
+      "topics": ["agent", "card-agent", "moneyclaw", "otp-agent", "wallet-agent"]
+    },
+    {
+      "name": "SilentFleetKK/ai-market-pulse",
+      "url": "https://github.com/SilentFleetKK/ai-market-pulse",
+      "summary": "ai-market-pulse 是一个基于 LLM 的金融市场分析工具，提供股票分析、投资组合管理和市场趋势预测功能。它使用 Python 和 AkShare 库，支持实时数据获取和分析，能够为投资者提供智能化的市场洞察。该项目适合量化交易者和金融分析师，为金融决策提供数据支持。",
+      "stars": 152,
+      "language": "Python",
+      "topics": ["ai", "akshare", "github-pages", "investment-research", "llm", "portfolio", "quant", "stock-analysis", "yfinance"]
+    },
+    {
+      "name": "pillar-labs/sail-skill",
+      "url": "https://github.com/pillar-labs/sail-skill",
+      "summary": "sail-skill 是一个专注于 AI 代理安全的框架，提供了针对 Claude Code 插件的安全评估和合规模块。它帮助开发者识别和修复 AI 代理中的安全漏洞，确保代理系统的安全性和合规性。该项目适合 AI 安全研究人员和开发者，为 AI 代理安全提供了专业解决方案。",
+      "stars": 140,
+      "language": null,
+      "topics": ["agent-skills", "agentic-ai", "ai-security", "claude-code", "claude-code-plugin", "compliance", "llm-security", "security-framework"]
+    },
+    {
+      "name": "olemeyer/rocketplaneIO",
+      "url": "https://github.com/olemeyer/rocketplaneIO",
+      "summary": "rocketplaneIO 是一个基于 AI 代理的监控平台，集成了 eBPF、Kubernetes 和 OpenTelemetry 技术。它提供了智能事件响应、性能分析和故障排查功能，能够自动化处理 DevOps 任务。该项目适合 DevOps 工程师和 SRE 团队，为基础设施监控提供了智能化解决方案。",
+      "stars": 131,
+      "language": "Go",
+      "topics": ["ai-agent", "aiops", "clickhouse", "devops", "ebpf", "golang", "incident-response", "kubernetes", "llm", "monitoring", "observability", "opentelemetry", "promql", "self-hosted", "sre", "tracing"]
+    },
+    {
+      "name": "amitshekhariitbhu/transformers-explained",
+      "url": "https://github.com/amitshekhariitbhu/transformers-explained",
+      "summary": "transformers-explained 是一个详细解释 Transformer 架构的教程项目，涵盖了注意力机制、位置编码和每个层的工作原理。它通过分步讲解的方式，帮助读者深入理解大型语言模型的基础架构。该项目适合 AI 初学者和研究人员，为学习 Transformer 架构提供了系统化的教程。",
+      "stars": 121,
+      "language": null,
+      "topics": ["architecture", "attention-is-all-you-need", "attention-mechanism", "large-language-models", "llm", "llms", "transformers"]
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "id": "gh-trending-20260711-010",
+  "title": "omnigent",
+  "source_url": "https://github.com/omnigent-ai/omnigent",
+  "source_type": "github_trending",
+  "summary": "Omnigent是一个开源的AI Agent元框架，提供跨Claude Code、Codex、Cursor、Pi等多种Agent的编排层。它允许开发者在不重写代码的情况下切换或组合Agent，支持策略执行和沙箱隔离，并支持从任何设备（终端、浏览器、手机、桌面应用）实时协作。内置Polly（多Agent编码协调器）和Debby（模型辩论）两个多Agent系统。项目在24天内获得6K+颗星，展示了开发者对Agent编排工具的迫切需求。其创新之处在于提供了真正的跨平台Agent编排能力，让开发者能够灵活组合不同的AI工具。",
+  "tags": ["agent", "framework"],
+  "category": "framework",
+  "status": "analyzed",
+  "collected_at": "2026-07-11T00:00:00Z",
+  "analyzed_at": "2026-07-11T00:00:00Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "stars": 6269,
+    "forks": 818,
+    "language": null,
+    "author": "omnigent-ai",
+    "highlights": [
+      "跨Agent编排：支持多种AI编程代理的无缝切换和组合，无需重写代码",
+      "多设备协作：支持终端、浏览器、手机等多种设备实时协作",
+      "内置多Agent系统：提供Polly和Debby两个多Agent系统，展示高级编排能力"
+    ],
+    "score": 8,
+    "score_reason": "Agent编排需求强烈，对需要灵活组合AI工具的开发者有直接帮助"
+  }
+}

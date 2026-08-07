@@ -1,0 +1,30 @@
+{
+  "id": "gh-trending-20260711-007",
+  "title": "DeepSeek-Reasonix",
+  "source_url": "https://github.com/esengine/DeepSeek-Reasonix",
+  "source_type": "github_trending",
+  "summary": "DeepSeek-Reasonix是一个基于DeepSeek的终端编程代理，专注于prefix-cache稳定性优化。该项目在约2.5个月内获得近26K颗星，是来自中国的Agent项目中增长最快的之一。它采用终端原生设计，支持多种编程语言，提供智能代码补全、错误检测和重构建议。项目在AI编程代理领域独树一帜，特别适合需要处理大型代码库的开发者。其核心优势在于针对DeepSeek模型的优化，以及终端原生的开发体验。",
+  "tags": ["agent", "coding", "inference"],
+  "category": "coding",
+  "status": "analyzed",
+  "collected_at": "2026-07-11T00:00:00Z",
+  "analyzed_at": "2026-07-11T00:00:00Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "stars": 25989,
+    "forks": 1615,
+    "language": null,
+    "author": "esengine",
+    "highlights": [
+      "DeepSeek模型优化：专门针对DeepSeek模型进行prefix-cache稳定性优化",
+      "终端原生设计：提供终端优先的开发体验，适合命令行工作流",
+      "快速增长：2.5个月内获得26K+星，显示开发者认可度高"
+    ],
+    "score": 7,
+    "score_reason": "编程代理领域有竞争力，特别是对使用DeepSeek模型的开发者"
+  }
+}

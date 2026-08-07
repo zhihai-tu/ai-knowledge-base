@@ -1,0 +1,26 @@
+{
+  "id": "gh-trending-20260712-009",
+  "title": "Moore-developers/moore-wechat-article-downloader",
+  "source_url": "https://github.com/Moore-developers/moore-wechat-article-downloader",
+  "source_type": "github_trending",
+  "summary": "AI代理项目，用于下载和分析微信文章",
+  "tags": ["wechat", "content-analysis", "knowledge-base"],
+  "category": "tool",
+  "status": "analyzed",
+  "collected_at": "2026-07-12T10:00:00Z",
+  "analyzed_at": "2026-07-12T10:30:00Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "highlights": [
+      "集成内容分析和知识库功能",
+      "支持本地优先的Markdown处理",
+      "自动下载和分析微信公众号文章"
+    ],
+    "score": 6,
+    "score_reason": "值得了解，微信内容管理"
+  }
+}

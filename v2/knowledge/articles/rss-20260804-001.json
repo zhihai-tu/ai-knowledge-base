@@ -1,0 +1,26 @@
+{
+  "id": "rss-20260804-001",
+  "title": "U.S. used 'virtually all' of its long-range precision missiles during Iran war",
+  "source_url": "https://www.cnbc.com/2026/08/04/us-has-used-virtually-all-of-its-long-range-precision-missiles-report.html",
+  "source_type": "rss",
+  "summary": "该报道聚焦美国在伊朗战争期间消耗了几乎所有远程精确导弹，反映出高烈度冲突下的弹药储备压力。内容完全围绕军事装备、地缘冲突和国防工业，未提及人工智能、机器学习、大语言模型或任何相关技术。尽管导弹制导系统可能涉及自动化技术，但文章本身未讨论AI层面。因此，该新闻与AI领域无直接关联，仅能作为军事动态背景参考。",
+  "tags": [
+    "military",
+    "missiles"
+  ],
+  "category": "agent",
+  "status": "review",
+  "collected_at": "2026-08-04T11:50:20Z",
+  "analyzed_at": "2026-08-04T11:51:46Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Tue, 04 Aug 2026 10:59:08 +0000",
+    "highlights": [],
+    "score": 1,
+    "score_reason": "内容为军事新闻，与AI领域无关，仅因导弹可视为自主执行任务的代理实体而归类。"
+  }
+}

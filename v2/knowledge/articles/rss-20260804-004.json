@@ -1,0 +1,27 @@
+{
+  "id": "rss-20260804-004",
+  "title": "DeepSeek V4 Flash on a Single AMD MI300X",
+  "source_url": "https://github.com/ryanzhou/deepseek-v4-flash-mi300x",
+  "source_type": "rss",
+  "summary": "该项目展示了如何在单个AMD MI300X GPU上运行DeepSeek V4 Flash模型，针对AMD ROCm平台进行了优化。DeepSeek V4 Flash作为一款高效能模型，通常需要多卡或专用硬件，而此方案通过内存优化、内核调优和推理加速技术，实现了在单卡MI300X上的部署，显著降低了硬件门槛和成本。Hacker News上的讨论集中在实际性能、社区支持以及AMD生态的成熟度。该项目为开源社区提供了在AMD硬件上运行前沿大模型的参考实现，有助于推动AI推理的硬件多元化。",
+  "tags": [
+    "deepseek",
+    "amd",
+    "inference"
+  ],
+  "category": "inference",
+  "status": "review",
+  "collected_at": "2026-08-04T11:50:20Z",
+  "analyzed_at": "2026-08-04T11:52:17Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Tue, 04 Aug 2026 10:00:55 +0000",
+    "highlights": [],
+    "score": 8,
+    "score_reason": "解决了单卡运行先进模型的硬件适配问题，具有实用价值和开源贡献，但技术细节和通用性待验证。"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "id": "gh-trending-20260711-009",
+  "title": "cmux",
+  "source_url": "https://github.com/manaflow-ai/cmux",
+  "source_type": "github_trending",
+  "summary": "cmux是一个基于Ghostty的macOS终端，专门为管理多个AI编程代理而设计。它允许开发者同时运行和切换Claude Code、Codex、Cursor等多种Agent，解决了多Agent工作流中的管理痛点。项目在约5个月内获得23K+颗星，反映了开发者对Agent编排工具的强烈需求。虽然有3227个open issues可能反映支持积压或质量问题，但其快速增长表明市场对这类工具的认可。其核心价值在于提供了统一的界面来管理多个AI编程代理，提升开发效率。",
+  "tags": ["agent", "tool", "coding"],
+  "category": "agent",
+  "status": "analyzed",
+  "collected_at": "2026-07-11T00:00:00Z",
+  "analyzed_at": "2026-07-11T00:00:00Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "stars": 23636,
+    "forks": 1873,
+    "language": null,
+    "author": "manaflow-ai",
+    "highlights": [
+      "多Agent管理：支持同时运行和切换多种AI编程代理，解决管理痛点",
+      "macOS原生体验：基于Ghostty终端，提供流畅的macOS开发体验",
+      "市场需求验证：快速增长显示开发者对Agent编排工具的强烈需求"
+    ],
+    "score": 8,
+    "score_reason": "解决多Agent管理痛点，对使用多种AI编程工具的开发者有直接帮助"
+  }
+}

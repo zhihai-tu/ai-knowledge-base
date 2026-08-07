@@ -1,0 +1,27 @@
+{
+  "id": "rss-20260804-006",
+  "title": "Show HN: I made a private self-destructing image hosting site in Golang",
+  "source_url": "https://picburn.xyz/",
+  "source_type": "rss",
+  "summary": "这是一个由初级 Go 开发者构建的私人图片托管网站，支持自毁链接，可控制分享次数和访问时长。作者强调其轻量、无广告、无需注册，且不存储用户上传内容。该服务面向需要临时、私密分享图片的场景，类似于阅后即焚。虽然项目本身不涉及人工智能技术，但作为一种实用工具，可能被用于 AI 应用中的临时数据交换或隐私保护场景。总体而言，这是一个普通的 Web 开发项目，与 AI 领域关联度极低。",
+  "tags": [
+    "golang",
+    "privacy",
+    "image-hosting"
+  ],
+  "category": "tool",
+  "status": "review",
+  "collected_at": "2026-08-04T11:50:20Z",
+  "analyzed_at": "2026-08-04T11:52:48Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Tue, 04 Aug 2026 08:39:12 +0000",
+    "highlights": [],
+    "score": 2,
+    "score_reason": "项目是普通图片托管工具，与LLM、Agent等AI技术无直接关联，仅作为工具具有极低相关性。"
+  }
+}

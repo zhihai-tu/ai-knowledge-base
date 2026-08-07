@@ -1,0 +1,46 @@
+{
+  "id": "github-20260804-004",
+  "title": "NousResearch/hermes-agent",
+  "source_url": "https://github.com/NousResearch/hermes-agent",
+  "source_type": "github",
+  "summary": "hermes-agent是NousResearch发布的一个AI代理项目，其核心理念为“随你成长”，即该代理能根据用户的交互和需求不断进化和适应，提供个性化服务。这可能涉及持续学习、记忆管理和上下文理解等能力。作为一个开源项目，它旨在构建灵活、可扩展的智能体框架，让用户能定制自己的AI助手。目前项目处于早期阶段，技术细节尚未公开，但鉴于NousResearch在AI领域的影响力，该项目值得关注。",
+  "tags": [
+    "agent",
+    "adaptive",
+    "AI"
+  ],
+  "category": "agent",
+  "status": "review",
+  "collected_at": "2026-08-04T11:50:18Z",
+  "analyzed_at": "2026-08-04T11:50:47Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "stars": 225204,
+    "language": "Python",
+    "author": "NousResearch",
+    "topics": [
+      "ai",
+      "ai-agent",
+      "ai-agents",
+      "anthropic",
+      "chatgpt",
+      "claude",
+      "claude-code",
+      "clawdbot",
+      "codex",
+      "hermes",
+      "hermes-agent",
+      "llm",
+      "moltbot",
+      "nous-research",
+      "openai",
+      "openclaw"
+    ],
+    "score": 6,
+    "score_reason": "信息有限，但项目定位为成长型代理，潜力较大"
+  }
+}

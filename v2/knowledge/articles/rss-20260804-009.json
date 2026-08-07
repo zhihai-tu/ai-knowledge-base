@@ -1,0 +1,27 @@
+{
+  "id": "rss-20260804-009",
+  "title": "Harness Engineering for Self-Improvement",
+  "source_url": "https://lilianweng.github.io/posts/2026-07-04-harness/",
+  "source_type": "rss",
+  "summary": "本文探讨了用于AI系统自我改进的“操控工程”（Harness Engineering）方法论。文章指出，仅依赖模型参数更新或提示工程难以实现持续进化，需要构建外部工程框架来引导模型的自省与迭代。核心思想是将自我改进视为一个可设计的系统：通过评估器、反馈回路、任务分解和工具调用等外部机制，让模型能够审视自身输出、定位错误并生成修正策略。文章详细讨论了多种操控组件，如可扩展的监督信号、结构化记忆、环境交互接口，以及如何利用这些组件在推理时优化模型行为，而非仅依赖训练阶段。作者还分析了安全性与可靠性问题，包括反馈信号的偏差、过度拟合于评估器以及改进过程的不可解释性。最终提出，有效的自我改进需要精心设计的“操控”，使模型在复杂任务中逐步提升表现，同时保持人类可监督性。该文为构建自主进化的AI智能体提供了系统化的工程视角，强调外部框架与模型能力的协同设计。",
+  "tags": [
+    "self-improvement",
+    "harness",
+    "agents"
+  ],
+  "category": "agent",
+  "status": "review",
+  "collected_at": "2026-08-04T11:50:20Z",
+  "analyzed_at": "2026-08-04T11:53:06Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Tue, 04 Aug 2026 06:17:54 +0000",
+    "highlights": [],
+    "score": 8,
+    "score_reason": "提出系统化的自我改进工程框架，兼具理论与实用价值，但缺少实验验证细节。"
+  }
+}

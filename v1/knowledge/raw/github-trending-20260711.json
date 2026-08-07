@@ -1,0 +1,112 @@
+[
+  {
+    "title": "ECC",
+    "url": "https://github.com/affaan-m/ECC",
+    "source": "github_trending",
+    "popularity": {
+      "stars": 226164,
+      "forks": 32500,
+      "likes": 0
+    },
+    "summary": "ECC 是一个 Agent harness 性能优化系统，为 Claude Code、Codex、OpenCode、Cursor 等多种 AI 编程工具提供统一的配置和技能管理。该系统包含技能、本能、记忆优化、安全扫描和研究优先开发等功能，支持 12+ 语言生态系统和跨 harness 工作流。通过 GitHub App 可将仓库历史转化为可复用的默认配置，实现 AgentShield 会话扫描。2.0.0 稳定版发布后，项目在一周内获得大量关注，成为开发者管理多 Agent 工作流的首选工具。"
+  },
+  {
+    "title": "claude-mem",
+    "url": "https://github.com/thedotmack/claude-mem",
+    "source": "github_trending",
+    "popularity": {
+      "stars": 85898,
+      "forks": 7431,
+      "likes": 0
+    },
+    "summary": "Claude-Mem 是一个为 AI Agent 设计的持久化上下文记忆系统，支持 Claude Code、OpenClaw、Codex、Gemini、Hermes、Copilot、OpenCode 等多种工具。它能自动捕获 Agent 在会话中的所有操作，通过 AI 压缩生成语义摘要，并在未来会话中注入相关上下文。系统采用渐进式披露机制，支持基于技能的搜索，提供 Web 查看器 UI 实时查看记忆流。该项目解决了 AI Agent 跨会话记忆持久化的痛点，本周获得超过 5000 颗星增长。"
+  },
+  {
+    "title": "graphify",
+    "url": "https://github.com/Graphify-Labs/graphify",
+    "source": "github_trending",
+    "popularity": {
+      "stars": 77830,
+      "forks": 3200,
+      "likes": 0
+    },
+    "summary": "Graphify 是一个 AI 编程助手技能，可将任何代码文件夹（包括代码、SQL 模式、R 脚本、Shell 脚本、文档、论文、图片、视频）转换为可查询的知识图谱。它使用 tree-sitter AST 进行本地代码解析，无需 LLM 且数据不离开机器。每个边都带有置信度标签（EXTRACTED 或 INFERRED），支持查询、路径追踪和概念解释。项目提供 God Nodes、社区检测、跨文件链接等功能，本周因新增自改进'工作记忆'功能而获得大量关注。"
+  },
+  {
+    "title": "hello-agents",
+    "url": "https://github.com/datawhalechina/hello-agents",
+    "source": "github_trending",
+    "popularity": {
+      "stars": 64016,
+      "forks": 7933,
+      "likes": 0
+    },
+    "summary": "Hello-Agents 是 Datawhale 社区出品的系统性智能体学习教程《从零开始构建智能体》。教程从智能体核心原理出发，深入架构设计，涵盖 ReAct、Plan-and-Solve、Reflection 等经典范式，以及 Coze、Dify、n8n 等低代码平台和 LangGraph 等主流框架。项目包含自研框架 HelloAgents，基于 OpenAI 原生 API 从零构建。内容覆盖记忆与检索、上下文工程、MCP/A2A 协议、Agentic-RL 训练等高级主题，是目前最受欢迎的中文 Agent 教程之一。"
+  },
+  {
+    "title": "MemPalace",
+    "url": "https://github.com/MemPalace/mempalace",
+    "source": "github_trending",
+    "popularity": {
+      "stars": 56960,
+      "forks": 2100,
+      "likes": 0
+    },
+    "summary": "MemPalace 是一个本地优先的 AI 记忆系统，在 LongMemEval 基准测试中达到 96.6% R@5 原始准确率，且无需 API 调用。它将对话历史以原始文本形式存储，通过语义搜索进行检索，不进行摘要、提取或改写。索引采用结构化设计——人物和项目成为'翼'，主题成为'房间'，原始内容保存在'抽屉'中。支持可插拔后端（默认 ChromaDB），每个专家 Agent 获得自己的翼和日记。该项目因其高性能和隐私保护特性在本周获得大量关注。"
+  },
+  {
+    "title": "voicebox",
+    "url": "https://github.com/jamiepine/voicebox",
+    "source": "github_trending",
+    "popularity": {
+      "stars": 37831,
+      "forks": 4537,
+      "likes": 0
+    },
+    "summary": "VoiceBox 是一个开源 AI 语音工作室，支持克隆、听写和创建语音。该项目自 2026 年 1 月发布以来持续增长，本周在 AI 编程代理主导的 trending 列表中脱颖而出。它提供完整的语音处理工作流，包括语音合成、语音克隆和文本转语音功能。作为少数非编程类 AI 工具进入 trending，反映了开发者对本地优先、隐私保护的语音 AI 工具的需求增长。"
+  },
+  {
+    "title": "DeepSeek-Reasonix",
+    "url": "https://github.com/esengine/DeepSeek-Reasonix",
+    "source": "github_trending",
+    "popularity": {
+      "stars": 25989,
+      "forks": 1615,
+      "likes": 0
+    },
+    "summary": "DeepSeek-Reasonix 是一个基于 DeepSeek 的终端编程代理，专注于 prefix-cache 稳定性优化。该项目在约 2.5 个月内获得近 26K 颗星，是来自中国的 Agent 项目中增长最快的之一。它采用终端原生设计，支持多种编程语言，提供智能代码补全、错误检测和重构建议。项目在 AI 编程代理领域独树一帜，特别适合需要处理大型代码库的开发者。"
+  },
+  {
+    "title": "qwen-code",
+    "url": "https://github.com/QwenLM/qwen-code",
+    "source": "github_trending",
+    "popularity": {
+      "stars": 25787,
+      "forks": 1800,
+      "likes": 0
+    },
+    "summary": "Qwen-Code 是通义千问团队推出的终端原生 AI 编程代理，基于 Qwen 模型构建。它提供智能代码补全、调试辅助、代码审查和重构建议等功能，支持多种编程语言。项目采用终端优先设计，与 Claude Code、Gemini CLI 等形成竞争。本周该项目因其快速的功能迭代和良好的开发者体验而获得大量关注，成为终端 AI 编程代理领域的重要参与者。"
+  },
+  {
+    "title": "cmux",
+    "url": "https://github.com/manaflow-ai/cmux",
+    "source": "github_trending",
+    "popularity": {
+      "stars": 23636,
+      "forks": 1873,
+      "likes": 0
+    },
+    "summary": "cmux 是一个基于 Ghostty 的 macOS 终端，专门为管理多个 AI 编程代理而设计。它允许开发者同时运行和切换 Claude Code、Codex、Cursor 等多种 Agent，解决了多 Agent 工作流中的管理痛点。项目在约 5 个月内获得 23K+ 颗星，反映了开发者对 Agent 编排工具的强烈需求。虽然有 3227 个 open issues 可能反映支持积压或质量问题，但其快速增长表明市场对这类工具的认可。"
+  },
+  {
+    "title": "omnigent",
+    "url": "https://github.com/omnigent-ai/omnigent",
+    "source": "github_trending",
+    "popularity": {
+      "stars": 6269,
+      "forks": 818,
+      "likes": 0
+    },
+    "summary": "Omnigent 是一个开源的 AI Agent 元框架，提供跨 Claude Code、Codex、Cursor、Pi 等多种 Agent 的编排层。它允许开发者在不重写代码的情况下切换或组合 Agent，支持策略执行和沙箱隔离，并支持从任何设备（终端、浏览器、手机、桌面应用）实时协作。内置 Polly（多 Agent 编码协调器）和 Debby（模型辩论）两个多 Agent 系统。项目在 24 天内获得 6K+ 颗星，展示了开发者对 Agent 编排工具的迫切需求。"
+  }
+]

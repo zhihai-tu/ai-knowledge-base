@@ -1,0 +1,26 @@
+{
+  "id": "gh-trending-20260712-002",
+  "title": "Robbyant/lingbot-vision",
+  "source_url": "https://github.com/Robbyant/lingbot-vision",
+  "source_type": "github_trending",
+  "summary": "空间感知自监督学习模型，为机器人导航和场景理解提供技术支持",
+  "tags": ["computer-vision", "self-supervised", "spatial-perception", "robotics"],
+  "category": "training",
+  "status": "analyzed",
+  "collected_at": "2026-07-12T10:00:00Z",
+  "analyzed_at": "2026-07-12T10:30:00Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "highlights": [
+      "使用自监督学习方法提升空间感知能力",
+      "专注于计算机视觉领域的空间理解",
+      "适用于机器人导航等实际应用场景"
+    ],
+    "score": 6,
+    "score_reason": "值得了解，空间感知是机器人领域的关键能力"
+  }
+}

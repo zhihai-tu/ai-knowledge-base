@@ -1,0 +1,27 @@
+{
+  "id": "rss-20260804-003",
+  "title": "Ray Bradbury's \"There Will Come Soft Rains\" is set today (2026-08-04)",
+  "source_url": "https://short-stories.co/@raybradbury/there-will-come-soft-rains-6k8vr4xxlnmj",
+  "source_type": "rss",
+  "summary": "该内容指向 Ray Bradbury 的科幻短篇小说《There Will Come Soft Rains》，在 Hacker News 上被分享，标题强调其设定日期为 2026-08-04。故事描绘了全自动房屋在人类灭绝后继续运转，属于经典科幻，但并非关于现代人工智能或机器学习。文章内容不涉及 LLM、代理、RAG 等 AI 技术，因此与 AI 领域无直接关联。",
+  "tags": [
+    "literature",
+    "sci-fi",
+    "short-story"
+  ],
+  "category": "tool",
+  "status": "review",
+  "collected_at": "2026-08-04T11:50:20Z",
+  "analyzed_at": "2026-08-04T11:52:14Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Tue, 04 Aug 2026 10:13:13 +0000",
+    "highlights": [],
+    "score": 1,
+    "score_reason": "内容为文学作品，与 AI 技术无关。"
+  }
+}

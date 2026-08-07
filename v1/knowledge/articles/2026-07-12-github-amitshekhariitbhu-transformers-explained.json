@@ -1,0 +1,26 @@
+{
+  "id": "gh-trending-20260712-015",
+  "title": "amitshekhariitbhu/transformers-explained",
+  "source_url": "https://github.com/amitshekhariitbhu/transformers-explained",
+  "source_type": "github_trending",
+  "summary": "详细解释Transformer架构的教程项目",
+  "tags": ["transformers", "tutorial", "llm"],
+  "category": "llm",
+  "status": "analyzed",
+  "collected_at": "2026-07-12T10:00:00Z",
+  "analyzed_at": "2026-07-12T10:30:00Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "highlights": [
+      "涵盖注意力机制、位置编码和每个层的工作原理",
+      "通过分步讲解的方式深入理解",
+      "为学习Transformer架构提供系统化教程"
+    ],
+    "score": 5,
+    "score_reason": "值得了解，学习资源"
+  }
+}

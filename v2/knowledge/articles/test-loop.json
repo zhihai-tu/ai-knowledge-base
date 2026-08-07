@@ -1,0 +1,25 @@
+{
+  "id": "manual-20260722-001",
+  "title": "LangGraph",
+  "source_url": "https://github.com/langchain-ai/langgraph",
+  "source_type": "github_trending",
+  "summary": "构建多 Agent 有状态工作流的框架",
+  "tags": ["agent", "llm"],
+  "category": "agent",
+  "status": "draft",
+  "collected_at": "2026-07-22T10:00:00Z",
+  "analyzed_at": null,
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "stars": 12000,
+    "language": "Python",
+    "author": "langchain-ai",
+    "highlights": ["有向图状态管理", "人机协同节点", "流式/断点恢复"],
+    "score": 9,
+    "score_reason": "Agent 编排领域标杆项目"
+  }
+}

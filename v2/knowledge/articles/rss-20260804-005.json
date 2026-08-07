@@ -1,0 +1,27 @@
+{
+  "id": "rss-20260804-005",
+  "title": "FFmpeg 9.0",
+  "source_url": "https://github.com/FFmpeg/FFmpeg/blob/n9.0/RELEASE_NOTES",
+  "source_type": "rss",
+  "summary": "FFmpeg 9.0 是开源多媒体处理框架的重要版本更新，主要面向音频、视频、字幕等多媒体数据的编解码、转码、流媒体处理。该版本可能引入了新的编解码器支持、过滤器优化、API 兼容性改进以及性能提升。对于 AI 领域，FFmpeg 常被用作视频数据预处理的底层工具，例如在训练视频理解模型前进行视频解码、抽帧、格式转换等操作。虽然其本身不直接提供 AI 算法，但作为数据流水线的关键基础设施，其稳定性和新功能会间接影响 AI 应用的开发效率。本次更新可能包含对现代视频编码标准（如 AV1）的进一步支持，以及对硬件加速的增强，这对于大规模视频数据集处理具有重要意义。考虑到这是主要版本发布，可能伴随一些不兼容的 API 变化，开发者需关注迁移指南。总体上，FFmpeg 9.0 是多媒体技术栈的重要基石。",
+  "tags": [
+    "ffmpeg",
+    "multimedia",
+    "video-processing"
+  ],
+  "category": "tool",
+  "status": "review",
+  "collected_at": "2026-08-04T11:50:20Z",
+  "analyzed_at": "2026-08-04T11:52:39Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Tue, 04 Aug 2026 09:30:33 +0000",
+    "highlights": [],
+    "score": 5,
+    "score_reason": "FFmpeg 是重要的多媒体处理工具，对 AI 数据处理有辅助价值，但并非 AI 核心技术。"
+  }
+}

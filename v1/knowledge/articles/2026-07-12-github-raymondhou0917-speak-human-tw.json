@@ -1,0 +1,26 @@
+{
+  "id": "gh-trending-20260712-007",
+  "title": "Raymondhou0917/speak-human-tw",
+  "source_url": "https://github.com/Raymondhou0917/speak-human-tw",
+  "source_type": "github_trending",
+  "summary": "专注于繁体中文内容生成的AI写作工具",
+  "tags": ["ai-writing", "chinese", "prompt-engineering"],
+  "category": "tool",
+  "status": "analyzed",
+  "collected_at": "2026-07-12T10:00:00Z",
+  "analyzed_at": "2026-07-12T10:30:00Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "highlights": [
+      "集成Claude Code和提示工程技术",
+      "生成自然流畅的中文内容",
+      "为繁体中文写作提供智能化支持"
+    ],
+    "score": 5,
+    "score_reason": "值得了解，中文写作辅助"
+  }
+}

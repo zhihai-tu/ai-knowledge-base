@@ -1,0 +1,26 @@
+{
+  "id": "gh-trending-20260712-010",
+  "title": "ninjahawk/Subtext",
+  "source_url": "https://github.com/ninjahawk/Subtext",
+  "source_type": "github_trending",
+  "summary": "专注于大型语言模型可解释性的工具",
+  "tags": ["interpretability", "llm", "mechanistic-interpretability"],
+  "category": "llm",
+  "status": "analyzed",
+  "collected_at": "2026-07-12T10:00:00Z",
+  "analyzed_at": "2026-07-12T10:30:00Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "highlights": [
+      "使用PyTorch和Transformers库",
+      "支持模型内部状态的可视化和分析",
+      "帮助研究者理解LLM的工作机制"
+    ],
+    "score": 7,
+    "score_reason": "直接有帮助，LLM可解释性研究"
+  }
+}

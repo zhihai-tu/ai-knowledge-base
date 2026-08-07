@@ -1,0 +1,26 @@
+{
+  "id": "gh-trending-20260712-013",
+  "title": "pillar-labs/sail-skill",
+  "source_url": "https://github.com/pillar-labs/sail-skill",
+  "source_type": "github_trending",
+  "summary": "专注于AI代理安全的框架",
+  "tags": ["ai-security", "compliance", "claude-code"],
+  "category": "agent",
+  "status": "analyzed",
+  "collected_at": "2026-07-12T10:00:00Z",
+  "analyzed_at": "2026-07-12T10:30:00Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "highlights": [
+      "提供针对Claude Code插件的安全评估",
+      "帮助识别和修复AI代理中的安全漏洞",
+      "确保代理系统的安全性和合规性"
+    ],
+    "score": 7,
+    "score_reason": "直接有帮助，AI安全领域"
+  }
+}

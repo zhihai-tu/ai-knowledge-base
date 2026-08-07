@@ -1,0 +1,26 @@
+{
+  "id": "gh-trending-20260712-012",
+  "title": "SilentFleetKK/ai-market-pulse",
+  "source_url": "https://github.com/SilentFleetKK/ai-market-pulse",
+  "source_type": "github_trending",
+  "summary": "基于LLM的金融市场分析工具",
+  "tags": ["quant", "stock-analysis", "llm", "finance"],
+  "category": "llm",
+  "status": "analyzed",
+  "collected_at": "2026-07-12T10:00:00Z",
+  "analyzed_at": "2026-07-12T10:30:00Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "highlights": [
+      "支持股票分析、投资组合管理和市场趋势预测",
+      "使用Python和AkShare库",
+      "支持实时数据获取和分析"
+    ],
+    "score": 6,
+    "score_reason": "值得了解，金融量化分析"
+  }
+}

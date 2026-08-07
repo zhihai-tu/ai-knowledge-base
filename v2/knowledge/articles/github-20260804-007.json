@@ -1,0 +1,50 @@
+{
+  "id": "github-20260804-007",
+  "title": "n8n-io/n8n",
+  "source_url": "https://github.com/n8n-io/n8n",
+  "source_type": "github",
+  "summary": "n8n是一个可自托管的公平代码工作流自动化平台，原生支持AI能力。用户可通过可视化界面构建工作流，同时结合自定义JavaScript代码实现复杂逻辑。平台提供400多种集成，覆盖数据库、API、消息服务等常见应用。n8n支持构建AI代理，可集成LangChain等框架，使自动化流程中包含LLM调用、条件判断和数据处理。用户可选择自托管以保障数据隐私，或使用云端服务。公平代码模式允许商业使用但限制源码直接销售，平衡开源与商业利益。作为AI工作流自动化工具，n8n显著降低了将AI集成到业务自动化的门槛，适合开发者、技术运营及非技术用户。项目在GitHub上星标数高，社区活跃，持续更新。对于AI技术情报分析，n8n是一个重要的实用工具，值得关注其在智能工作流领域的发展趋势。",
+  "tags": [
+    "workflow-automation",
+    "ai",
+    "self-hosted"
+  ],
+  "category": "tool",
+  "status": "review",
+  "collected_at": "2026-08-04T11:50:18Z",
+  "analyzed_at": "2026-08-04T11:51:03Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "stars": 199283,
+    "language": "TypeScript",
+    "author": "n8n-io",
+    "topics": [
+      "ai",
+      "apis",
+      "automation",
+      "cli",
+      "data-flow",
+      "development",
+      "integration-framework",
+      "integrations",
+      "ipaas",
+      "low-code",
+      "low-code-platform",
+      "mcp",
+      "mcp-client",
+      "mcp-server",
+      "n8n",
+      "no-code",
+      "self-hosted",
+      "typescript",
+      "workflow",
+      "workflow-automation"
+    ],
+    "score": 8,
+    "score_reason": "n8n作为AI原生工作流自动化平台，集成度高且支持自定义代码，对智能体工作流构建有实际应用价值。"
+  }
+}

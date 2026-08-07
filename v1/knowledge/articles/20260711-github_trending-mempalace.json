@@ -1,0 +1,30 @@
+{
+  "id": "gh-trending-20260711-005",
+  "title": "MemPalace",
+  "source_url": "https://github.com/MemPalace/mempalace",
+  "source_type": "github_trending",
+  "summary": "MemPalace是一个本地优先的AI记忆系统，在LongMemEval基准测试中达到96.6% R@5原始准确率，且无需API调用。它将对话历史以原始文本形式存储，通过语义搜索进行检索，不进行摘要、提取或改写。索引采用结构化设计——人物和项目成为'翼'，主题成为'房间'，原始内容保存在'抽屉'中。支持可插拔后端（默认ChromaDB），每个专家Agent获得自己的翼和日记。该项目因其高性能和隐私保护特性在本周获得大量关注。其创新之处在于完全本地化的记忆存储和检索，同时保持了高准确率。",
+  "tags": ["agent", "memory"],
+  "category": "memory",
+  "status": "analyzed",
+  "collected_at": "2026-07-11T00:00:00Z",
+  "analyzed_at": "2026-07-11T00:00:00Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "stars": 56960,
+    "forks": 2100,
+    "language": null,
+    "author": "MemPalace",
+    "highlights": [
+      "高准确率记忆检索：在LongMemEval基准测试中达到96.6%准确率，性能优异",
+      "完全本地化：无需API调用，数据不离开本地，隐私保护能力强",
+      "结构化记忆设计：采用'翼-房间-抽屉'的隐喻，提供直观的记忆组织方式"
+    ],
+    "score": 8,
+    "score_reason": "高性能且隐私保护，对需要本地化记忆系统的应用场景有直接帮助"
+  }
+}

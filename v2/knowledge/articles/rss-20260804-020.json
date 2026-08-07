@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260804-020",
+  "title": "Model Routing Is Simple. Until It Isn’t.",
+  "source_url": "https://huggingface.co/blog/ibm-research/model-routing-is-simple-until-it-isnt",
+  "source_type": "rss",
+  "summary": "本文由IBM Research发布，探讨模型路由（Model Routing）的表面简单性与实际复杂性。模型路由旨在为每个用户查询选择最合适的LLM，以平衡成本、延迟与响应质量。文章指出，虽然路由概念直观，但实现有效路由面临多重挑战：LLM能力差异大且更新频繁，路由指标难以统一；基准测试无法覆盖真实场景的长尾分布；路由策略需要在探索与利用之间权衡，并考虑上下文依赖、领域适应性及模型间的互补性。此外，路由本身引入额外延迟与推理开销，需要高效的嵌入和预测机制。文章强调，静态路由规则容易过时，动态反馈和在线学习虽能改善，但带来工程复杂性和冷启动问题。作者提出，模型路由是推理系统优化的关键组件，但需要结合任务分解、模型优先级和成本约束进行综合设计。最终，路由并非简单的选择器，而是一个涉及理解模型行为、用户意图和系统资源的持续优化问题。",
+  "tags": [
+    "model-routing",
+    "LLM",
+    "inference"
+  ],
+  "category": "inference",
+  "status": "review",
+  "collected_at": "2026-08-04T12:19:21Z",
+  "analyzed_at": "2026-08-04T12:20:14Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Wed, 15 Jul 2026 17:27:01 GMT",
+    "source_name": "Hugging Face Blog",
+    "highlights": [],
+    "score": 7,
+    "score_reason": "深入剖析模型路由的复杂性，对推理系统设计具有实用参考价值，但缺乏具体实验数据。"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "id": "gh-trending-20260711-008",
+  "title": "qwen-code",
+  "source_url": "https://github.com/QwenLM/qwen-code",
+  "source_type": "github_trending",
+  "summary": "Qwen-Code是通义千问团队推出的终端原生AI编程代理，基于Qwen模型构建。它提供智能代码补全、调试辅助、代码审查和重构建议等功能，支持多种编程语言。项目采用终端优先设计，与Claude Code、Gemini CLI等形成竞争。本周该项目因其快速的功能迭代和良好的开发者体验而获得大量关注，成为终端AI编程代理领域的重要参与者。其价值在于为中文开发者提供了基于国产大模型的编程辅助工具，具有更好的本地化支持。",
+  "tags": ["agent", "coding"],
+  "category": "coding",
+  "status": "analyzed",
+  "collected_at": "2026-07-11T00:00:00Z",
+  "analyzed_at": "2026-07-11T00:00:00Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "stars": 25787,
+    "forks": 1800,
+    "language": null,
+    "author": "QwenLM",
+    "highlights": [
+      "国产大模型支持：基于Qwen模型构建，为中文开发者提供更好的本地化体验",
+      "终端原生设计：提供终端优先的开发体验，适合命令行工作流",
+      "快速功能迭代：团队持续更新功能，保持技术竞争力"
+    ],
+    "score": 7,
+    "score_reason": "重要的国产AI编程代理，对中文开发者有直接帮助"
+  }
+}

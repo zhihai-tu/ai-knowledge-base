@@ -1,0 +1,30 @@
+{
+  "id": "gh-trending-20260711-006",
+  "title": "voicebox",
+  "source_url": "https://github.com/jamiepine/voicebox",
+  "source_type": "github_trending",
+  "summary": "VoiceBox是一个开源AI语音工作室，支持克隆、听写和创建语音。该项目自2026年1月发布以来持续增长，本周在AI编程代理主导的trending列表中脱颖而出。它提供完整的语音处理工作流，包括语音合成、语音克隆和文本转语音功能。作为少数非编程类AI工具进入trending，反映了开发者对本地优先、隐私保护的语音AI工具的需求增长。其价值在于为开发者提供了完整的语音处理解决方案，特别适合需要语音交互的应用场景。",
+  "tags": ["voice", "tool"],
+  "category": "voice",
+  "status": "analyzed",
+  "collected_at": "2026-07-11T00:00:00Z",
+  "analyzed_at": "2026-07-11T00:00:00Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "stars": 37831,
+    "forks": 4537,
+    "language": null,
+    "author": "jamiepine",
+    "highlights": [
+      "完整语音工作流：支持语音合成、克隆、听写等完整语音处理功能",
+      "本地优先设计：数据处理在本地进行，保护用户隐私",
+      "开源生态：作为开源项目，允许社区参与改进和扩展功能"
+    ],
+    "score": 7,
+    "score_reason": "语音AI领域有价值的工具，对需要语音处理功能的开发者有帮助"
+  }
+}

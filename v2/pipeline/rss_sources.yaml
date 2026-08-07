@@ -1,0 +1,68 @@
+# RSS 数据源配置
+# 每个源包含: name, url, category, enabled
+
+# ── 综合技术 ──────────────────────────────────────────────────────
+- name: Hacker News Best (AI)
+  url: https://hnrss.org/best?q=AI+OR+LLM+OR+agent
+  category: tech
+  enabled: true
+
+- name: Lobsters AI/ML
+  url: https://lobste.rs/rss
+  category: tech
+  enabled: true
+
+# ── AI 研究 ──────────────────────────────────────────────────────
+- name: arXiv cs.AI
+  url: https://export.arxiv.org/rss/cs.AI
+  category: research
+  enabled: true
+
+- name: Reddit r/MachineLearning
+  url: https://www.reddit.com/r/MachineLearning/hot.rss
+  category: research
+  enabled: true
+
+# ── 开源社区 ─────────────────────────────────────────────────────
+- name: Reddit r/LocalLLaMA
+  url: https://www.reddit.com/r/LocalLLaMA/hot.rss
+  category: open-source
+  enabled: true
+
+# ── 公司博客 ─────────────────────────────────────────────────────
+- name: OpenAI Blog
+  url: https://openai.com/news/rss.xml
+  category: company
+  enabled: true
+
+- name: Anthropic Research
+  url: https://www.anthropic.com/feed.xml
+  category: company
+  enabled: false
+
+- name: Hugging Face Blog
+  url: https://huggingface.co/blog/feed.xml
+  category: company
+  enabled: true
+
+- name: Google AI Blog
+  url: https://blog.google/innovation-and-ai/technology/ai/rss/
+  category: industry
+  enabled: true
+
+# ── AI 新闻 ─────────────────────────────────────────────────────
+- name: The Verge (AI)
+  url: https://www.theverge.com/rss/ai-artificial-intelligence/index.xml
+  category: news
+  enabled: true
+
+# ── 中文社区（默认禁用，需确认 RSS 可用性）──────────────────────
+- name: 机器之心
+  url: https://www.jiqizhixin.com/rss
+  category: chinese
+  enabled: false
+
+- name: 量子位
+  url: https://www.qbitai.com/feed
+  category: chinese
+  enabled: false

@@ -1,0 +1,30 @@
+{
+  "id": "gh-trending-20260711-004",
+  "title": "hello-agents",
+  "source_url": "https://github.com/datawhalechina/hello-agents",
+  "source_type": "github_trending",
+  "summary": "Hello-Agents是Datawhale社区出品的系统性智能体学习教程《从零开始构建智能体》。教程从智能体核心原理出发，深入架构设计，涵盖ReAct、Plan-and-Solve、Reflection等经典范式，以及Coze、Dify、n8n等低代码平台和LangGraph等主流框架。项目包含自研框架HelloAgents，基于OpenAI原生API从零构建。内容覆盖记忆与检索、上下文工程、MCP/A2A协议、Agentic-RL训练等高级主题，是目前最受欢迎的中文Agent教程之一。其价值在于为中文开发者提供了系统化的Agent学习路径，降低了入门门槛。",
+  "tags": ["agent", "training"],
+  "category": "training",
+  "status": "analyzed",
+  "collected_at": "2026-07-11T00:00:00Z",
+  "analyzed_at": "2026-07-11T00:00:00Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "stars": 64016,
+    "forks": 7933,
+    "language": null,
+    "author": "datawhalechina",
+    "highlights": [
+      "系统性学习路径：从核心原理到高级主题，覆盖Agent开发的完整知识体系",
+      "多框架覆盖：涵盖ReAct、LangGraph等主流框架，以及Coze、Dify等低代码平台",
+      "中文社区支持：Datawhale社区出品，提供中文文档和社区交流环境"
+    ],
+    "score": 7,
+    "score_reason": "对学习Agent技术有直接帮助，特别是中文开发者"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "id": "gh-trending-20260712-014",
+  "title": "olemeyer/rocketplaneIO",
+  "source_url": "https://github.com/olemeyer/rocketplaneIO",
+  "source_type": "github_trending",
+  "summary": "基于AI代理的监控平台，集成eBPF、Kubernetes和OpenTelemetry",
+  "tags": ["aiops", "monitoring", "kubernetes", "ebpf"],
+  "category": "tool",
+  "status": "analyzed",
+  "collected_at": "2026-07-12T10:00:00Z",
+  "analyzed_at": "2026-07-12T10:30:00Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "highlights": [
+      "集成eBPF、Kubernetes和OpenTelemetry技术",
+      "提供智能事件响应和性能分析",
+      "自动化处理DevOps任务"
+    ],
+    "score": 7,
+    "score_reason": "直接有帮助，AIOps领域"
+  }
+}

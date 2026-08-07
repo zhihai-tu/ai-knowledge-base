@@ -1,0 +1,26 @@
+{
+  "id": "gh-trending-20260712-004",
+  "title": "Nanako0129/pilotfish",
+  "source_url": "https://github.com/Nanako0129/pilotfish",
+  "source_type": "github_trending",
+  "summary": "多AI代理编排框架，专注于Claude代码的协作和编排",
+  "tags": ["multi-agent", "orchestration", "claude-code", "ai-agents"],
+  "category": "agent",
+  "status": "analyzed",
+  "collected_at": "2026-07-12T10:00:00Z",
+  "analyzed_at": "2026-07-12T10:30:00Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "highlights": [
+      "提供代理之间的通信和任务分配机制",
+      "支持多代理协作完成复杂任务",
+      "为构建复杂AI系统提供基础设施"
+    ],
+    "score": 7,
+    "score_reason": "直接有帮助，多代理协作是当前热点"
+  }
+}

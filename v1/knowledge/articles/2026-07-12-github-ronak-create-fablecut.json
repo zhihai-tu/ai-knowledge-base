@@ -1,0 +1,26 @@
+{
+  "id": "gh-trending-20260712-006",
+  "title": "ronak-create/FableCut",
+  "source_url": "https://github.com/ronak-create/FableCut",
+  "source_type": "github_trending",
+  "summary": "基于AI代理和LLM的视频编辑工具，支持自然语言指令",
+  "tags": ["video-editing", "ai-agent", "claude", "ffmpeg"],
+  "category": "tool",
+  "status": "analyzed",
+  "collected_at": "2026-07-12T10:00:00Z",
+  "analyzed_at": "2026-07-12T10:30:00Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "highlights": [
+      "集成Claude和FFmpeg",
+      "支持自然语言指令进行视频剪辑",
+      "提供智能剪辑和字幕生成"
+    ],
+    "score": 7,
+    "score_reason": "直接有帮助，AI辅助视频编辑"
+  }
+}

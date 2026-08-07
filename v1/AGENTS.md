@@ -23,6 +23,8 @@
 - 变量/函数名使用 `snake_case`
 - 类名使用 `PascalCase`
 - 常量使用 `UPPER_SNAKE_CASE`
+- Python 用 black 格式化，以 PEP 8 为准
+- TypeScript strict mode（项目计划引入TypeScript）
 
 ### Docstring 规范
 
@@ -48,6 +50,32 @@ def fetch_trending(repos: int = 25) -> list[dict]:
 - **禁止裸 `print()`**：日志输出必须使用 `logging` 模块
 - 类型注解必须完整
 - 异常必须显式捕获和处理
+- **禁止魔法字符串**：所有字符串字面量都必须定义为常量
+- **禁止 TODO 提交到 main**：TODO 必须在提交前完成
+- 所有公开函数必须有 Google 风格 docstring
+
+### 验收标准
+
+- 单测覆盖率 ≥ 80%（行覆盖率）
+
+### 验证方式
+
+- CI 上跑 lint + 单测
+- Python: flake8 + mypy + pytest
+- TypeScript: ESLint + Prettier + Jest
+
+### 配置文件
+
+- Python: pyproject.toml
+- TypeScript: tsconfig.json
+- ESLint: .eslintrc.js
+- Prettier: .prettierrc
+- Jest: jest.config.js
+
+### 版本要求
+
+- Python 3.12+
+- Node.js 18+
 
 ## 项目结构
 
@@ -59,6 +87,8 @@ ai-knowledge-base/
 ├── knowledge/
 │   ├── raw/             # 原始采集数据
 │   └── articles/        # 结构化知识条目
+├── specs/               # 规范文档
+├── utils/               # 工具函数
 ├── AGENTS.md            # 本文件
 └── README.md
 ```
@@ -108,3 +138,6 @@ ai-knowledge-base/
 6. **禁止硬编码 URL**：所有外部链接必须从配置读取
 7. **禁止无限制重试**：外部请求必须设置超时和重试上限
 8. **禁止直接操作生产环境**：测试必须在开发环境完成
+9. **禁止分析 Agent 保存文件**：分析 Agent 只输出分析结果，不保存文件；文件保存由整理 Agent 负责
+10. **禁止擅自保存文件**：除非用户明确要求，否则不得将输出结果保存到文件
+11. **严格遵循工具调用指令**：用户指定调用 subagent 或特定工具时，必须按指令执行，不得自行替代

@@ -1,0 +1,26 @@
+{
+  "id": "gh-trending-20260712-011",
+  "title": "Matchameleon/moneyclaw",
+  "source_url": "https://github.com/Matchameleon/moneyclaw",
+  "source_type": "github_trending",
+  "summary": "基于AI代理的金融管理工具",
+  "tags": ["fintech", "ai-agent", "finance"],
+  "category": "agent",
+  "status": "analyzed",
+  "collected_at": "2026-07-12T10:00:00Z",
+  "analyzed_at": "2026-07-12T10:30:00Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "highlights": [
+      "支持卡片代理、钱包代理和OTP代理功能",
+      "提供智能化的金融交易和资产管理",
+      "自动化处理金融任务"
+    ],
+    "score": 5,
+    "score_reason": "值得了解，AI金融应用"
+  }
+}

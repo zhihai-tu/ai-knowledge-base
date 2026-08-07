@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260804-019",
+  "title": "Security incident disclosure — July 2026",
+  "source_url": "https://huggingface.co/blog/security-incident-july-2026",
+  "source_type": "rss",
+  "summary": "Hugging Face 发布了关于 2026 年 7 月发生的一起安全事件的公开披露。该事件影响了其平台的部分用户，具体涉及某些托管的模型或数据集可能被未经授权访问。Hugging Face 在发现后立即采取了缓解措施，包括撤销泄露的凭证、通知受影响用户，并与外部安全专家合作展开调查。公司强调，用户的凭证和令牌可能受到影响，建议用户轮换密钥并审查账户活动。同时，Hugging Face 表示正在加强安全监控和访问控制，以防止类似事件再次发生。此次披露体现了 AI 基础设施提供商在应对安全威胁时的透明度和响应流程，也提醒使用开源模型 Hub 的开发者注意供应链安全和凭证管理。",
+  "tags": [
+    "security",
+    "incident",
+    "huggingface"
+  ],
+  "category": "tool",
+  "status": "review",
+  "collected_at": "2026-08-04T12:19:21Z",
+  "analyzed_at": "2026-08-04T12:20:06Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Thu, 16 Jul 2026 00:00:00 GMT",
+    "source_name": "Hugging Face Blog",
+    "highlights": [],
+    "score": 7,
+    "score_reason": "事件披露及时且透明，对 AI 平台供应链安全有警示意义，但信息量有限，未涉及技术细节。"
+  }
+}

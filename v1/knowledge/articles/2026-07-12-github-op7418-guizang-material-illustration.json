@@ -1,0 +1,26 @@
+{
+  "id": "gh-trending-20260712-003",
+  "title": "op7418/guizang-material-illustration",
+  "source_url": "https://github.com/op7418/guizang-material-illustration",
+  "source_type": "github_trending",
+  "summary": "集成Claude Code的材质插画生成工具，支持图表美化和解释图生成",
+  "tags": ["image-generation", "claude-code", "design", "visualization"],
+  "category": "tool",
+  "status": "analyzed",
+  "collected_at": "2026-07-12T10:00:00Z",
+  "analyzed_at": "2026-07-12T10:30:00Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "highlights": [
+      "集成Claude Code和图像生成技术",
+      "支持图表美化和解释图生成",
+      "为内容创作者提供便捷的AI辅助设计"
+    ],
+    "score": 5,
+    "score_reason": "值得了解，AI辅助设计工具"
+  }
+}

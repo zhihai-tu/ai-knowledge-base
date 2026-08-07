@@ -1,0 +1,29 @@
+{
+  "id": "github-20260804-005",
+  "title": "mattpocock/skills",
+  "source_url": "https://github.com/mattpocock/skills",
+  "source_type": "github",
+  "summary": "该仓库是 Matt Pocock 个人分享的 AI 代理技能集合，内容直接来源于其 .agents 目录，旨在为真实工程师提供实用技能。它可能包含用于 AI 代理的配置、提示词或工具函数，帮助工程师更高效地完成编码、调试或自动化任务。由于描述简短，具体细节未知，但定位清晰，聚焦于工程实践，适合希望复用优秀代理技能的开发者。",
+  "tags": [
+    "skills",
+    "agents",
+    "engineering"
+  ],
+  "category": "agent",
+  "status": "review",
+  "collected_at": "2026-08-04T11:50:18Z",
+  "analyzed_at": "2026-08-04T11:50:53Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "stars": 202492,
+    "language": "Shell",
+    "author": "mattpocock",
+    "topics": [],
+    "score": 7,
+    "score_reason": "实用性强但内容未知，作为代理技能参考有较高价值。"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "id": "rss-20260804-010",
+  "title": "There Will Come Soft Rains (1950) [pdf]",
+  "source_url": "https://users.wpi.edu/~zrbutzke/Docs/BradburyStories(1).pdf",
+  "source_type": "rss",
+  "summary": "这是雷·布拉德伯里1950年经典科幻短篇小说《There Will Come Soft Rains》的PDF版本，近期在Hacker News上引发讨论（169分，60条评论）。小说描绘了一座全自动智能房屋在核战后人类灭绝的情况下，仍按部就班地执行日常家务、播报天气、准备早餐，最终在火灾中自我毁灭的过程。作品深刻反思了技术对人类生活的异化、自动化系统的脆弱性，以及人类缺席后技术存在的荒谬性。虽然并非直接讨论现代AI技术，但其中关于自主系统、环境感知与失效场景的描写，与当代智能家居和AI代理的潜在风险形成呼应，是技术伦理与科幻文学交叉的经典文本。",
+  "tags": [
+    "science-fiction",
+    "smart-home",
+    "automation"
+  ],
+  "category": "agent",
+  "status": "review",
+  "collected_at": "2026-08-04T11:50:20Z",
+  "analyzed_at": "2026-08-04T11:53:17Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Mon, 03 Aug 2026 23:24:53 +0000",
+    "highlights": [],
+    "score": 6,
+    "score_reason": "该作品虽非技术论文，但以文学形式预测了自主系统失效场景，对AI伦理讨论有启发价值。"
+  }
+}

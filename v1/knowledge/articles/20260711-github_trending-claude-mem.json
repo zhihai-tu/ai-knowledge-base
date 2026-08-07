@@ -1,0 +1,30 @@
+{
+  "id": "gh-trending-20260711-002",
+  "title": "claude-mem",
+  "source_url": "https://github.com/thedotmack/claude-mem",
+  "source_type": "github_trending",
+  "summary": "Claude-Mem是一个为AI Agent设计的持久化上下文记忆系统，支持Claude Code、OpenClaw、Codex、Gemini、Hermes、Copilot、OpenCode等多种工具。它能自动捕获Agent在会话中的所有操作，通过AI压缩生成语义摘要，并在未来会话中注入相关上下文。系统采用渐进式披露机制，支持基于技能的搜索，提供Web查看器UI实时查看记忆流。该项目解决了AI Agent跨会话记忆持久化的痛点，本周获得超过5000颗星增长。其创新之处在于将记忆存储与语义检索结合，让Agent能够真正记住过去的交互历史，提升长期任务处理能力。",
+  "tags": ["agent", "memory"],
+  "category": "memory",
+  "status": "analyzed",
+  "collected_at": "2026-07-11T00:00:00Z",
+  "analyzed_at": "2026-07-11T00:00:00Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "stars": 85898,
+    "forks": 7431,
+    "language": null,
+    "author": "thedotmack",
+    "highlights": [
+      "跨会话记忆持久化：自动捕获并压缩会话操作，支持未来会话的上下文注入",
+      "语义检索机制：采用渐进式披露和基于技能的搜索，提供高效的记忆检索",
+      "可视化记忆管理：Web查看器UI让开发者能够实时查看和管理Agent的记忆流"
+    ],
+    "score": 8,
+    "score_reason": "解决AI Agent核心痛点，对需要长期记忆的应用场景有直接帮助"
+  }
+}
