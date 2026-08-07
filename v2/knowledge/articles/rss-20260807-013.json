@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260807-013",
+  "title": "Improving GPT‑5.6 Sol in ChatGPT—and expanding access to GPT-5.6 Luna for free users",
+  "source_url": "https://openai.com/index/improving-gpt-5-6-sol-in-chatgpt",
+  "source_type": "rss",
+  "summary": "OpenAI宣布改进ChatGPT中的GPT-5.6 Sol模型，显著提升了回答的准确性和一致性，同时优化了用户体验。此外，公司扩大了免费用户对GPT-5.6 Luna的访问权限，允许他们在日常聊天中无限次使用该模型。此举旨在让更广泛的用户群体享受先进AI能力，同时通过模型升级巩固OpenAI在对话式AI领域的领先地位。更新后的Sol在复杂推理和长上下文处理上表现更佳，而Luna则成为免费用户的轻量级日常助手。整体上，这一发布反映了OpenAI推动AI普惠化和持续迭代模型的战略方向。",
+  "tags": [
+    "GPT-5.6",
+    "ChatGPT",
+    "OpenAI"
+  ],
+  "category": "llm",
+  "status": "review",
+  "collected_at": "2026-08-07T07:01:06Z",
+  "analyzed_at": "2026-08-07T07:02:14Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Thu, 06 Aug 2026 10:00:00 GMT",
+    "source_name": "OpenAI Blog",
+    "highlights": [],
+    "score": 8,
+    "score_reason": "重要模型更新与免费策略扩展，影响用户广泛，但缺乏技术细节，评分偏高。"
+  }
+}

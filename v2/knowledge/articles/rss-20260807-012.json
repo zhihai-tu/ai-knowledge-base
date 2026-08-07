@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260807-012",
+  "title": "[D] Self-Promotion Thread",
+  "source_url": "https://www.reddit.com/r/MachineLearning/comments/1vd5kqk/d_selfpromotion_thread/",
+  "source_type": "rss",
+  "summary": "这是Reddit r/MachineLearning 子版块的固定自我推广帖，由AutoModerator发布。帖子邀请社区成员在此分享个人项目、初创公司、产品推广、合作需求和博客等内容，并要求明确标注付费和定价信息。同时禁止使用短链接、聚合链接和自动订阅链接，任何滥用信任的行为将被封禁。帖子鼓励用户将原本独立发布的推广内容集中到此帖，以避免刷屏主版块。此外，帖中提到这是一个实验性举措，如果社区不喜欢将取消。整体而言，该帖是社区管理工具，用于规范内容分发，本身不包含具体AI技术信息。",
+  "tags": [
+    "self-promotion",
+    "community",
+    "reddit"
+  ],
+  "category": "tool",
+  "status": "review",
+  "collected_at": "2026-08-07T07:01:06Z",
+  "analyzed_at": "2026-08-07T07:02:11Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "2026-08-02T02:15:24+00:00",
+    "source_name": "Reddit r/MachineLearning",
+    "highlights": [],
+    "score": 2,
+    "score_reason": "内容为社区管理公告，缺乏实质性AI技术信息，信息价值低。"
+  }
+}

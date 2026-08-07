@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260807-016",
+  "title": "Jony Ive&#8217;s first OpenAI gadget is reportedly a hockey puck-sized smart speaker",
+  "source_url": "https://www.theverge.com/ai-artificial-intelligence/976431/openai-chatgpt-battery-smart-speaker-rumor",
+  "source_type": "rss",
+  "summary": "据彭博社记者马克·古尔曼报道，OpenAI与苹果前设计师乔尼·艾维合作的首款AI设备被描述为一款“无屏幕的智能音箱”，外形类似甜甜圈，大小如冰球，内置电池，便于在家中携带。该设备预计于2027年发布，售价超过300美元，配备独特的活动部件，包括可自主移动以指示响应状态的组件，以及灯光、摄像头系统和其他传感器。此消息来自The Verge的报道，目前仍属传闻阶段，但展示了AI硬件设计的新方向。",
+  "tags": [
+    "openai",
+    "hardware",
+    "smart-speaker"
+  ],
+  "category": "tool",
+  "status": "review",
+  "collected_at": "2026-08-07T07:01:06Z",
+  "analyzed_at": "2026-08-07T07:02:25Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "2026-08-06T16:55:39-04:00",
+    "source_name": "The Verge (AI)",
+    "highlights": [],
+    "score": 6,
+    "score_reason": "内容为传闻性硬件报道，涉及AI设备设计但缺乏技术细节，信息价值中等。"
+  }
+}

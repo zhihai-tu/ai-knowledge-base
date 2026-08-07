@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260807-010",
+  "title": "tl;dv (Too Lazy; Didn't Validate): 181,874 Meetings Left Wide Open",
+  "source_url": "https://bobdahacker.com/blog/tldv-hack",
+  "source_type": "rss",
+  "summary": "该博客揭示了知名会议记录工具tl;dv（Too Lazy; Didn't Validate）存在的严重安全漏洞，导致181,874场会议录音和转录内容被公开泄露。攻击者利用了该平台在URL鉴权或访问控制上的缺陷，无需任何凭据即可访问敏感的商业会议数据，包括内部讨论、客户信息、战略规划等。这一事件暴露了AI会议工具在数据安全验证方面的普遍疏忽，尤其是在默认设置下对隐私保护不足的问题。文章强调，此类SaaS工具往往追求便捷性而忽视了严格的权限校验，使大量企业用户面临商业机密和隐私泄露风险。该漏洞不仅影响单个产品，也引发了对AI驱动的转录与会议记录服务整体安全模式的质疑。文章建议用户立即检查并收紧相关权限，同时敦促厂商采用更可靠的加密与访问控制机制，并提供了漏洞披露的时间线和缓解措施。",
+  "tags": [
+    "security",
+    "privacy",
+    "vulnerability"
+  ],
+  "category": "tool",
+  "status": "review",
+  "collected_at": "2026-08-07T07:01:05Z",
+  "analyzed_at": "2026-08-07T07:02:04Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Thu, 06 Aug 2026 06:22:20 -0500",
+    "source_name": "Lobsters AI/ML",
+    "highlights": [],
+    "score": 7,
+    "score_reason": "重大数据泄露事件，暴露AI工具安全缺陷，影响广泛，但非直接模型漏洞，故评7分。"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "github-20260807-015",
+  "title": "mattpocock/skills",
+  "source_url": "https://github.com/mattpocock/skills",
+  "source_type": "github",
+  "summary": "这是一个名为 mattpocock/skills 的 GitHub 仓库，内容是为真实工程师设计的技能集合，直接来自作者本人的 .agents 目录。mattpocock 是知名的 TypeScript 教育者和开发者，该仓库很可能包含用于 AI 编程助手的提示词、工作流或技能定义，旨在提升 AI 在工程场景中的实用性和可靠性。技能可能涵盖代码审查、架构决策、调试、测试等真实工程任务。该仓库将个人最佳实践转化为可复用的 AI 技能，体现了 AI 代理与工程工作流结合的趋势。对于希望优化 AI 辅助开发效率的工程师和团队具有参考价值。",
+  "tags": [
+    "skills",
+    "agents",
+    "engineering"
+  ],
+  "category": "agent",
+  "status": "review",
+  "collected_at": "2026-08-07T07:00:59Z",
+  "analyzed_at": "2026-08-07T07:01:34Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "stars": 207645,
+    "language": "Shell",
+    "author": "mattpocock",
+    "topics": [],
+    "score": 7,
+    "score_reason": "来自知名开发者的实用技能仓库，与 AI 代理实践直接相关，但受众相对特定，评估为中等偏上有用。"
+  }
+}

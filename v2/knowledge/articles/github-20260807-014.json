@@ -1,0 +1,46 @@
+{
+  "id": "github-20260807-014",
+  "title": "NousResearch/hermes-agent",
+  "source_url": "https://github.com/NousResearch/hermes-agent",
+  "source_type": "github",
+  "summary": "该内容为NousResearch在GitHub上发布的hermes-agent仓库，其描述为'The agent that grows with you'，意为'与你共同成长的智能体'。这表明该项目旨在打造一个能够根据用户交互和需求不断进化、个性化的AI代理系统。由于仓库描述极为简短，未透露具体技术栈、实现方案或应用场景，但鉴于NousResearch在AI领域的影响力，该项目可能涉及前沿的智能体设计，如利用强化学习、记忆机制或用户反馈来持续优化行为。整体而言，这是一个面向未来、强调自适应能力的智能体项目，值得关注其后续更新和文档发布。",
+  "tags": [
+    "agent",
+    "personalization",
+    "NousResearch"
+  ],
+  "category": "agent",
+  "status": "review",
+  "collected_at": "2026-08-07T07:00:59Z",
+  "analyzed_at": "2026-08-07T07:01:30Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "stars": 226739,
+    "language": "Python",
+    "author": "NousResearch",
+    "topics": [
+      "ai",
+      "ai-agent",
+      "ai-agents",
+      "anthropic",
+      "chatgpt",
+      "claude",
+      "claude-code",
+      "clawdbot",
+      "codex",
+      "hermes",
+      "hermes-agent",
+      "llm",
+      "moltbot",
+      "nous-research",
+      "openai",
+      "openclaw"
+    ],
+    "score": 6,
+    "score_reason": "信息有限，但来自知名研究组织且描述具有吸引力，故给予中等评分。"
+  }
+}

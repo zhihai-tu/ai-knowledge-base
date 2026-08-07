@@ -1,0 +1,29 @@
+{
+  "id": "github-20260807-016",
+  "title": "multica-ai/andrej-karpathy-skills",
+  "source_url": "https://github.com/multica-ai/andrej-karpathy-skills",
+  "source_type": "github",
+  "summary": "该仓库提供了一个单一的 CLAUDE.md 配置文件，用于改善 Claude Code 在编码任务中的行为。该文件基于 Andrej Karpathy 对大型语言模型在编程场景中常见陷阱的观察，例如过度自信、忽略上下文、生成冗余代码等。通过加载此配置，开发者可以引导 Claude 更谨慎地处理代码生成，减少低级错误，并提高代码质量和与现有项目的兼容性。该资源以简洁的单一文件形式分发，便于直接集成到 Claude Code 项目中，适合希望优化 AI 辅助开发流程的开发者。",
+  "tags": [
+    "claude-code",
+    "llm-coding",
+    "prompt-engineering"
+  ],
+  "category": "agent",
+  "status": "review",
+  "collected_at": "2026-08-07T07:00:59Z",
+  "analyzed_at": "2026-08-07T07:01:40Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "stars": 200354,
+    "language": null,
+    "author": "multica-ai",
+    "topics": [],
+    "score": 6,
+    "score_reason": "实用且简洁的配置方案，但缺乏深度技术实现，价值在于技巧整合而非创新。"
+  }
+}
