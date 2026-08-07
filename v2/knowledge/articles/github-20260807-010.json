@@ -1,0 +1,41 @@
+{
+  "id": "github-20260807-010",
+  "title": "Significant-Gravitas/AutoGPT",
+  "source_url": "https://github.com/Significant-Gravitas/AutoGPT",
+  "source_type": "github",
+  "summary": "AutoGPT 是一个广受欢迎的开源项目，旨在实现 AI 的普及化，让所有人都能使用并在此基础上构建。其核心是提供自主 AI 代理，能够将复杂任务分解为子任务并自动执行，利用大型语言模型（如 GPT-4）进行决策和工具调用。项目强调模块化和可访问性，使开发者能够轻松创建自定义代理。AutoGPT 在 2023 年引发广泛关注，成为自主代理领域的标志性项目，尽管实际应用中面临任务稳定性、成本控制等挑战，但其理念——提供工具，让用户专注于重要事务——依然影响深远。该仓库持续迭代，包含丰富的文档和社区支持，适合实验和二次开发。",
+  "tags": [
+    "autonomous-agents",
+    "open-source",
+    "llm"
+  ],
+  "category": "agent",
+  "status": "review",
+  "collected_at": "2026-08-07T06:44:22Z",
+  "analyzed_at": "2026-08-07T06:45:26Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "stars": 186113,
+    "language": "Python",
+    "author": "Significant-Gravitas",
+    "topics": [
+      "agentic-ai",
+      "agents",
+      "ai",
+      "artificial-intelligence",
+      "autonomous-agents",
+      "claude",
+      "gpt",
+      "llama-api",
+      "llm",
+      "openai",
+      "python"
+    ],
+    "score": 8,
+    "score_reason": "作为自主 AI 代理的开创性开源项目，影响力巨大，但实际效用和稳定性仍有提升空间。"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260807-003",
+  "title": "tl;dv (Too Lazy; Didn't Validate): 181,874 Meetings Left Wide Open",
+  "source_url": "https://bobdahacker.com/blog/tldv-hack",
+  "source_type": "rss",
+  "summary": "该博客揭示了AI会议记录工具tl;dv的严重安全漏洞，其名称调侃为'Too Lazy; Didn't Validate'。由于未正确验证会议记录的所有权，攻击者可以通过构造特定请求来访问其他用户的会议记录，导致181,874个私人会议内容被暴露。这些会议记录包含敏感的商业讨论、个人信息和内部决策，可能造成大规模隐私泄露。作者通过实际测试验证了漏洞的可利用性，并指出该问题涉及API授权逻辑缺陷而非简单配置错误。事件突显了AI工具在数据安全方面的薄弱环节，以及厂商在快速迭代中忽视安全验证的风险。文章建议企业谨慎使用此类AI记录工具，并强调对第三方AI服务进行安全审计的必要性。",
+  "tags": [
+    "security",
+    "privacy",
+    "meeting-recording"
+  ],
+  "category": "tool",
+  "status": "review",
+  "collected_at": "2026-08-07T06:44:25Z",
+  "analyzed_at": "2026-08-07T06:45:39Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Thu, 06 Aug 2026 06:22:20 -0500",
+    "source_name": "Lobsters AI/ML",
+    "highlights": [],
+    "score": 7,
+    "score_reason": "真实安全漏洞曝光，影响面大且涉及AI工具的数据保护，但文章本身偏技术曝光而非深度技术分析。"
+  }
+}

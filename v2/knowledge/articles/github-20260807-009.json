@@ -1,0 +1,29 @@
+{
+  "id": "github-20260807-009",
+  "title": "anomalyco/opencode",
+  "source_url": "https://github.com/anomalyco/opencode",
+  "source_type": "github",
+  "summary": "这是一个名为 opencode 的开源编码代理项目，旨在提供类似 AI 编程助手的工具。然而，仓库描述极其简短，仅提及“开源编码代理”，未提供具体功能、技术栈、安装方法或使用示例。从标题和链接可推测该项目可能支持代码生成、补全或自动修复等能力，但实际效果和成熟度未知。作为开源项目，它可能吸引寻求自托管 AI 编程工具的开发者，但缺乏详细文档和社区信息，难以评估其质量。若项目处于早期阶段或使用须知不完善，可能需要潜在用户自行探索代码和演示。整体而言，这是一个概念明确但信息不充分的仓库，适合感兴趣者深入查看源码以了解更多细节。",
+  "tags": [
+    "coding-agent",
+    "open-source",
+    "codegen"
+  ],
+  "category": "agent",
+  "status": "review",
+  "collected_at": "2026-08-07T06:44:22Z",
+  "analyzed_at": "2026-08-07T06:45:19Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "stars": 194452,
+    "language": "TypeScript",
+    "author": "anomalyco",
+    "topics": [],
+    "score": 6,
+    "score_reason": "基于标题和描述，这是一个有潜力的开源编码代理，但缺少具体信息和功能展示，评分保守。"
+  }
+}

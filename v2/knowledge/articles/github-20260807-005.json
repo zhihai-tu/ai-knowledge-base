@@ -1,0 +1,29 @@
+{
+  "id": "github-20260807-005",
+  "title": "mattpocock/skills",
+  "source_url": "https://github.com/mattpocock/skills",
+  "source_type": "github",
+  "summary": "mattpocock/skills 是一个面向真实工程师的 AI 代理技能仓库，内容直接来源于作者本人的 .agents 目录。mattpocock 作为知名的 TypeScript 教育者，将这些技能整理为公开资源，可能包含提示词模板、工作流定义或工具配置，旨在帮助开发者更高效地在日常编码、调试和开发任务中使用 AI 代理。该仓库反映了作者在真实工程环境中积累的实用经验，具有较高的可复用性和实践参考价值，尤其对于希望将 AI 代理深度集成到开发工作流中的工程师。不过，具体技能内容和覆盖面有限，需进一步查看仓库才能全面评估其深度。总体而言，这是一个值得关注的开发者工具类资源。",
+  "tags": [
+    "agent-skills",
+    "developer-tools",
+    "ai-workflow"
+  ],
+  "category": "agent",
+  "status": "review",
+  "collected_at": "2026-08-07T06:44:22Z",
+  "analyzed_at": "2026-08-07T06:45:00Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "stars": 207611,
+    "language": "Shell",
+    "author": "mattpocock",
+    "topics": [],
+    "score": 7,
+    "score_reason": "来自知名开发者，聚焦AI代理实用技能，但具体内容深度未知。"
+  }
+}
