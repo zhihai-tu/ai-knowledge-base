@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260807-017",
+  "title": "Software development with AI is starting to feel like cooking steak",
+  "source_url": "https://blog.sydorets.com/en/posts/almost-no-skill-required-to-cook-a-steak/",
+  "source_type": "rss",
+  "summary": "文章将AI辅助软件开发比作烹饪牛排：过去需要专业技能和精确控制，现在借助AI工具，开发者只需提供大致指令就能获得可用的代码，就像用智能烤箱煎牛排一样，几乎不需要技巧。作者认为这种变化降低了编程门槛，但也引发了对代码质量、理解深度和开发者技能退化的担忧。文章讨论了AI编码助手在真实项目中的表现，指出它们擅长生成样板代码和解决常见问题，但在复杂架构和边缘情况下仍需人类判断。作者反思了这种范式转变对软件工程实践的影响，认为开发者正从“手写代码”转向“审查和指导AI”，类似于厨师从掌控火候变成设定程序。整体上，文章持谨慎乐观态度，强调AI是强大工具，但核心工程能力依然重要。",
+  "tags": [
+    "AI-assisted development",
+    "software engineering",
+    "LLM"
+  ],
+  "category": "tool",
+  "status": "review",
+  "collected_at": "2026-08-07T09:05:12Z",
+  "analyzed_at": "2026-08-07T09:06:04Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Thu, 06 Aug 2026 15:30:48 +0000",
+    "source_name": "Hacker News Best (AI)",
+    "highlights": [],
+    "score": 8,
+    "score_reason": "以生动类比深入探讨AI编程的现状与影响，视角独特，引发广泛讨论，具有实用洞察。"
+  }
+}

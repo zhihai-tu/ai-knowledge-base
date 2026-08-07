@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260807-022",
+  "title": "How HSP GRUPPE builds AI capabilities for tax advisory",
+  "source_url": "https://openai.com/index/hsp-gruppe",
+  "source_type": "rss",
+  "summary": "HSP GRUPPE是一家税务咨询公司，通过采用ChatGPT Enterprise来构建AI能力，以提升生产力、改善工作质量，并为税务咨询和客户服务创造更多容量。该案例展示了专业服务公司如何将生成式AI融入日常工作流程，利用大语言模型辅助文档处理、信息整理和客户沟通等任务。通过这一工具，HSP GRUPPE能够更高效地处理复杂税务问题，同时让顾问将更多精力投入到高价值的客户互动中。这体现了企业级AI在垂直行业中的实际应用价值，也说明了像ChatGPT Enterprise这样的解决方案如何帮助传统专业服务实现数字化转型。",
+  "tags": [
+    "ChatGPT Enterprise",
+    "tax advisory",
+    "productivity"
+  ],
+  "category": "llm",
+  "status": "review",
+  "collected_at": "2026-08-07T09:05:13Z",
+  "analyzed_at": "2026-08-07T09:06:25Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Fri, 07 Aug 2026 09:00:00 GMT",
+    "source_name": "OpenAI Blog",
+    "highlights": [],
+    "score": 7,
+    "score_reason": "内容为具体企业案例，展示了LLM在专业服务中的应用价值，但信息较简洁，缺乏技术细节和深度分析。"
+  }
+}

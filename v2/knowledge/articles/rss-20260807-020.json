@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260807-020",
+  "title": "Agentic Nesting: A New Methodology for Existing Enterprise Application Integration and Services",
+  "source_url": "https://arxiv.org/abs/2608.05159",
+  "source_type": "rss",
+  "summary": "本文提出了一种名为Agentic Nesting的新型企业应用集成方法，针对传统企业系统中多异构系统导致的数据孤岛和流程碎片化问题。现有集成方案如ESB、API网关和RPA存在架构耦合度高、运维成本大、智能性不足等局限。Agentic Nesting将现有企业应用封装为自治AI代理，并组织成分层嵌套的树状结构，而非扁平互联。每个遗留应用提取数字代理，支持自然语言交互和自主操作；中央编排器负责任务分解与动态调度，并通过统一对话界面实现跨应用查询和流程编排。主要贡献包括提出“应用即代理”的集成范式和“对话即集成”的交互哲学，并探讨了该方法的通用性，适用于异构系统协调和大规模数据应用场景。",
+  "tags": [
+    "agent",
+    "enterprise-integration",
+    "multi-agent"
+  ],
+  "category": "agent",
+  "status": "review",
+  "collected_at": "2026-08-07T09:05:12Z",
+  "analyzed_at": "2026-08-07T09:06:16Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Fri, 07 Aug 2026 00:00:00 -0400",
+    "source_name": "arXiv cs.AI",
+    "highlights": [],
+    "score": 7,
+    "score_reason": "提出创新的应用集成范式，结合多智能体与分层架构，但缺乏实验验证和性能评估。"
+  }
+}

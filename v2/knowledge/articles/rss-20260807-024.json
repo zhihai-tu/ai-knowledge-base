@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260807-024",
+  "title": "The latest AI news we announced in July 2026",
+  "source_url": "https://blog.google/innovation-and-ai/technology/ai/google-ai-updates-july-2026/",
+  "source_type": "rss",
+  "summary": "本文是谷歌官方博客在2026年7月发布的AI新闻汇总，旨在向用户和开发者介绍本月内谷歌在人工智能领域的重要更新。作为月度回顾，文章可能涵盖Gemini模型系列的迭代、AI搜索与助手功能的增强、企业级AI解决方案的改进，以及开发者工具的更新等。由于是官方发布的总结性内容，文章更偏向于信息索引而非深入技术解析，适合快速了解谷歌AI生态的最新动向。读者可以通过其中的链接跳转到具体的技术文档或产品页面。整体而言，这篇博客体现了谷歌在AI领域的持续投入和布局，但具体内容的价值取决于读者关注的细分方向。对于AI从业者和研究者，它提供了一站式的更新入口；对于普通用户，则有助于了解主流AI产品的新特性。不过，由于缺乏具体细节，该文章本身的信息密度较低，更推荐作为起点进行后续探索。",
+  "tags": [
+    "Google",
+    "AI",
+    "Updates"
+  ],
+  "category": "llm",
+  "status": "review",
+  "collected_at": "2026-08-07T09:05:13Z",
+  "analyzed_at": "2026-08-07T09:06:39Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Tue, 04 Aug 2026 13:00:00 +0000",
+    "source_name": "Google AI Blog",
+    "highlights": [],
+    "score": 6,
+    "score_reason": "官方来源权威，但内容仅为月度汇总，缺乏具体细节，参考价值中等。"
+  }
+}

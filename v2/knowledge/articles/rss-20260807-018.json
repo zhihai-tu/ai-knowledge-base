@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260807-018",
+  "title": "Humans missed 1 in 3 threats approving AI agent commands across 40k game runs",
+  "source_url": "https://scalex.dev/blog/ai-agent-permissions-stats/",
+  "source_type": "rss",
+  "summary": "该文章基于4万次游戏运行实验，研究人类在批准AI代理命令时的安全表现。结果显示，人类用户漏掉了约三分之一的恶意或危险命令，这表明依赖人工审批AI代理操作存在严重安全漏洞。随着AI代理自主执行任务日益普及，权限管理成为关键挑战。文章通过真实数据揭示了人类监督的局限性，并探讨了如何改进代理权限机制，如最小权限原则、自动化威胁检测和更细粒度的审批流程。这项研究对AI代理的安全部署具有重要意义，呼吁在设计代理系统时不能过度信任人类审批作为唯一防线。",
+  "tags": [
+    "AI-safety",
+    "permissions",
+    "agents"
+  ],
+  "category": "agent",
+  "status": "review",
+  "collected_at": "2026-08-07T09:05:12Z",
+  "analyzed_at": "2026-08-07T09:06:08Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Thu, 06 Aug 2026 11:58:07 +0000",
+    "source_name": "Hacker News Best (AI)",
+    "highlights": [],
+    "score": 8,
+    "score_reason": "提供了实证数据揭示AI代理权限审批中的关键安全缺陷，对实际部署有重要警示价值。"
+  }
+}
