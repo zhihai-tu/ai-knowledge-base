@@ -186,24 +186,31 @@ def _fetch_single_rss(client: httpx.Client, url: str, source_name: str,
 
 
 def collect_rss(limit: int) -> list[dict[str, Any]]:
-    """遍历 rss_sources.yaml 中已启用的源采集，累计最多 limit 条。"""
+    """在已启用的 RSS 源间轮流均分采集，总量不超过 limit。"""
     sources = load_rss_sources()
     if not sources:
         logger.warning("无可用 RSS 源，跳过采集")
         return []
 
+    n = len(sources)
+    per_source, extra = divmod(limit, n)
+    if per_source == 0:
+        per_source, extra = 1, 0
+
     items: list[dict[str, Any]] = []
     seq = _next_seq("rss", datetime.now(timezone.utc).strftime("%Y%m%d"))
     with httpx.Client(timeout=30.0, transport=httpx.HTTPTransport(proxy=None)) as client:
-        for source in sources:
-            remaining = limit - len(items)
-            if remaining <= 0:
+        for idx, source in enumerate(sources):
+            if len(items) >= limit:
                 break
+            if per_source == 1 and idx >= limit:
+                break
+            quota = per_source + (1 if idx < extra else 0)
             name = source.get("name", "unknown")
             url = source.get("url", "")
             try:
-                logger.info("采集 RSS 源: %s", name)
-                new_items = _fetch_single_rss(client, url, name, remaining, seq)
+                logger.info("采集 RSS 源: %s（配额 %d）", name, quota)
+                new_items = _fetch_single_rss(client, url, name, quota, seq)
                 items.extend(new_items)
                 seq += len(new_items)
                 logger.info("  %s: 采集 %d 条", name, len(new_items))
