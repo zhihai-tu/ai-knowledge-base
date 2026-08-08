@@ -1,0 +1,50 @@
+{
+  "id": "github-20260808-007",
+  "title": "n8n-io/n8n",
+  "source_url": "https://github.com/n8n-io/n8n",
+  "source_type": "github",
+  "summary": "n8n是一个开源（fair-code）的工作流自动化平台，原生集成AI能力。它允许用户通过可视化界面构建工作流，同时支持自定义代码扩展，满足从简单自动化到复杂AI代理场景的需求。平台提供400多种集成，连接各种应用、数据库和API，并支持自托管或云服务两种部署方式。n8n特别适合构建AI代理工作流，可将LLM调用、工具使用和业务流程编排相结合，是企业级自动化与AI落地的实用工具。",
+  "tags": [
+    "workflow",
+    "automation",
+    "AI"
+  ],
+  "category": "tool",
+  "status": "review",
+  "collected_at": "2026-08-08T08:49:25Z",
+  "analyzed_at": "2026-08-08T08:50:05Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "stars": 199775,
+    "language": "TypeScript",
+    "author": "n8n-io",
+    "topics": [
+      "ai",
+      "apis",
+      "automation",
+      "cli",
+      "data-flow",
+      "development",
+      "integration-framework",
+      "integrations",
+      "ipaas",
+      "low-code",
+      "low-code-platform",
+      "mcp",
+      "mcp-client",
+      "mcp-server",
+      "n8n",
+      "no-code",
+      "self-hosted",
+      "typescript",
+      "workflow",
+      "workflow-automation"
+    ],
+    "score": 8,
+    "score_reason": "功能全面且AI原生支持，生态丰富，但在专业AI编排深度上略逊于专用agent框架。"
+  }
+}

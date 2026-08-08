@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260808-007",
+  "title": "The latest AI news we announced in July 2026",
+  "source_url": "https://blog.google/innovation-and-ai/technology/ai/google-ai-updates-july-2026/",
+  "source_type": "rss",
+  "summary": "Google在2026年7月发布了一系列AI更新，涵盖多个产品和技术方向。虽然原始内容仅提供了标题和一张示意图，但可以推断该月度总结涉及大语言模型、智能体、推理效率、训练方法以及AI工具等多个层面。此类更新通常包括模型性能提升、新功能上线、开发者工具改进以及企业级解决方案的增强。Google持续推动AI技术的实用化和生态扩展，强调在搜索、云计算、助手等场景中的整合应用。该汇总面向开发者、企业和普通用户，旨在展示最新进展并引导后续采用。由于缺乏具体细节，无法深入评估各项更新的技术突破或影响，但整体体现了Google在AI领域的活跃度和战略投入。",
+  "tags": [
+    "Google",
+    "AI",
+    "updates"
+  ],
+  "category": "llm",
+  "status": "review",
+  "collected_at": "2026-08-08T08:49:26Z",
+  "analyzed_at": "2026-08-08T08:50:46Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Tue, 04 Aug 2026 13:00:00 +0000",
+    "source_name": "Google AI Blog",
+    "highlights": [],
+    "score": 5,
+    "score_reason": "内容为月度AI新闻汇总，但信息量有限，缺乏具体技术细节，中等重要度。"
+  }
+}

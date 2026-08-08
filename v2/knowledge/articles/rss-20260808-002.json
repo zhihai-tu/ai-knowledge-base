@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260808-002",
+  "title": "Oracle bans AI-generated code from OpenJDK",
+  "source_url": "https://app.dealroom.co/news/feed/oracle-bans-ai-generated-code-from-openjdk-despite-ellison-s-claim-oracle-isn-t-writing-its-own-code",
+  "source_type": "rss",
+  "summary": "Oracle 宣布禁止将 AI 生成的代码提交至 OpenJDK 项目，尽管其创始人 Larry Ellison 曾表示 Oracle 自身并不编写代码。这一政策引发了对 AI 辅助编码在开源社区中地位的广泛讨论。支持者认为，AI 生成代码可能带来版权和许可证风险，严格审查是必要的；反对者则指出，这可能会阻碍创新，并批评 Oracle 在 AI 使用上的双重标准。该事件凸显了大型科技公司在拥抱 AI 工具的同时，如何平衡代码质量、法律合规与社区信任的挑战。OpenJDK 作为 Java 的核心实现，其政策可能影响其他开源项目的 AI 代码接纳标准。",
+  "tags": [
+    "OpenJDK",
+    "AI-code",
+    "policy"
+  ],
+  "category": "tool",
+  "status": "review",
+  "collected_at": "2026-08-08T08:49:25Z",
+  "analyzed_at": "2026-08-08T08:50:26Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Fri, 07 Aug 2026 17:36:30 +0000",
+    "source_name": "Hacker News Best (AI)",
+    "highlights": [],
+    "score": 7,
+    "score_reason": "反映了AI代码生成在开源治理中的关键争议，但非技术突破性新闻。"
+  }
+}

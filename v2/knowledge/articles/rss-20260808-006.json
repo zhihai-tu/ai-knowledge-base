@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260808-006",
+  "title": "TutorMoments: Do AI tutors know when to help and when to hold back?",
+  "source_url": "https://huggingface.co/blog/allenai/tutormoments",
+  "source_type": "rss",
+  "summary": "TutorMoments 是 AllenAI 发布的一个关于 AI 辅导系统决策时机的研究项目。文章探讨了 AI 辅导模型能否像人类导师一样，判断何时应该提供帮助、何时应保持沉默以促进学生独立思考。通过引入高质量的人类辅导行为数据，TutorMoments 训练和评估大语言模型在真实教学场景中的干预能力。研究发现，现有模型在判断干预时机上仍有明显不足，往往过度帮助或在不恰当的时候打断学生。该数据集和评估基准为构建更智能、更具教育敏感性的 AI 导师提供了重要资源，同时也对 AI 在交互式学习任务中的对齐与推理能力提出了新挑战。",
+  "tags": [
+    "tutoring",
+    "llm",
+    "education"
+  ],
+  "category": "llm",
+  "status": "review",
+  "collected_at": "2026-08-08T08:49:26Z",
+  "analyzed_at": "2026-08-08T08:50:42Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Fri, 07 Aug 2026 17:53:32 GMT",
+    "source_name": "Hugging Face Blog",
+    "highlights": [],
+    "score": 8,
+    "score_reason": "针对AI辅导决策时机提出新数据集和评测，兼具应用价值与研究挑战，但属垂直领域，影响力有限。"
+  }
+}

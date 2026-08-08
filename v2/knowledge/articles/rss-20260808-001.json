@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260808-001",
+  "title": "Managing AI Coding Costs at Scale",
+  "source_url": "https://www.databricks.com/blog/managing-ai-coding-costs-scale",
+  "source_type": "rss",
+  "summary": "本文由Databricks发布，探讨在规模化场景下管理AI辅助编程成本的问题。随着AI编码工具在企业中的广泛采用，计算成本、token消耗和工具链集成费用成为关键挑战。文章可能提出了一套成本治理框架，包括用量监控、预算分配、模型路由策略、缓存机制以及针对不同开发任务的性价比优化方案。通过结合Databricks的数据基础设施，企业可以更精细地追踪每次代码生成请求的资源消耗，从而在保持开发者生产力的同时控制支出。文中还可能讨论了从单一高价模型向混合模型架构迁移的实践，以及如何通过离线批处理与实时推理的分离降低成本。整体上，文章聚焦于工程化地解决AI Coding规模化落地时的财务与资源效率问题。",
+  "tags": [
+    "AI Coding",
+    "Cost Management",
+    "Scalability"
+  ],
+  "category": "tool",
+  "status": "review",
+  "collected_at": "2026-08-08T08:49:25Z",
+  "analyzed_at": "2026-08-08T08:50:21Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Fri, 07 Aug 2026 18:25:17 +0000",
+    "source_name": "Hacker News Best (AI)",
+    "highlights": [],
+    "score": 7,
+    "score_reason": "内容针对AI落地中的高成本痛点，提供工程化视角，但具体细节需进一步核实，故评分中等偏上。"
+  }
+}

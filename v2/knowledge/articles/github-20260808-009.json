@@ -1,0 +1,29 @@
+{
+  "id": "github-20260808-009",
+  "title": "anomalyco/opencode",
+  "source_url": "https://github.com/anomalyco/opencode",
+  "source_type": "github",
+  "summary": "opencode 是一个开源的智能编码代理项目，旨在为开发者提供类似 Claude Code 的终端内 AI 辅助编程体验，但强调完全本地化、可定制和开源透明。它支持多模型接入（包括 Anthropic、OpenAI、本地模型等），具备文件编辑、命令执行、代码搜索、上下文管理等功能，并能与 Git 工作流深度集成。项目采用 Rust 编写，性能高效，提供交互式 TUI 界面和 CLI 两种使用方式。其设计理念是让开发者拥有对 AI 编码助手行为的完全控制权，支持自定义工具、提示词和模型配置，适合需要隐私保护或希望深度定制 AI 工作流的团队和个人。作为开源项目，它允许社区贡献和审计，降低了信任成本，同时保持了接近商业产品的完成度。该工具正在快速迭代，代表了 AI 辅助编程工具向开源、可自托管方向发展的趋势。",
+  "tags": [
+    "coding-agent",
+    "open-source",
+    "CLI"
+  ],
+  "category": "agent",
+  "status": "review",
+  "collected_at": "2026-08-08T08:49:25Z",
+  "analyzed_at": "2026-08-08T08:50:14Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "stars": 194898,
+    "language": "TypeScript",
+    "author": "anomalyco",
+    "topics": [],
+    "score": 8,
+    "score_reason": "开源编码代理，功能完整且社区活跃，但生态成熟度仍不及商业竞品。"
+  }
+}

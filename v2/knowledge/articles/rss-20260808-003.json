@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260808-003",
+  "title": "The Nixpkgs core team has disbanded",
+  "source_url": "https://discourse.nixos.org/t/the-nixpkgs-core-team-has-disbanded/79413",
+  "source_type": "rss",
+  "summary": "Nixpkgs核心团队宣布解散，这是Nix生态系统中一个重大的治理变动。该事件源于社区内部对治理结构、决策流程和方向分歧的长期争议，最终导致核心团队集体辞职。此举可能影响NixOS及其包管理器的后续开发节奏和社区协作模式。虽然这不是直接的人工智能技术进展，但Nixpkgs作为开发工具链的重要组成部分，其治理动荡可能间接影响依赖Nix的AI项目部署和复现性工作。社区目前正在讨论如何重建治理结构，以确保项目可持续性。",
+  "tags": [
+    "nixpkgs",
+    "governance",
+    "open-source"
+  ],
+  "category": "tool",
+  "status": "review",
+  "collected_at": "2026-08-08T08:49:25Z",
+  "analyzed_at": "2026-08-08T08:50:30Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Fri, 07 Aug 2026 21:33:45 -0500",
+    "source_name": "Lobsters AI/ML",
+    "highlights": [],
+    "score": 3,
+    "score_reason": "与AI核心技术无关，但作为开发工具链治理事件对AI工程实践有间接影响。"
+  }
+}

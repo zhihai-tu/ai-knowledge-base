@@ -1,0 +1,27 @@
+{
+  "id": "rss-20260808-005",
+  "title": "Responding to the next frontier of critical cyber capabilities",
+  "source_url": "https://openai.com/index/responding-next-frontier-critical-cyber-capabilities",
+  "source_type": "rss",
+  "summary": "OpenAI发布了关于其下一代AI系统Astra的初步网络安全评估，并阐述了为应对关键网络能力前沿所采取的安全保障措施。该内容聚焦于AI在网络安全领域的潜在风险与防护策略，强调在提升AI能力的同时，加强安全控制以防止滥用。OpenAI正在主动评估Astra在渗透测试、漏洞发现等场景中的表现，并据此强化安全框架，以平衡创新与安全。",
+  "tags": [
+    "cybersecurity",
+    "AI-safety"
+  ],
+  "category": "tool",
+  "status": "review",
+  "collected_at": "2026-08-08T08:49:26Z",
+  "analyzed_at": "2026-08-08T08:50:38Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Fri, 07 Aug 2026 15:20:00 GMT",
+    "source_name": "OpenAI Blog",
+    "highlights": [],
+    "score": 8,
+    "score_reason": "针对前沿AI系统的网络安全评估与安全控制举措，具有重要战略意义，但内容偏概述，细节有限。"
+  }
+}
