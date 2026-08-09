@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260809-008",
+  "title": "An Amazon data center could have the worst polluting power plant in the country",
+  "source_url": "https://www.theverge.com/ai-artificial-intelligence/977124/amazon-data-center-worst-polluting-power-plant",
+  "source_type": "rss",
+  "summary": "亚马逊为支撑其位于西得克萨斯的新数据中心，投资建设一座大型天然气发电厂，该电厂可能成为美国最大的单一温室气体排放源之一。据报道，这座位于佩科斯县的燃气电厂初期不接入州电网，其35台天然气涡轮机将主要向数据中心输送7.65吉瓦电力。数据中心追踪机构Cleanview指出该项目获得得克萨斯州许可。此举凸显AI算力扩张带来的巨大能源需求和环境代价，引发对AI基础设施可持续性的担忧。",
+  "tags": [
+    "data-center",
+    "carbon-emissions",
+    "energy"
+  ],
+  "category": "training",
+  "status": "review",
+  "collected_at": "2026-08-09T08:50:39Z",
+  "analyzed_at": "2026-08-09T08:52:21Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "2026-08-08T13:53:34-04:00",
+    "source_name": "The Verge (AI)",
+    "highlights": [],
+    "score": 6,
+    "score_reason": "报道聚焦AI数据中心的能源与碳排问题，重要但非技术核心，与训练基础设施间接相关。"
+  }
+}

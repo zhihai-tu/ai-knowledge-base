@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260809-003",
+  "title": "some software talks i like",
+  "source_url": "https://char.lt/blog/2026/08/talks-i-like/",
+  "source_type": "rss",
+  "summary": "该博客文章由作者整理并分享了一系列个人喜欢的软件相关演讲视频，内容大多以视频链接形式呈现，并非传统文章。作者在博客中列举了这些演讲，可能涵盖软件工程实践、系统架构、编程语言设计、开发工具等多个方面。文章还附有lobste.rs上的讨论链接，供读者参与评论。整体是一个精选资源列表，适合对软件技术和行业洞见感兴趣的开发者参考。由于具体演讲主题未知，从描述看更偏向于对软件行业有广泛兴趣的分享，而非聚焦于某个特定技术领域。",
+  "tags": [
+    "talks",
+    "software",
+    "videos"
+  ],
+  "category": "tool",
+  "status": "review",
+  "collected_at": "2026-08-09T08:50:38Z",
+  "analyzed_at": "2026-08-09T08:51:56Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Sat, 08 Aug 2026 08:48:36 -0500",
+    "source_name": "Lobsters AI/ML",
+    "highlights": [],
+    "score": 5,
+    "score_reason": "内容为个人收藏的软件演讲链接，缺乏AI技术深度，但作为技术资源有一定参考价值。"
+  }
+}
