@@ -1,0 +1,4 @@
+/bin/sh: python: command not found
+usage: pipeline.py [-h] [--sources SOURCES] [--limit LIMIT] [--dry-run]
+                   [--verbose]
+pipeline.py: error: unrecognized arguments: --step 1 --step 2

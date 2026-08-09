@@ -27,7 +27,9 @@ from typing import Any
 import httpx
 import yaml
 
-from model_client import create_provider, chat_with_retry, load_dotenv, LLMProvider
+from model_client import (
+    create_provider, chat_with_retry, load_dotenv, LLMProvider, tracker,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -41,7 +43,7 @@ RSS_SOURCES_YAML = PROJECT_ROOT / "pipeline" / "rss_sources.yaml"
 
 VALID_SOURCES = {"github", "rss"}
 DEFAULT_SOURCES = ["github", "rss"]
-DEFAULT_LIMIT = 20
+DEFAULT_LIMIT = 10
 VALID_STATUSES = {"draft", "review", "published", "archived"}
 VALID_CATEGORIES = {"llm", "agent", "rag", "inference", "training", "tool"}
 
@@ -438,6 +440,8 @@ def main(argv: list[str] | None = None) -> None:
 
     logger.info("流水线完成: 采集 %d 条，分析 %d 条，整理 %d 条，保存 %d 条",
                 len(collected), len(analyzed), len(organized), saved)
+
+    tracker.report()
 
 
 if __name__ == "__main__":

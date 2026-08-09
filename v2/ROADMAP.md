@@ -10,6 +10,7 @@ V1：采集-分析流水线可用，MCP 本地检索服务已完成（已知问�
 
 - [x] GitHub Trending + RSS 采集 → LLM 分析 → 结构化 JSON 存储的四步流水线（`pipeline/pipeline.py`）
 - [x] LLM 统一接入层（`pipeline/model_client.py`，httpx 直连 OpenAI 兼容接口）
+- [x] CostTracker 成本追踪（`model_client.py`，按提供商 RMB 价格表估算 token 成本，`chat()` 成功后自动记录，Pipeline 结束输出 `tracker.report()`；已验证 deepseek 真实调用成本 0.0020 元 / 2 次）
 - [x] 内容质量评分 hook（`hooks/check_quality.py`）+ JSON 校验 hook（`hooks/validate_json.py`）
 - [x] Agent / skill 定义（`.opencode/agents/`、`.opencode/skills/`）
 - [x] AGENTS.md 项目记忆

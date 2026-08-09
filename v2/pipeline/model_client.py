@@ -68,6 +68,14 @@ MODEL_PRICES_USD = {
     "gpt-4o": (2.50, 10.00),
 }
 
+# 国产模型价格表（RMB / 1M tokens），按提供商计，取值 (输入价, 输出价)。
+# 供 CostTracker 估算成本，使用前请核对各厂商最新价目。
+PROVIDER_PRICES_CNY = {
+    "deepseek": (1.0, 2.0),
+    "qwen": (4.0, 12.0),
+    "openai": (150.0, 600.0),  # gpt-4o-mini
+}
+
 
 @dataclass
 class Usage:
@@ -82,6 +90,96 @@ class Usage:
     prompt_tokens: int = 0
     completion_tokens: int = 0
     total_tokens: int = 0
+
+
+class CostTracker:
+    """追踪 LLM 调用的 token 消耗与估算成本（RMB）。
+
+    每次 API 调用成功后由 :meth:`OpenAICompatibleProvider.chat` 自动记录，
+    Pipeline 结束时可通过 :meth:`report` 输出成本报告。
+
+    Attributes:
+        _records: 各提供商累计的 token 用量，key 为提供商名称
+            （deepseek / qwen / openai）。
+        _calls: 各提供商的调用次数。
+    """
+
+    def __init__(self) -> None:
+        self._records: dict[str, Usage] = {}
+        self._calls: dict[str, int] = {}
+
+    def record(self, usage: Usage, provider: str) -> None:
+        """记录一次 API 调用的 token 用量。
+
+        Args:
+            usage: 本次调用的 token 用量统计。
+            provider: 提供商名称（deepseek / qwen / openai）。
+        """
+        record = self._records.setdefault(
+            provider, Usage(prompt_tokens=0, completion_tokens=0, total_tokens=0)
+        )
+        record.prompt_tokens += usage.prompt_tokens
+        record.completion_tokens += usage.completion_tokens
+        record.total_tokens += usage.total_tokens
+        self._calls[provider] = self._calls.get(provider, 0) + 1
+
+    def estimated_cost(self, provider: str) -> float:
+        """估算某提供商累计调用的成本。
+
+        按 :data:`PROVIDER_PRICES_CNY` 的价格（RMB / 1M tokens）计算，
+        未记录过调用的提供商返回 0。
+
+        Args:
+            provider: 提供商名称。
+
+        Returns:
+            估算成本（元）。
+
+        Raises:
+            ValueError: 提供商不在价格表中。
+        """
+        price = PROVIDER_PRICES_CNY.get(provider)
+        if price is None:
+            raise ValueError(
+                f"提供商 '{provider}' 不在成本价格表中，"
+                f"可选: {', '.join(PROVIDER_PRICES_CNY)}"
+            )
+        record = self._records.get(provider)
+        if record is None:
+            return 0.0
+        input_price, output_price = price
+        return (
+            record.prompt_tokens / 1_000_000 * input_price
+            + record.completion_tokens / 1_000_000 * output_price
+        )
+
+    def report(self, provider: Optional[str] = None) -> None:
+        """打印成本报告。
+
+        Args:
+            provider: 仅报告该提供商；缺省报告所有记录过的提供商。
+        """
+        logger.info("===== LLM 成本报告 =====")
+        providers = [provider] if provider else sorted(self._records)
+        if not providers:
+            logger.info("（无任何已记录的调用）")
+            return
+        for name in providers:
+            record = self._records.get(name)
+            if record is None:
+                continue
+            logger.info(
+                "[%s] 调用 %d 次: 输入 %d tokens, 输出 %d tokens, 估算成本 %.4f 元",
+                name,
+                self._calls.get(name, 0),
+                record.prompt_tokens,
+                record.completion_tokens,
+                self.estimated_cost(name),
+            )
+        logger.info("========================")
+
+
+tracker = CostTracker()
 
 
 @dataclass
@@ -148,7 +246,27 @@ class OpenAICompatibleProvider(LLMProvider):
     """基于 OpenAI 兼容 /chat/completions 接口的实现。
 
     适用于 DeepSeek、Qwen（百炼）、OpenAI 等提供兼容接口的服务。
+    每次调用成功后自动将 token 用量记录到全局 :data:`tracker`。
     """
+
+    def __init__(
+        self,
+        api_key: str,
+        base_url: str,
+        model: str,
+        provider_name: Optional[str] = None,
+    ) -> None:
+        """初始化提供商实例。
+
+        Args:
+            api_key: 提供商 API Key。
+            base_url: OpenAI 兼容接口的基础地址。
+            model: 使用的模型名称。
+            provider_name: 提供商名称（deepseek / qwen / openai），
+                用于成本追踪；为 None 时不记录。
+        """
+        super().__init__(api_key, base_url, model)
+        self.provider_name = provider_name
 
     def chat(
         self,
@@ -183,6 +301,8 @@ class OpenAICompatibleProvider(LLMProvider):
             completion_tokens=usage_data.get("completion_tokens", 0),
             total_tokens=usage_data.get("total_tokens", 0),
         )
+        if self.provider_name:
+            tracker.record(usage, self.provider_name)
         logger.info(
             "LLM 调用完成: model=%s, prompt=%d, completion=%d, finish=%s",
             self.model,
@@ -263,6 +383,7 @@ def create_provider(
         api_key=api_key,
         base_url=base_url or config["base_url"],
         model=model or config["model"],
+        provider_name=provider_name,
     )
 
 
