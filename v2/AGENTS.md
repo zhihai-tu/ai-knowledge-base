@@ -8,8 +8,8 @@
 
 - 统一由 `pipeline/model_client.py` 提供 LLM 调用（httpx 直连 OpenAI 兼容接口，不依赖 openai SDK）。
 - 配置存于项目根目录 `.env`（模板见 `.env.example`），受 `.gitignore` 保护，禁止提交真实 Key。
-- 优先级：进程环境变量 > `.env`。变量：`LLM_PROVIDER`（deepseek/qwen/openai，默认 deepseek）、`DEEPSEEK_API_KEY`、`DASHSCOPE_API_KEY`、`OPENAI_API_KEY`、`LOG_LEVEL`（DEBUG/INFO/WARNING/ERROR，默认 INFO）。
-- 新增模型价格需同步登记到 `MODEL_PRICES_USD`（USD / 1M tokens）；按提供商的成本估算表为 `PROVIDER_PRICES_CNY`（RMB / 1M tokens，deepseek/qwen/openai）。
+- 优先级：进程环境变量 > `.env`。变量：`LLM_PROVIDER`（deepseek/qwen/openai，默认 deepseek）、`DEEPSEEK_API_KEY`、`DASHSCOPE_API_KEY`、`OPENAI_API_KEY`、`LOG_LEVEL`（DEBUG/INFO/WARNING/ERROR，默认 INFO）。qwen 提供商额外支持 `QWEN_BASE_URL`（百炼专属网关 OpenAI 兼容地址，覆盖默认公共版）与 `QWEN_MODEL`（模型名覆盖）。流水线支持 `--provider` 参数指定提供商（`pipeline.py` 传入 `create_provider(name=...)`）。
+- 新增模型价格只登记到 `MODEL_PRICES_USD`（USD / 1M tokens）；成本统一按模型单价计算 USD，不做汇率换算（`CostTracker` 以 (provider, model) 键记录并输出 USD 报告）。
 
 本项目是一个自动化 AI 知识库助手，负责从 GitHub Trending 和 Hacker News 等渠道实时采集 AI/LLM/Agent 领域的技术动态，通过 AI 分析后结构化存储为 JSON 格式，并支持向 Telegram、飞书等多渠道分发。
 

@@ -64,16 +64,9 @@ MODEL_PRICES_USD = {
     "deepseek-v4-flash": (0.14, 0.28),
     "deepseek-v4-pro": (0.435, 0.87),
     "qwen-plus": (0.40, 1.20),
+    "qwen3.7-plus": (0.28, 1.11),
     "gpt-4o-mini": (0.15, 0.60),
     "gpt-4o": (2.50, 10.00),
-}
-
-# 国产模型价格表（RMB / 1M tokens），按提供商计，取值 (输入价, 输出价)。
-# 供 CostTracker 估算成本，使用前请核对各厂商最新价目。
-PROVIDER_PRICES_CNY = {
-    "deepseek": (1.0, 2.0),
-    "qwen": (4.0, 12.0),
-    "openai": (150.0, 600.0),  # gpt-4o-mini
 }
 
 
@@ -93,61 +86,53 @@ class Usage:
 
 
 class CostTracker:
-    """追踪 LLM 调用的 token 消耗与估算成本（RMB）。
+    """追踪 LLM 调用的 token 消耗与估算成本。
 
     每次 API 调用成功后由 :meth:`OpenAICompatibleProvider.chat` 自动记录，
     Pipeline 结束时可通过 :meth:`report` 输出成本报告。
 
+    成本统一按模型单价（:data:`MODEL_PRICES_USD`）计算，以 USD 展示。
+
     Attributes:
-        _records: 各提供商累计的 token 用量，key 为提供商名称
-            （deepseek / qwen / openai）。
-        _calls: 各提供商的调用次数。
+        _records: 各 (提供商, 模型) 组合累计的 token 用量。
+        _calls: 各 (提供商, 模型) 组合的调用次数。
     """
 
     def __init__(self) -> None:
-        self._records: dict[str, Usage] = {}
-        self._calls: dict[str, int] = {}
+        self._records: dict[tuple[str, str], Usage] = {}
+        self._calls: dict[tuple[str, str], int] = {}
 
-    def record(self, usage: Usage, provider: str) -> None:
+    def record(self, usage: Usage, provider: str, model: str) -> None:
         """记录一次 API 调用的 token 用量。
 
         Args:
             usage: 本次调用的 token 用量统计。
             provider: 提供商名称（deepseek / qwen / openai）。
+            model: 实际使用的模型名。
         """
+        key = (provider, model)
         record = self._records.setdefault(
-            provider, Usage(prompt_tokens=0, completion_tokens=0, total_tokens=0)
+            key, Usage(prompt_tokens=0, completion_tokens=0, total_tokens=0)
         )
         record.prompt_tokens += usage.prompt_tokens
         record.completion_tokens += usage.completion_tokens
         record.total_tokens += usage.total_tokens
-        self._calls[provider] = self._calls.get(provider, 0) + 1
+        self._calls[key] = self._calls.get(key, 0) + 1
 
-    def estimated_cost(self, provider: str) -> float:
-        """估算某提供商累计调用的成本。
-
-        按 :data:`PROVIDER_PRICES_CNY` 的价格（RMB / 1M tokens）计算，
-        未记录过调用的提供商返回 0。
+    def cost_usd(self, provider: str, model: str) -> float:
+        """估算某个 (提供商, 模型) 组合的累计成本（USD）。
 
         Args:
             provider: 提供商名称。
+            model: 模型名，须在 :data:`MODEL_PRICES_USD` 中登记。
 
         Returns:
-            估算成本（元）。
-
-        Raises:
-            ValueError: 提供商不在价格表中。
+            估算成本（美元）；该组合无调用记录时返回 0。
         """
-        price = PROVIDER_PRICES_CNY.get(provider)
-        if price is None:
-            raise ValueError(
-                f"提供商 '{provider}' 不在成本价格表中，"
-                f"可选: {', '.join(PROVIDER_PRICES_CNY)}"
-            )
-        record = self._records.get(provider)
+        record = self._records.get((provider, model))
         if record is None:
             return 0.0
-        input_price, output_price = price
+        input_price, output_price = MODEL_PRICES_USD.get(model, (0.0, 0.0))
         return (
             record.prompt_tokens / 1_000_000 * input_price
             + record.completion_tokens / 1_000_000 * output_price
@@ -156,26 +141,39 @@ class CostTracker:
     def report(self, provider: Optional[str] = None) -> None:
         """打印成本报告。
 
+        按模型分行、按提供商汇总，成本以 USD 展示。
+
         Args:
             provider: 仅报告该提供商；缺省报告所有记录过的提供商。
         """
         logger.info("===== LLM 成本报告 =====")
-        providers = [provider] if provider else sorted(self._records)
-        if not providers:
+        keys = [k for k in self._records if provider is None or k[0] == provider]
+        if not keys:
             logger.info("（无任何已记录的调用）")
+            logger.info("========================")
             return
-        for name in providers:
-            record = self._records.get(name)
-            if record is None:
-                continue
-            logger.info(
-                "[%s] 调用 %d 次: 输入 %d tokens, 输出 %d tokens, 估算成本 %.4f 元",
-                name,
-                self._calls.get(name, 0),
-                record.prompt_tokens,
-                record.completion_tokens,
-                self.estimated_cost(name),
+        by_provider: dict[str, dict[str, tuple]] = {}
+        for prov, model in sorted(keys):
+            by_provider.setdefault(prov, {})[model] = (
+                self._records[(prov, model)],
+                self._calls[(prov, model)],
             )
+        grand_usd = 0.0
+        for prov, models in sorted(by_provider.items()):
+            provider_usd = 0.0
+            for model, (record, calls) in sorted(models.items()):
+                usd = self.cost_usd(prov, model)
+                provider_usd += usd
+                grand_usd += usd
+                logger.info(
+                    "[%s/%s] 调用 %d 次: 输入 %d tokens, 输出 %d tokens, 估算成本 %.6f USD",
+                    prov, model, calls,
+                    record.prompt_tokens, record.completion_tokens,
+                    usd,
+                )
+            logger.info("  %s 提供商合计: %.6f USD",
+                        prov, provider_usd)
+        logger.info("全部合计: %.6f USD", grand_usd)
         logger.info("========================")
 
 
@@ -302,7 +300,7 @@ class OpenAICompatibleProvider(LLMProvider):
             total_tokens=usage_data.get("total_tokens", 0),
         )
         if self.provider_name:
-            tracker.record(usage, self.provider_name)
+            tracker.record(usage, self.provider_name, self.model)
         logger.info(
             "LLM 调用完成: model=%s, prompt=%d, completion=%d, finish=%s",
             self.model,
@@ -379,6 +377,12 @@ def create_provider(
             f"无法创建 {provider_name} 提供商"
         )
 
+    # qwen 支持通过环境变量 QWEN_BASE_URL / QWEN_MODEL 覆盖默认值
+    # （用于百炼专属网关等自定义 OpenAI 兼容地址），不影响其他提供商。
+    if provider_name == "qwen":
+        base_url = base_url or os.getenv("QWEN_BASE_URL") or config["base_url"]
+        model = model or os.getenv("QWEN_MODEL") or config["model"]
+
     return OpenAICompatibleProvider(
         api_key=api_key,
         base_url=base_url or config["base_url"],
@@ -415,16 +419,19 @@ def chat_with_retry(
         httpx.RequestError: 重试次数已用尽仍网络失败。
     """
     attempt = 0
+    last_error = ""
     while True:
         try:
             return provider.chat(messages, temperature=temperature, max_tokens=max_tokens)
         except httpx.HTTPStatusError as exc:
+            last_error = f"HTTP {exc.response.status_code}: {exc}"
             retryable = exc.response.status_code in RETRYABLE_STATUS_CODES
             last_attempt = attempt >= max_retries - 1
             if not retryable or last_attempt:
                 raise
             delay = BASE_RETRY_DELAY * (2**attempt)
         except httpx.RequestError as exc:
+            last_error = str(exc)
             if attempt >= max_retries - 1:
                 raise
             delay = BASE_RETRY_DELAY * (2**attempt)
@@ -432,7 +439,7 @@ def chat_with_retry(
         attempt += 1
         logger.warning(
             "LLM 调用失败（第 %d 次），%.1fs 后重试: %s",
-            attempt, delay, exc,
+            attempt, delay, last_error,
         )
         time.sleep(delay)
 

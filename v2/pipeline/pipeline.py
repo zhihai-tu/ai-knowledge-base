@@ -283,14 +283,34 @@ def analyze_item(provider: LLMProvider, item: dict[str, Any]) -> dict[str, Any]:
 
 # ── Step 3: 整理 ──────────────────────────────────────────────────
 
-def organize(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    """去重 + 格式标准化。"""
-    seen: set[str] = set()
+def _existing_urls() -> set[str]:
+    """加载 knowledge/articles/ 下已入库文章的 source_url 集合，用于跨运行去重。"""
+    urls: set[str] = set()
+    if not ARTICLES_DIR.exists():
+        return urls
+    for f in ARTICLES_DIR.iterdir():
+        if not f.is_file() or not f.name.endswith(".json"):
+            continue
+        try:
+            item = json.loads(f.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError):
+            continue
+        url = item.get("source_url")
+        if isinstance(url, str) and url:
+            urls.add(url)
+    return urls
+
+
+def organize(items: list[dict[str, Any]], existing: set[str] | None = None) -> list[dict[str, Any]]:
+    """去重 + 格式标准化（existing 为已入库文章的 source_url，用于跨运行去重）。"""
+    seen: set[str] = set(existing or ())
+    dropped = 0
     result: list[dict[str, Any]] = []
     for item in items:
         url = item.get("source_url", "")
         if url in seen:
             logger.debug("去重丢弃: %s", url)
+            dropped += 1
             continue
         seen.add(url)
         result.append(_normalize(item))
@@ -378,6 +398,8 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
                         help=f"每个采集源最多采集条数（默认: {DEFAULT_LIMIT}）")
     parser.add_argument("--dry-run", action="store_true",
                         help="干跑模式：执行流水线但不写入任何文件")
+    parser.add_argument("--provider", type=str,
+                        help="指定 LLM 提供商")
     parser.add_argument("--verbose", action="store_true", help="输出详细日志")
     return parser.parse_args(argv)
 
@@ -426,14 +448,14 @@ def main(argv: list[str] | None = None) -> None:
 
     # Step 2: 分析
     try:
-        provider = create_provider()
+        provider = create_provider(name=args.provider)
         analyzed = [analyze_item(provider, item) for item in collected]
     except RuntimeError as exc:
         logger.warning("未配置 API Key，跳过分析步骤: %s", exc)
         analyzed = collected
 
     # Step 3: 整理
-    organized = organize(analyzed)
+    organized = organize(analyzed, _existing_urls())
 
     # Step 4: 保存
     saved = save_articles(organized, args.dry_run)

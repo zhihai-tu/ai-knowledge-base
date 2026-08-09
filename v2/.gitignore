@@ -1,1 +1,4 @@
 .env
+
+# 中间产物：raw 为采集快照，可重建，不入库
+knowledge/raw/
