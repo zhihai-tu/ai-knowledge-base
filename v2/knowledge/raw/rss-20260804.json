@@ -1,0 +1,242 @@
+[
+  {
+    "id": "rss-20260804-011",
+    "title": "GPU Management: Why Idle GPUs Are the New Grounded Aircraft",
+    "source_url": "https://huggingface.co/blog/Dharma-AI/gpu-management",
+    "source_type": "rss",
+    "summary": "",
+    "tags": [],
+    "category": null,
+    "status": "draft",
+    "collected_at": "2026-08-04T12:19:21Z",
+    "analyzed_at": null,
+    "published_at": null,
+    "distribution": {
+      "telegram": false,
+      "feishu": false
+    },
+    "metadata": {
+      "published": "Thu, 30 Jul 2026 15:09:09 GMT",
+      "source_name": "Hugging Face Blog",
+      "highlights": [],
+      "score": null,
+      "score_reason": null
+    }
+  },
+  {
+    "id": "rss-20260804-012",
+    "title": "The OlmoEarth Platform: Geospatial inference at planetary scale",
+    "source_url": "https://huggingface.co/blog/allenai/olmoearth-infrastructure",
+    "source_type": "rss",
+    "summary": "",
+    "tags": [],
+    "category": null,
+    "status": "draft",
+    "collected_at": "2026-08-04T12:19:21Z",
+    "analyzed_at": null,
+    "published_at": null,
+    "distribution": {
+      "telegram": false,
+      "feishu": false
+    },
+    "metadata": {
+      "published": "Tue, 28 Jul 2026 16:27:42 GMT",
+      "source_name": "Hugging Face Blog",
+      "highlights": [],
+      "score": null,
+      "score_reason": null
+    }
+  },
+  {
+    "id": "rss-20260804-013",
+    "title": "LFM2.5-Encoders for Fast Long-Context Inference on CPU",
+    "source_url": "https://huggingface.co/blog/LiquidAI/lfm2-5-encoders",
+    "source_type": "rss",
+    "summary": "",
+    "tags": [],
+    "category": null,
+    "status": "draft",
+    "collected_at": "2026-08-04T12:19:21Z",
+    "analyzed_at": null,
+    "published_at": null,
+    "distribution": {
+      "telegram": false,
+      "feishu": false
+    },
+    "metadata": {
+      "published": "Tue, 28 Jul 2026 15:01:45 GMT",
+      "source_name": "Hugging Face Blog",
+      "highlights": [],
+      "score": null,
+      "score_reason": null
+    }
+  },
+  {
+    "id": "rss-20260804-014",
+    "title": "NVIDIA Cosmos-H-Dreams: Bringing Real-Time Generative Simulation to Surgical Robotics",
+    "source_url": "https://huggingface.co/blog/nvidia/cosmos-h-dreams",
+    "source_type": "rss",
+    "summary": "",
+    "tags": [],
+    "category": null,
+    "status": "draft",
+    "collected_at": "2026-08-04T12:19:21Z",
+    "analyzed_at": null,
+    "published_at": null,
+    "distribution": {
+      "telegram": false,
+      "feishu": false
+    },
+    "metadata": {
+      "published": "Mon, 27 Jul 2026 09:32:20 GMT",
+      "source_name": "Hugging Face Blog",
+      "highlights": [],
+      "score": null,
+      "score_reason": null
+    }
+  },
+  {
+    "id": "rss-20260804-015",
+    "title": "Anatomy of a Frontier Lab Agent Intrusion: A Technical Timeline of the July 2026 Incident",
+    "source_url": "https://huggingface.co/blog/agent-intrusion-technical-timeline",
+    "source_type": "rss",
+    "summary": "",
+    "tags": [],
+    "category": null,
+    "status": "draft",
+    "collected_at": "2026-08-04T12:19:21Z",
+    "analyzed_at": null,
+    "published_at": null,
+    "distribution": {
+      "telegram": false,
+      "feishu": false
+    },
+    "metadata": {
+      "published": "Mon, 27 Jul 2026 00:00:00 GMT",
+      "source_name": "Hugging Face Blog",
+      "highlights": [],
+      "score": null,
+      "score_reason": null
+    }
+  },
+  {
+    "id": "rss-20260804-016",
+    "title": "Bringing Nunchaku 4-bit Diffusion Inference to Diffusers",
+    "source_url": "https://huggingface.co/blog/nunchaku-diffusers",
+    "source_type": "rss",
+    "summary": "",
+    "tags": [],
+    "category": null,
+    "status": "draft",
+    "collected_at": "2026-08-04T12:19:21Z",
+    "analyzed_at": null,
+    "published_at": null,
+    "distribution": {
+      "telegram": false,
+      "feishu": false
+    },
+    "metadata": {
+      "published": "Thu, 23 Jul 2026 00:00:00 GMT",
+      "source_name": "Hugging Face Blog",
+      "highlights": [],
+      "score": null,
+      "score_reason": null
+    }
+  },
+  {
+    "id": "rss-20260804-017",
+    "title": "Grabette: an open system to record robot-manipulation data",
+    "source_url": "https://huggingface.co/blog/grabette",
+    "source_type": "rss",
+    "summary": "",
+    "tags": [],
+    "category": null,
+    "status": "draft",
+    "collected_at": "2026-08-04T12:19:21Z",
+    "analyzed_at": null,
+    "published_at": null,
+    "distribution": {
+      "telegram": false,
+      "feishu": false
+    },
+    "metadata": {
+      "published": "Tue, 21 Jul 2026 00:00:00 GMT",
+      "source_name": "Hugging Face Blog",
+      "highlights": [],
+      "score": null,
+      "score_reason": null
+    }
+  },
+  {
+    "id": "rss-20260804-018",
+    "title": "Newer Models, Same Advantage",
+    "source_url": "https://huggingface.co/blog/Dharma-AI/newer-models-same-advantages",
+    "source_type": "rss",
+    "summary": "",
+    "tags": [],
+    "category": null,
+    "status": "draft",
+    "collected_at": "2026-08-04T12:19:21Z",
+    "analyzed_at": null,
+    "published_at": null,
+    "distribution": {
+      "telegram": false,
+      "feishu": false
+    },
+    "metadata": {
+      "published": "Thu, 16 Jul 2026 11:49:48 GMT",
+      "source_name": "Hugging Face Blog",
+      "highlights": [],
+      "score": null,
+      "score_reason": null
+    }
+  },
+  {
+    "id": "rss-20260804-019",
+    "title": "Security incident disclosure — July 2026",
+    "source_url": "https://huggingface.co/blog/security-incident-july-2026",
+    "source_type": "rss",
+    "summary": "",
+    "tags": [],
+    "category": null,
+    "status": "draft",
+    "collected_at": "2026-08-04T12:19:21Z",
+    "analyzed_at": null,
+    "published_at": null,
+    "distribution": {
+      "telegram": false,
+      "feishu": false
+    },
+    "metadata": {
+      "published": "Thu, 16 Jul 2026 00:00:00 GMT",
+      "source_name": "Hugging Face Blog",
+      "highlights": [],
+      "score": null,
+      "score_reason": null
+    }
+  },
+  {
+    "id": "rss-20260804-020",
+    "title": "Model Routing Is Simple. Until It Isn’t.",
+    "source_url": "https://huggingface.co/blog/ibm-research/model-routing-is-simple-until-it-isnt",
+    "source_type": "rss",
+    "summary": "",
+    "tags": [],
+    "category": null,
+    "status": "draft",
+    "collected_at": "2026-08-04T12:19:21Z",
+    "analyzed_at": null,
+    "published_at": null,
+    "distribution": {
+      "telegram": false,
+      "feishu": false
+    },
+    "metadata": {
+      "published": "Wed, 15 Jul 2026 17:27:01 GMT",
+      "source_name": "Hugging Face Blog",
+      "highlights": [],
+      "score": null,
+      "score_reason": null
+    }
+  }
+]

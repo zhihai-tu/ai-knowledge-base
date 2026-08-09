@@ -1,0 +1,328 @@
+[
+  {
+    "id": "github-20260804-001",
+    "title": "openclaw/openclaw",
+    "source_url": "https://github.com/openclaw/openclaw",
+    "source_type": "github",
+    "summary": "Your own personal AI assistant. Any OS. Any Platform. The lobster way. 🦞",
+    "tags": [],
+    "category": null,
+    "status": "draft",
+    "collected_at": "2026-08-04T11:50:18Z",
+    "analyzed_at": null,
+    "published_at": null,
+    "distribution": {
+      "telegram": false,
+      "feishu": false
+    },
+    "metadata": {
+      "stars": 385102,
+      "language": "TypeScript",
+      "author": "openclaw",
+      "topics": [
+        "ai",
+        "assistant",
+        "crustacean",
+        "molty",
+        "openclaw",
+        "own-your-data",
+        "personal"
+      ],
+      "score": null,
+      "score_reason": null
+    }
+  },
+  {
+    "id": "github-20260804-002",
+    "title": "obra/superpowers",
+    "source_url": "https://github.com/obra/superpowers",
+    "source_type": "github",
+    "summary": "An agentic skills framework & software development methodology that works.",
+    "tags": [],
+    "category": null,
+    "status": "draft",
+    "collected_at": "2026-08-04T11:50:18Z",
+    "analyzed_at": null,
+    "published_at": null,
+    "distribution": {
+      "telegram": false,
+      "feishu": false
+    },
+    "metadata": {
+      "stars": 266053,
+      "language": "Shell",
+      "author": "obra",
+      "topics": [
+        "ai",
+        "brainstorming",
+        "coding",
+        "obra",
+        "sdlc",
+        "skills",
+        "subagent-driven-development",
+        "superpowers"
+      ],
+      "score": null,
+      "score_reason": null
+    }
+  },
+  {
+    "id": "github-20260804-003",
+    "title": "affaan-m/ECC",
+    "source_url": "https://github.com/affaan-m/ECC",
+    "source_type": "github",
+    "summary": "The agent harness performance optimization system. Skills, instincts, memory, security, and research-first development for Claude Code, Codex, Opencode, Cursor and beyond.",
+    "tags": [],
+    "category": null,
+    "status": "draft",
+    "collected_at": "2026-08-04T11:50:18Z",
+    "analyzed_at": null,
+    "published_at": null,
+    "distribution": {
+      "telegram": false,
+      "feishu": false
+    },
+    "metadata": {
+      "stars": 237509,
+      "language": "JavaScript",
+      "author": "affaan-m",
+      "topics": [
+        "ai-agents",
+        "anthropic",
+        "claude",
+        "claude-code",
+        "developer-tools",
+        "llm",
+        "mcp",
+        "productivity"
+      ],
+      "score": null,
+      "score_reason": null
+    }
+  },
+  {
+    "id": "github-20260804-004",
+    "title": "NousResearch/hermes-agent",
+    "source_url": "https://github.com/NousResearch/hermes-agent",
+    "source_type": "github",
+    "summary": "The agent that grows with you",
+    "tags": [],
+    "category": null,
+    "status": "draft",
+    "collected_at": "2026-08-04T11:50:18Z",
+    "analyzed_at": null,
+    "published_at": null,
+    "distribution": {
+      "telegram": false,
+      "feishu": false
+    },
+    "metadata": {
+      "stars": 225204,
+      "language": "Python",
+      "author": "NousResearch",
+      "topics": [
+        "ai",
+        "ai-agent",
+        "ai-agents",
+        "anthropic",
+        "chatgpt",
+        "claude",
+        "claude-code",
+        "clawdbot",
+        "codex",
+        "hermes",
+        "hermes-agent",
+        "llm",
+        "moltbot",
+        "nous-research",
+        "openai",
+        "openclaw"
+      ],
+      "score": null,
+      "score_reason": null
+    }
+  },
+  {
+    "id": "github-20260804-005",
+    "title": "mattpocock/skills",
+    "source_url": "https://github.com/mattpocock/skills",
+    "source_type": "github",
+    "summary": "Skills for Real Engineers. Straight from my .agents directory.",
+    "tags": [],
+    "category": null,
+    "status": "draft",
+    "collected_at": "2026-08-04T11:50:18Z",
+    "analyzed_at": null,
+    "published_at": null,
+    "distribution": {
+      "telegram": false,
+      "feishu": false
+    },
+    "metadata": {
+      "stars": 202492,
+      "language": "Shell",
+      "author": "mattpocock",
+      "topics": [],
+      "score": null,
+      "score_reason": null
+    }
+  },
+  {
+    "id": "github-20260804-006",
+    "title": "multica-ai/andrej-karpathy-skills",
+    "source_url": "https://github.com/multica-ai/andrej-karpathy-skills",
+    "source_type": "github",
+    "summary": "A single CLAUDE.md file to improve Claude Code behavior, derived from Andrej Karpathy's observations on LLM coding pitfalls.",
+    "tags": [],
+    "category": null,
+    "status": "draft",
+    "collected_at": "2026-08-04T11:50:18Z",
+    "analyzed_at": null,
+    "published_at": null,
+    "distribution": {
+      "telegram": false,
+      "feishu": false
+    },
+    "metadata": {
+      "stars": 199345,
+      "language": null,
+      "author": "multica-ai",
+      "topics": [],
+      "score": null,
+      "score_reason": null
+    }
+  },
+  {
+    "id": "github-20260804-007",
+    "title": "n8n-io/n8n",
+    "source_url": "https://github.com/n8n-io/n8n",
+    "source_type": "github",
+    "summary": "Fair-code workflow automation platform with native AI capabilities. Combine visual building with custom code, self-host or cloud, 400+ integrations.",
+    "tags": [],
+    "category": null,
+    "status": "draft",
+    "collected_at": "2026-08-04T11:50:18Z",
+    "analyzed_at": null,
+    "published_at": null,
+    "distribution": {
+      "telegram": false,
+      "feishu": false
+    },
+    "metadata": {
+      "stars": 199283,
+      "language": "TypeScript",
+      "author": "n8n-io",
+      "topics": [
+        "ai",
+        "apis",
+        "automation",
+        "cli",
+        "data-flow",
+        "development",
+        "integration-framework",
+        "integrations",
+        "ipaas",
+        "low-code",
+        "low-code-platform",
+        "mcp",
+        "mcp-client",
+        "mcp-server",
+        "n8n",
+        "no-code",
+        "self-hosted",
+        "typescript",
+        "workflow",
+        "workflow-automation"
+      ],
+      "score": null,
+      "score_reason": null
+    }
+  },
+  {
+    "id": "github-20260804-008",
+    "title": "ultraworkers/claw-code",
+    "source_url": "https://github.com/ultraworkers/claw-code",
+    "source_type": "github",
+    "summary": "An agent-managed museum exhibit, built in Rust with Gajae-Code / LazyCodex — developed and maintained with no human intervention.",
+    "tags": [],
+    "category": null,
+    "status": "draft",
+    "collected_at": "2026-08-04T11:50:18Z",
+    "analyzed_at": null,
+    "published_at": null,
+    "distribution": {
+      "telegram": false,
+      "feishu": false
+    },
+    "metadata": {
+      "stars": 194965,
+      "language": "Rust",
+      "author": "ultraworkers",
+      "topics": [],
+      "score": null,
+      "score_reason": null
+    }
+  },
+  {
+    "id": "github-20260804-009",
+    "title": "anomalyco/opencode",
+    "source_url": "https://github.com/anomalyco/opencode",
+    "source_type": "github",
+    "summary": "The open source coding agent.",
+    "tags": [],
+    "category": null,
+    "status": "draft",
+    "collected_at": "2026-08-04T11:50:18Z",
+    "analyzed_at": null,
+    "published_at": null,
+    "distribution": {
+      "telegram": false,
+      "feishu": false
+    },
+    "metadata": {
+      "stars": 193152,
+      "language": "TypeScript",
+      "author": "anomalyco",
+      "topics": [],
+      "score": null,
+      "score_reason": null
+    }
+  },
+  {
+    "id": "github-20260804-010",
+    "title": "Significant-Gravitas/AutoGPT",
+    "source_url": "https://github.com/Significant-Gravitas/AutoGPT",
+    "source_type": "github",
+    "summary": "AutoGPT is the vision of accessible AI for everyone, to use and to build on. Our mission is to provide the tools, so that you can focus on what matters.",
+    "tags": [],
+    "category": null,
+    "status": "draft",
+    "collected_at": "2026-08-04T11:50:18Z",
+    "analyzed_at": null,
+    "published_at": null,
+    "distribution": {
+      "telegram": false,
+      "feishu": false
+    },
+    "metadata": {
+      "stars": 185805,
+      "language": "Python",
+      "author": "Significant-Gravitas",
+      "topics": [
+        "agentic-ai",
+        "agents",
+        "ai",
+        "artificial-intelligence",
+        "autonomous-agents",
+        "claude",
+        "gpt",
+        "llama-api",
+        "llm",
+        "openai",
+        "python"
+      ],
+      "score": null,
+      "score_reason": null
+    }
+  }
+]
