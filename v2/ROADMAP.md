@@ -19,6 +19,7 @@ V1：采集-分析流水线可用，MCP 本地检索服务已完成（已知问�
 - [x] 流水线 `--provider` 参数生效（`pipeline.py` 传入 `create_provider(name=...)`；已验证 `--provider qwen` 调用 qwen3.7-plus）
 - [x] 百炼专属网关接入：`model_client.py` 的 qwen 提供商支持 `QWEN_BASE_URL` / `QWEN_MODEL` 环境变量覆盖默认 base_url/模型，`.env` 已配置专属网关地址与 key（已验证 200 OK，真实调用回复正常）
 - [x] 成本计费单一价格表重构：删除 `PROVIDER_PRICES_CNY` 与汇率折算，统一按 `MODEL_PRICES_USD` 计算并输出 USD 报告，`CostTracker` 按 `(provider, model)` 记录（已验证多提供商/多模型混合报告按各自单价准确分列与汇总）
+- [x] RSS 多源采集兜底策略：`collect_rss` 改为两阶段（公平保底 + 兜底回填），源失败/为空自动剔除并把配额转移给仍能产出的源，请求带浏览器 UA 并缩短超时（connect 8s / 总 15s）；`_fetch_single_rss` 新增 `seen_urls` 运行内去重，避免回填重复抓取（已验证 limit=5 与 limit=10 均实采满额、0 重复，Reddit/HF 失败源被兜底跳过）
 
 ## 进行中
 

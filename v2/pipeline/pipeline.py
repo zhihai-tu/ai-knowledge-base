@@ -148,8 +148,12 @@ def load_rss_sources() -> list[dict[str, Any]]:
     return enabled
 
 def _fetch_single_rss(client: httpx.Client, url: str, source_name: str,
-                       limit: int, seq: int) -> list[dict[str, Any]]:
-    """采集单个 RSS 源，返回条目列表。支持 RSS 和 Atom 格式。"""
+                       limit: int, seq: int,
+                       seen_urls: set[str] | None = None) -> list[dict[str, Any]]:
+    """采集单个 RSS 源，返回条目列表。支持 RSS 和 Atom 格式。
+
+    seen_urls: 本次运行已采集过的 source_url 集合，回填时跳过避免重复。
+    """
     resp = client.get(url, follow_redirects=True)
     resp.raise_for_status()
     text = resp.text
@@ -173,6 +177,8 @@ def _fetch_single_rss(client: httpx.Client, url: str, source_name: str,
         description = _clean_text(fields.get("description", "") or fields.get("content", ""))
         if not title or not link:
             continue
+        if seen_urls is not None and link in seen_urls:
+            continue
         items.append(_make_item(
             source_type="rss", seq=seq,
             title=title,
@@ -189,37 +195,71 @@ def _fetch_single_rss(client: httpx.Client, url: str, source_name: str,
 
 
 def collect_rss(limit: int) -> list[dict[str, Any]]:
-    """在已启用的 RSS 源间轮流均分采集，总量不超过 limit。"""
+    """在已启用的 RSS 源间两阶段采集:公平保底 + 兜底回填,总量尽量贴近 limit。
+
+    阶段一:每个启用源分配 max(1, limit // 源数) 的基础配额,保证各源都有发声机会。
+    阶段二:总量未达 limit 时,把剩余配额轮转回填到仍能产出的源,直至补齐或源枯竭。
+    空/失败源会被剔除,不再占用后续配额。
+    """
     sources = load_rss_sources()
     if not sources:
-        logger.warning("无可用 RSS 源，跳过采集")
+        logger.warning("无可用 RSS 源,跳过采集")
         return []
 
-    n = len(sources)
-    per_source, extra = divmod(limit, n)
-    if per_source == 0:
-        per_source, extra = 1, 0
-
     items: list[dict[str, Any]] = []
+    got_sources: set[str] = set()
+    seen_urls: set[str] = set()
     seq = _next_seq("rss", datetime.now(timezone.utc).strftime("%Y%m%d"))
-    with httpx.Client(timeout=30.0, transport=httpx.HTTPTransport(proxy=None)) as client:
-        for idx, source in enumerate(sources):
+    headers = {"User-Agent": ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                              "AppleWebKit/537.36 (KHTML, like Gecko) "
+                              "Chrome/126.0 Safari/537.36")}
+
+    def fetch_one(source: dict[str, Any], quota: int) -> int:
+        """抓取单个源的条目,返回新增条数(空/失败返回 0)。"""
+        nonlocal seq
+        name = source.get("name", "unknown")
+        url = source.get("url", "")
+        try:
+            new_items = _fetch_single_rss(client, url, name, quota, seq, seen_urls)
+            seq += len(new_items)
+            items.extend(new_items)
+            seen_urls.update(i["source_url"] for i in new_items)
+            if new_items:
+                got_sources.add(name)
+                logger.info("  %s: 采集 %d 条", name, len(new_items))
+            return len(new_items)
+        except (httpx.HTTPStatusError, httpx.RequestError) as exc:
+            logger.warning("  %s: 采集失败 - %s", name, exc)
+            return 0
+
+    with httpx.Client(timeout=httpx.Timeout(15.0, connect=8.0), headers=headers,
+                      transport=httpx.HTTPTransport(proxy=None)) as client:
+        # 阶段一:公平保底,每个启用源给基础配额
+        base = max(1, limit // len(sources))
+        alive: list[dict[str, Any]] = []
+        for source in sources:
             if len(items) >= limit:
                 break
-            if per_source == 1 and idx >= limit:
-                break
-            quota = per_source + (1 if idx < extra else 0)
-            name = source.get("name", "unknown")
-            url = source.get("url", "")
-            try:
-                logger.info("采集 RSS 源: %s（配额 %d）", name, quota)
-                new_items = _fetch_single_rss(client, url, name, quota, seq)
-                items.extend(new_items)
-                seq += len(new_items)
-                logger.info("  %s: 采集 %d 条", name, len(new_items))
-            except (httpx.HTTPStatusError, httpx.RequestError) as exc:
-                logger.warning("  %s: 采集失败 - %s", name, exc)
-    logger.info("RSS 采集完成: %d 条（来自 %d 个源）", len(items), len(sources))
+            logger.info("采集 RSS 源: %s(配额 %d)", source.get("name", "unknown"), base)
+            if fetch_one(source, base) > 0:
+                alive.append(source)
+
+        # 阶段二:兜底回填,轮转补齐剩余配额,直到达标或所有存活源枯竭
+        while alive and len(items) < limit:
+            remaining = limit - len(items)
+            per_round = max(1, remaining // len(alive))
+            next_alive: list[dict[str, Any]] = []
+            for source in alive:
+                if len(items) >= limit:
+                    break
+                logger.info("兜底回填 RSS 源: %s(配额 %d)",
+                            source.get("name", "unknown"), per_round)
+                if fetch_one(source, per_round) > 0:
+                    next_alive.append(source)
+            alive = next_alive
+
+    logger.info("RSS 采集完成: %d 条(目标 %d,来自 %d 个源)",
+                len(items), limit, len(got_sources))
     return items
 
 
