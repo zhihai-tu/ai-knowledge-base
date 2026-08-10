@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260810-002",
+  "title": "Towards Multi-Label Graph Foundation Models: from Single-Vector Representation Learning to Multi-Semantic Basis Learning",
+  "source_url": "https://arxiv.org/abs/2608.06394",
+  "source_type": "rss",
+  "summary": "本文提出多语义基座图基础模型（MSB-GFM），旨在解决多标签节点分类的跨域泛化问题。现有图基础模型普遍基于单标签假设，将每个节点编码为单一向量，导致多语义纠缠，难以同时区分多个标签。MSB-GFM引入多语义基座表示学习范式，将每个多标签节点建模为多个语义基座的自适应组合，增强表示灵活性。同时设计语义-结构双通道架构，结合领域对抗训练，实现跨域知识迁移。实验证明该模型在多标签节点分类上具有有效性。",
+  "tags": [
+    "graph",
+    "multi-label",
+    "foundation-model"
+  ],
+  "category": "training",
+  "status": "review",
+  "collected_at": "2026-08-10T09:38:47Z",
+  "analyzed_at": "2026-08-10T09:41:38Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Mon, 10 Aug 2026 00:00:00 -0400",
+    "source_name": "arXiv cs.AI",
+    "highlights": [],
+    "score": 7,
+    "score_reason": "提出新颖的多语义基座表示和双通道架构，解决图基础模型的多标签跨域问题，但实验规模和创新深度一般。"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260810-007",
+  "title": "AI detectors are creating a new era of distrust",
+  "source_url": "https://www.theverge.com/column/976690/ai-writing-detectors-suspicion",
+  "source_type": "rss",
+  "summary": "本文探讨了AI写作检测器如何引发新的不信任时代。在ChatGPT普及之前，教育工作者和编辑已使用反抄袭工具来验证作者诚实性，如Turnitin通过比对网络和学术数据库内容检测重复句子。然而，随着AI生成文本的普及，这些工具被重新用于识别AI写作，但其准确性存疑，常产生误报，导致无辜作者被错误指控。这种技术的不完美加剧了人与人之间的怀疑，使教育、编辑等场景中的信任关系受到侵蚀。文章指出，AI检测器不仅未能有效解决AI滥用问题，反而制造了新的社会矛盾，人们开始对所有文本产生怀疑，甚至需要自证清白。这种趋势反映了技术发展中的伦理困境，也提醒我们依赖不可靠工具可能带来的负面后果。",
+  "tags": [
+    "AI-detection",
+    "trust",
+    "ethics"
+  ],
+  "category": "tool",
+  "status": "review",
+  "collected_at": "2026-08-10T09:38:48Z",
+  "analyzed_at": "2026-08-10T09:41:58Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "2026-08-09T08:00:00-04:00",
+    "source_name": "The Verge (AI)",
+    "highlights": [],
+    "score": 7,
+    "score_reason": "文章聚焦AI检测工具的缺陷及其社会影响，话题重要且具洞察力，但内容偏向评论而非技术深度。"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260810-001",
+  "title": "Who Should Pay For Source Code Availability?",
+  "source_url": "https://kristoff.it/blog/source-code-availability/",
+  "source_type": "rss",
+  "summary": "本文探讨在AI训练数据需求激增的背景下，源代码可用性由谁承担成本的问题。随着大型语言模型广泛抓取公开代码库，开发者与公司的知识产权面临被无偿使用的争议。文章可能分析开源许可证的局限性、代码贡献者与AI公司之间的利益失衡，以及可能的解决方案（如补偿机制、新许可模式或政策干预）。核心矛盾在于：源代码作为公共资源被AI利用，但维护者未获得回报，这影响开源生态可持续性。",
+  "tags": [
+    "open-source",
+    "ai-training",
+    "licensing"
+  ],
+  "category": "tool",
+  "status": "review",
+  "collected_at": "2026-08-10T09:38:46Z",
+  "analyzed_at": "2026-08-10T09:41:34Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Sun, 09 Aug 2026 08:42:39 -0500",
+    "source_name": "Lobsters AI/ML",
+    "highlights": [],
+    "score": 6,
+    "score_reason": "话题切中AI与开源冲突的实时痛点，但内容深度未知，偏向行业讨论而非技术方案。"
+  }
+}
