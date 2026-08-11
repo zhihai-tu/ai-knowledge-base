@@ -1,4 +1,8 @@
 .env
 
-# 中间产物：raw 为采集快照，可重建，不入库
+# 知识库内容（测试数据，不入库）
+knowledge/articles/
 knowledge/raw/
+
+# 运行日志与轨迹记录
+logs/
