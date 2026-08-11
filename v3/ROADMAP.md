@@ -17,6 +17,7 @@ V3（初始化）：基于 V2 拷贝代码骨架，将在 V2 基础上引入多 
 - 2026-08-11：意图识别修正：移除关键词层「首字'搜/查/找/看'」的启发式硬路由（会把「搜索最近的 AI Agent 框架」误判为 knowledge_query），歧义查询一律交 LLM 分类；`_llm_route` 分类为 github_search 时在同一调用内输出英文搜索词（格式 `github_search|关键词`），github handler 优先使用。已验证：「搜索最近的 AI Agent 框架」→ github_search 并搜到 superpowers/langchain/MetaGPT；「查一下 rag」仍判 knowledge_query；「github 搜索 X」关键词直配不受影响。
 - 2026-08-11：GitHub 搜索网络容错：新增 `_fetch_github()`，经代理连接失败（TLS/超时）自动回退直连并重试 2 次，CLI 输出 `[GitHub] 已改用直连（原代理连接失败）`。排查中发现关键坑：复用同一 `urllib Request` 对象时 ProxyHandler 缓存 `proxy_host` 导致直连仍走代理，每次尝试必须新建 Request。已验证：代理坏时 3/3 直连成功搜到结果。
 - 2026-08-11：GitHub 搜索结果精简：新增 `_truncate()`，仓库描述截断为 100 字符（超长描述如几万字不再刷屏）；代理回退提示语改为明确的「已改用直连（原代理连接失败）」。已验证：超长描述仓库正常截断，死代理下 `via_direct=True` 且直连返回结果。
+- 2026-08-11：Supervisor 监督模式落地 `patterns/supervisor.py`：Worker 产出 JSON 分析报告 → Supervisor 按准确性/深度/格式三维度评分（score=round(均值)）输出 `{"passed","score","feedback"}`；score≥7 通过，否则带反馈重做（最多 `max_retries` 轮），耗尽后强制返回并附 warning。已验证：真实 DeepSeek 调用首轮通过；monkeypatch 用例覆盖「耗尽报 warning」「第2轮通过」「Worker LLM 失败降级」三条分支。返回值新增 `rounds`（每轮 attempt/score/passed/feedback），CLI 改为分轮次展示得分与最终结果（含输出预览、警告行），日志降为 WARNING 保持控制台干净。已验证：真实调用渲染正确、monkeypatch rounds 字段齐全。
 
 ## 进行中
 
