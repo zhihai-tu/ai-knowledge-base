@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260811-004",
+  "title": "OpenAI’s letter to Governor Abbott on responsible AI infrastructure in Texas",
+  "source_url": "https://openai.com/index/responsible-ai-infrastructure-texas",
+  "source_type": "rss",
+  "summary": "OpenAI致信得克萨斯州州长Greg Abbott，阐述其在得州建设负责任AI基础设施的承诺。信中强调支持可靠、透明的增长，使得州居民受益。OpenAI表示将遵循安全与责任原则，推动AI基础设施发展，包括数据中心和能源等配套资源，以促进当地经济与技术创新。此举旨在与州政府合作，确保AI发展兼顾公共利益与可持续性。",
+  "tags": [
+    "AI infrastructure",
+    "policy",
+    "Texas"
+  ],
+  "category": "tool",
+  "status": "review",
+  "collected_at": "2026-08-11T09:05:05Z",
+  "analyzed_at": "2026-08-11T09:06:03Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Mon, 10 Aug 2026 14:00:00 GMT",
+    "source_name": "OpenAI Blog",
+    "highlights": [],
+    "score": 7,
+    "score_reason": "该内容涉及AI基础设施的政策承诺，但缺乏技术细节，影响有限。"
+  }
+}

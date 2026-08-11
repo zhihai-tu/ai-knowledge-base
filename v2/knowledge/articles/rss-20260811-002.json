@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260811-002",
+  "title": "Towards an Argumentative Foundation for Evaluative AI",
+  "source_url": "https://arxiv.org/abs/2608.07473",
+  "source_type": "rss",
+  "summary": "该论文提出了一种名为“评估型AI”（Evaluative AI, EAI）的决策支持新范式，其核心思想并非给出单一推荐，而是呈现多个竞争性假设及其支持与反对证据。作者主张计算论证（computational argumentation）是构建可解释、可质疑的EAI系统的理想形式化基础，能够提供严格的逻辑框架以支持证据权衡与冲突消解。文章作为立场论文，勾勒了面向分布式、以人为中心的EAI系统的长期研究议程，强调在人类决策过程中实现透明性和可争议性。该工作将论证计算与AI评估结合，为未来在人机协同决策、可解释AI及争议性场景中的应用奠定理论基础。",
+  "tags": [
+    "argumentation",
+    "evaluative-ai",
+    "human-centered"
+  ],
+  "category": "agent",
+  "status": "review",
+  "collected_at": "2026-08-11T09:05:04Z",
+  "analyzed_at": "2026-08-11T09:05:56Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Tue, 11 Aug 2026 00:00:00 -0400",
+    "source_name": "arXiv cs.AI",
+    "highlights": [],
+    "score": 7,
+    "score_reason": "理论创新性较强，为评估型AI提供了论证计算这一扎实的形式化基础，但尚处概念阶段，缺乏实证验证。"
+  }
+}

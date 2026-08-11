@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260811-009",
+  "title": "Flow-by-Flow:Content-Judgment Bypass for Governing AI Output in High-Loss Domains",
+  "source_url": "https://arxiv.org/abs/2608.07474",
+  "source_type": "rss",
+  "summary": "本文提出Flow-by-Flow治理范式，针对高损失领域中人类监督AI输出的结构性瓶颈。作者认为核心约束不是输出速度V而是V×L，其中L是每项认知负载，包括分诊、判断和响应三部分。模型能力提升不会降低分诊成本（语义不确定性固有），也不降低响应成本，只能压缩判断成本，且常以省略而非真正减少实现，因此能力提升只是重构L。现有基于内容正确性评估的治理要么委托AI而引入幻觉风险，要么依赖人类而受V×L上限约束。Flow-by-Flow绕过内容判断，通过基于形式可数特征的认知成本分数对高量生产施加非线性成本，并用机构容量上限确保处理量在人类认知能力内。作者导出四个设计不变量：无内容判断、不可规模化消耗审查者容量、身份绑定的每应用摩擦、无批量放行。参考实现表明不变量可共同满足，蒙特卡洛分析显示复合多指标流控在90.8%试验中优于单纯监督强化。",
+  "tags": [
+    "AI-governance",
+    "supervisory-load",
+    "Flow-by-Flow"
+  ],
+  "category": "llm",
+  "status": "review",
+  "collected_at": "2026-08-11T09:05:06Z",
+  "analyzed_at": "2026-08-11T09:06:24Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Tue, 11 Aug 2026 00:00:00 -0400",
+    "source_name": "arXiv cs.AI",
+    "highlights": [],
+    "score": 7,
+    "score_reason": "提出新颖的治理范式与不变量，但缺乏真实场景验证，且蒙特卡洛分析仅作示意。"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260811-010",
+  "title": "Model ML completes finance work more efficiently with GPT-5.6 Sol",
+  "source_url": "https://openai.com/index/model-ml",
+  "source_type": "rss",
+  "summary": "OpenAI发布案例，介绍Model ML公司利用GPT-5.6 Sol模型执行金融工作流程，从研究和分析到生成可编辑、可追溯的PowerPoint演示文稿和Excel工作簿。该应用展示了GPT-5.6 Sol在复杂金融任务中的高效自动化能力，不仅提升数据整理、分析和报告生成的效率，还确保了输出结果的可追溯性与可编辑性，便于金融专业人士审查和修改。案例强调模型在端到端金融场景中的实用性，覆盖研报撰写、数据建模、可视化呈现等多个环节，体现了大模型在垂直行业中的落地价值。",
+  "tags": [
+    "finance",
+    "GPT-5.6",
+    "automation"
+  ],
+  "category": "agent",
+  "status": "review",
+  "collected_at": "2026-08-11T09:05:06Z",
+  "analyzed_at": "2026-08-11T09:06:27Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Mon, 10 Aug 2026 12:00:00 GMT",
+    "source_name": "OpenAI Blog",
+    "highlights": [],
+    "score": 8,
+    "score_reason": "展示了具体金融场景中的端到端自动化能力，且强调可编辑和可追溯性，具备实际落地价值。"
+  }
+}

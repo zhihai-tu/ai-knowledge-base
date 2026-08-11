@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260811-001",
+  "title": "Toggles Considered Harmful",
+  "source_url": "https://ignorethecode.net/blog/2026/08/09/toggles_considered_harmful/",
+  "source_type": "rss",
+  "summary": "本文标题为“Toggles Considered Harmful”，是一篇关于软件工程中功能开关（feature toggles）的评论文章。文章可能讨论在持续集成和部署中使用功能开关带来的复杂性、技术债务、测试困难以及对系统可维护性的负面影响。作者可能认为过度依赖开关会导致代码路径分支过多，增加调试和运维成本，同时掩盖了产品决策的及时性。文章强调应谨慎使用开关，或在特定场景下寻找替代方案，例如通过渐进式发布或小批量部署来控制功能上线。整体上，这是一篇针对开发实践的经验性观点文章，对于软件架构和DevOps团队具有参考价值。",
+  "tags": [
+    "toggles",
+    "software",
+    "engineering"
+  ],
+  "category": "tool",
+  "status": "review",
+  "collected_at": "2026-08-11T09:05:04Z",
+  "analyzed_at": "2026-08-11T09:05:52Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Mon, 10 Aug 2026 03:04:12 -0500",
+    "source_name": "Lobsters AI/ML",
+    "highlights": [],
+    "score": 4,
+    "score_reason": "文章内容虽涉及开发工具实践，但非AI核心领域，相关性有限。"
+  }
+}

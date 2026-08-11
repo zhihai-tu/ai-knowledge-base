@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260811-008",
+  "title": "A researcher bought noreply.net. Companies started sending him secrets",
+  "source_url": "https://arstechnica.com/security/2026/08/a-researcher-bought-noreply-net-companies-started-sending-him-secrets/",
+  "source_type": "rss",
+  "summary": "该报道讲述一名研究人员购买了noreply.net 域名，随后开始收到多家公司误发给该域名的邮件，其中包含敏感信息甚至商业机密。由于许多公司在系统中使用类似“noreply”的通用发件域名，却未正确配置或验证所有权，导致本应发送给自身的邮件被外部接管。这一事件暴露了企业在邮件安全配置、域名管理和数据治理方面的严重漏洞，也提醒AI系统在自动生成或处理邮件时，需要警惕域名伪造与信息泄露风险。",
+  "tags": [
+    "security",
+    "privacy",
+    "email"
+  ],
+  "category": "tool",
+  "status": "review",
+  "collected_at": "2026-08-11T09:05:06Z",
+  "analyzed_at": "2026-08-11T09:06:20Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Mon, 10 Aug 2026 11:47:33 -0500",
+    "source_name": "Lobsters AI/ML",
+    "highlights": [],
+    "score": 4,
+    "score_reason": "内容涉及AI相关安全风险，但并非核心AI技术进展，属于边缘应用。"
+  }
+}

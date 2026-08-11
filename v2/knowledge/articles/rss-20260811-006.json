@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260811-006",
+  "title": "Evolve your marketing with new AI tools",
+  "source_url": "https://blog.google/products/ads-commerce/google-ads-analytics-ai-updates/",
+  "source_type": "rss",
+  "summary": "本文介绍了Google在Google Ads和Google Analytics中推出的新AI和代理式体验，旨在简化营销工作流程。这些工具利用人工智能自动化和优化广告投放、受众分析及效果追踪，帮助营销人员更高效地管理跨平台活动。文章强调了AI在营销中的实际应用，包括智能建议、自动化报告和个性化客户互动，体现了Google将AI深度集成到其广告生态系统的战略方向。",
+  "tags": [
+    "marketing",
+    "google-ads",
+    "AI-tools"
+  ],
+  "category": "tool",
+  "status": "review",
+  "collected_at": "2026-08-11T09:05:05Z",
+  "analyzed_at": "2026-08-11T09:06:10Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Mon, 10 Aug 2026 14:30:00 +0000",
+    "source_name": "Google AI Blog",
+    "highlights": [],
+    "score": 6,
+    "score_reason": "标题明确但描述信息有限，缺乏具体技术细节，需依靠推测。"
+  }
+}
