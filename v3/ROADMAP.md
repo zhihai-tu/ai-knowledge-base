@@ -18,16 +18,20 @@ V3（初始化）：基于 V2 拷贝代码骨架，将在 V2 基础上引入多 
 - 2026-08-11：GitHub 搜索网络容错：新增 `_fetch_github()`，经代理连接失败（TLS/超时）自动回退直连并重试 2 次，CLI 输出 `[GitHub] 已改用直连（原代理连接失败）`。排查中发现关键坑：复用同一 `urllib Request` 对象时 ProxyHandler 缓存 `proxy_host` 导致直连仍走代理，每次尝试必须新建 Request。已验证：代理坏时 3/3 直连成功搜到结果。
 - 2026-08-11：GitHub 搜索结果精简：新增 `_truncate()`，仓库描述截断为 100 字符（超长描述如几万字不再刷屏）；代理回退提示语改为明确的「已改用直连（原代理连接失败）」。已验证：超长描述仓库正常截断，死代理下 `via_direct=True` 且直连返回结果。
 - 2026-08-11：Supervisor 监督模式落地 `patterns/supervisor.py`：Worker 产出 JSON 分析报告 → Supervisor 按准确性/深度/格式三维度评分（score=round(均值)）输出 `{"passed","score","feedback"}`；score≥7 通过，否则带反馈重做（最多 `max_retries` 轮），耗尽后强制返回并附 warning。已验证：真实 DeepSeek 调用首轮通过；monkeypatch 用例覆盖「耗尽报 warning」「第2轮通过」「Worker LLM 失败降级」三条分支。返回值新增 `rounds`（每轮 attempt/score/passed/feedback），CLI 改为分轮次展示得分与最终结果（含输出预览、警告行），日志降为 WARNING 保持控制台干净。已验证：真实调用渲染正确、monkeypatch rounds 字段齐全。
+- 2026-08-11：`workflows/nodes.py` organize 新增跨批次 URL 去重：新增 `_load_existing_urls()` 扫描 `knowledge/articles/*.json`（排除 index.json / test-*）收集历史 `source_url`，`_build_articles` 将其并入 `seen_urls`，与当前批次内去重共用同一逻辑，避免热门仓库重复入库（此前 157 篇仅 52 个唯一 URL）。已验证：`_load_existing_urls()` 返回 49 与全文件直接扫描一致；真实管线运行 0 条（GitHub top10 全部命中历史，符合预期）。
 
 ## 进行中
 
-- （无）
+- LangGraph 工作流节点落地 `workflows/nodes.py`：5 个纯函数节点（collect→analyze→organize→review→save）已实现，评分沿用 1-10（与现有库一致，过滤线 6 分、审核通过线 7 分），节点逻辑经 monkeypatch（假 GitHub API + 假 LLM）验证通过。待办：真实 LLM 端到端验证。
+- LangGraph 编排 `workflows/graph.py`：StateGraph(KBState) 组装 collect→analyze→organize→review 线性边，review 后按 `review_passed` 条件分支（True→save→END，False→organize 重做），`build_graph()` 返回编译后 app，`__main__` 流式打印每节点关键输出。已验证（stub 节点替换 graph 模块引用）：PASS 分支顺序 collect→analyze→organize→review→save；FAIL 分支 collect→analyze→organize→review→organize→review→save 重做循环正常。
 
 ## 待办
 
 - [ ] 设计多 Agent 架构整体方案：agent 分工、编排方式、与 Router 模块的衔接
 - [ ] V3 基线验证：拷贝自 V2 的流水线 / MCP server 在 V3 环境可运行
 - [ ] [可选] 路由探针模式：关键词命中时也调用一次 LLM 记录其意图，作为「命中得对不对」的对照数据（调试期按需开启，会增加 LLM 调用成本）
+- [ ] 已收录仓库的刷新更新机制：跨批次去重会拦截「已收录过、想重新采集生成新版本」的仓库（如 AutoGPT 迭代升级后想重收），需设计刷新/强制覆盖开关（如按 source_url 覆盖、CLI 传参跳过历史去重），当前流程无此需求暂不实现
+- [ ] 0 条结果短路：跨批次去重将全部条目过滤后管线仍空跑 review/save 并重复消耗 GitHub API + LLM 分析成本，考虑 organize 产出 0 条时提前结束
 
 ## 阻塞
 
