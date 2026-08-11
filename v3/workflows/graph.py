@@ -35,6 +35,7 @@ def build_graph():
     graph.add_node("analyze", analyze_node)
     graph.add_node("organize", organize_node)
     graph.add_node("review", review_node)
+    # graph.add_node("review", review_node_test)
     graph.add_node("save", save_node)
 
     graph.add_edge("collect", "analyze")

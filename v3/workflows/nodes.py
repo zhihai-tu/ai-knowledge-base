@@ -497,6 +497,27 @@ def review_node(state: KBState) -> dict:
     }
 
 
+def review_node_test(state: KBState) -> dict:
+    """临时测试版节点 4：模拟审核循环（验证后会删除）。
+
+    前 2 次强制返回 review_passed: False；iteration >= 2（第 3 次）返回 True。
+    每次给出不同 feedback，并打印当前 iteration 与 review_passed。
+    """
+    iteration = state.get("iteration", 0)
+    if iteration < 2:
+        passed = False
+        feedback = ["摘要过于简短", "标签不够精准"][iteration]
+    else:
+        passed = True
+        feedback = "整体质量合格，审核通过。"
+    print(f"[ReviewNode] iteration={iteration}, review_passed={passed}")
+    return {
+        "review_passed": passed,
+        "review_feedback": feedback,
+        "iteration": iteration if passed else iteration + 1,
+    }
+
+
 # ── save_node: 写入 articles 目录并更新 index.json ─────────────────
 
 def _validate_article(item: dict) -> list[str]:
