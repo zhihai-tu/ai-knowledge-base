@@ -4,6 +4,8 @@
 
 本项目是 V3 版本，基于 V2 代码骨架初始化。V2 是自动化 AI 知识库助手：从 GitHub Trending、RSS 等渠道实时采集 AI/LLM/Agent 领域技术动态，通过 AI 分析后结构化存储为 JSON 格式，并支持多渠道分发。V3 将在 V2 基础上引入多 Agent 能力（agent 架构待设计，本文件将随架构确定同步更新）。
 
+> 通用设计原则「以简单为主，不要过度设计」见根目录 `AGENTS.md`，V1-V4 通用。
+
 ## LLM 配置
 
 - 统一由 `workflows/model_client.py`（`workflows.model_client`）提供 LLM 调用（httpx 直连 OpenAI 兼容接口，不依赖 openai SDK）。`pipeline/model_client.py` 仅为向后兼容的 re-export 层，新代码一律从 `workflows.model_client` 导入。
