@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260812-009",
+  "title": "Apple Silicon and macOS VMs: Faster LLM Inference with llama.cpp",
+  "source_url": "https://github.com/trycua/cua/blob/main/blog/gpu-passthrough-macos-vms.md",
+  "source_type": "rss",
+  "summary": "本文探讨在Apple Silicon上的macOS虚拟机中，通过GPU透传技术使用llama.cpp实现更快的LLM推理。文章详细介绍了如何配置虚拟机以直通Apple Silicon的GPU，从而绕过虚拟化带来的性能损失，使llama.cpp能够充分利用原生硬件加速。内容包括硬件要求、虚拟化框架配置、以及针对不同模型规模的性能优化建议。作者通过实验数据展示了GPU透传相比纯CPU模拟的显著速度提升，并讨论了在macOS虚拟机中运行llama.cpp的潜在限制与解决方案。该文对希望在macOS虚拟化环境中高效运行LLM的开发者具有实用参考价值，尤其是对使用Apple Silicon Mac作为开发或测试平台的用户。文中还涉及与Linux虚拟机方案的对比，突出了macOS专属功能的差异。",
+  "tags": [
+    "llama.cpp",
+    "GPU-passthrough",
+    "macOS-VM"
+  ],
+  "category": "inference",
+  "status": "review",
+  "collected_at": "2026-08-12T09:16:32Z",
+  "analyzed_at": "2026-08-12T09:17:57Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Tue, 11 Aug 2026 14:50:33 +0000",
+    "source_name": "Hacker News Best (AI)",
+    "highlights": [],
+    "score": 8,
+    "score_reason": "提供了具体可操作的GPU透传方案，对llama.cpp在Apple Silicon上的推理性能优化有实证数据，技术深度和实用性兼备。"
+  }
+}

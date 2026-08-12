@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260812-003",
+  "title": "Closed-Loop LLM Co-Pilots for Digital Agriculture",
+  "source_url": "https://arxiv.org/abs/2608.09949",
+  "source_type": "rss",
+  "summary": "该研究探讨了大语言模型（LLM）在数字农业中的应用，从数据分析演进到自主闭环实验控制。系统基于49通道植物传感器网络（包括多光谱、电化学和介电模态），提供实时自然语言解释以增强非专家可用性。核心创新在于从人在环路分析转向自主控制：LLM处理生物物理数据，评估植物生理状态，并触发硬件执行器以优化微气候、执行表型分析协议或诱导受控胁迫场景。框架在三个案例中得到验证，包括垂直农场和单株装置。在规模化部署中，智能体实现多参数优化，平衡生物量积累、叶绿素含量和能耗。通过调节全光谱、450nm和660nm光照，系统在最短时间模式下将生产周期缩短35%，在节能模式下能耗降低18%且仅略微延长培养时间。更值得注意的是，智能体自主发现了黑暗诱导叶绿素积累的意外策略，实现67.9%的节能。该框架将LLM转化为数字农业的自主副驾驶，显著提升成本效益比，并降低计算和专家人力约束。",
+  "tags": [
+    "LLM",
+    "agriculture",
+    "closed-loop"
+  ],
+  "category": "agent",
+  "status": "review",
+  "collected_at": "2026-08-12T09:16:31Z",
+  "analyzed_at": "2026-08-12T09:17:35Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Wed, 12 Aug 2026 00:00:00 -0400",
+    "source_name": "arXiv cs.AI",
+    "highlights": [],
+    "score": 8,
+    "score_reason": "创新性地将LLM用于闭环自主农业控制，有量化成果和意外策略发现，但领域特定且规模化验证有限。"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260812-002",
+  "title": "GNOME Shell Design Dreams",
+  "source_url": "https://blogs.gnome.org/shell-dev/2026/08/11/gnome-shell-design-dreams/",
+  "source_type": "rss",
+  "summary": "该文章是 GNOME Shell 开发团队发表的设计展望，探讨未来桌面环境的界面改进与交互理念。内容主要围绕用户体验、窗口管理、视觉风格等传统桌面设计话题，与人工智能技术无直接关联。原始描述仅包含评论链接，未提供具体技术细节。作为 AI 技术情报，此内容相关性极低。",
+  "tags": [
+    "gnome",
+    "design",
+    "desktop"
+  ],
+  "category": "tool",
+  "status": "review",
+  "collected_at": "2026-08-12T09:16:31Z",
+  "analyzed_at": "2026-08-12T09:17:30Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Tue, 11 Aug 2026 09:08:21 -0500",
+    "source_name": "Lobsters AI/ML",
+    "highlights": [],
+    "score": 1,
+    "score_reason": "内容与AI无关，仅涉及GUI设计，技术情报价值低。"
+  }
+}

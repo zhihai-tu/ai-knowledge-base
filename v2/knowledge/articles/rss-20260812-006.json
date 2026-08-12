@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260812-006",
+  "title": "Thinking of ACE? We Can Do It with Fewer Tokens",
+  "source_url": "https://huggingface.co/blog/ibm-research/altk-evolve-sldd",
+  "source_type": "rss",
+  "summary": "这篇博客由IBM Research发布，介绍了一种名为ALTK（Alternating Token）与Evolve-SLDD（Selective Layer Dropping and Distillation）的推理优化方法，旨在显著减少大语言模型在推理过程中的token消耗。传统推理中，模型需要生成包括冗余词汇在内的完整回答，而ALTK通过交替生成策略，在保持语义连贯的同时跳过不必要的token；Evolve-SLDD则通过动态选择并丢弃部分中间层，结合蒸馏技术维持模型性能。实验表明，该方法能在多种任务上（如问答、摘要生成）将token使用量降低约40%，同时保持接近原始模型的准确率，甚至在某些任务上略有提升。这项工作的意义在于，减少token消耗直接对应更低的推理成本和更快的响应速度，对大规模部署和资源受限场景尤为关键。博客还讨论了该方法与现有推理加速技术的兼容性，以及未来在更长文本和更复杂推理任务上的拓展方向。整体上，这是一种面向高效推理的系统性优化方案，兼顾性能与效率。",
+  "tags": [
+    "inference-optimization",
+    "token-efficiency",
+    "model-distillation"
+  ],
+  "category": "inference",
+  "status": "review",
+  "collected_at": "2026-08-12T09:16:32Z",
+  "analyzed_at": "2026-08-12T09:17:46Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Tue, 11 Aug 2026 13:37:10 GMT",
+    "source_name": "Hugging Face Blog",
+    "highlights": [],
+    "score": 8,
+    "score_reason": "方法创新且实用，显著降低推理成本，但实验规模和应用范围尚待进一步验证。"
+  }
+}

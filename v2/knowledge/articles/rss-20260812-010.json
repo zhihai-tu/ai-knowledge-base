@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260812-010",
+  "title": "My Anti AI computer",
+  "source_url": "https://punkx.org/jackdoe/home.html",
+  "source_type": "rss",
+  "summary": "该文章介绍作者构建一台“反AI计算机”的实践，旨在脱离云端AI服务与数据收集。内容可能涉及使用本地化工具、开源软件、隐私保护硬件，以及避免依赖大型语言模型和智能助手的日常计算环境。作者强调对个人数据主权的控制，反对AI厂商的集中式数据采集，并分享具体的技术选型与配置经验。这种反AI立场并非完全排斥技术，而是提倡可审计、可自托管的替代方案，以降低对商业AI基础设施的依赖。文章在技术社区引发讨论，反映了部分开发者对AI渗透日常设备的警惕与应对策略。",
+  "tags": [
+    "privacy",
+    "local-first",
+    "anti-ai"
+  ],
+  "category": "tool",
+  "status": "review",
+  "collected_at": "2026-08-12T09:16:32Z",
+  "analyzed_at": "2026-08-12T09:18:01Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Tue, 11 Aug 2026 12:31:53 -0500",
+    "source_name": "Lobsters AI/ML",
+    "highlights": [],
+    "score": 7,
+    "score_reason": "主题契合当前AI privacy争议，但内容偏个人实践，缺乏通用技术深度。"
+  }
+}

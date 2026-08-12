@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260812-005",
+  "title": "Testing ads in ChatGPT",
+  "source_url": "https://openai.com/index/testing-ads-in-chatgpt",
+  "source_type": "rss",
+  "summary": "OpenAI宣布开始在ChatGPT中测试广告，旨在支持免费用户访问。广告将带有明确标识，确保不影响回答的独立性和质量，同时加强隐私保护，并为用户提供控制选项。此举是OpenAI探索商业化路径的一部分，在不损害用户体验的前提下维持免费服务。测试初期将面向部分用户，并根据反馈逐步调整。该举措引发了关于AI产品中广告植入如何平衡商业利益与用户信任的讨论。",
+  "tags": [
+    "advertising",
+    "ChatGPT",
+    "monetization"
+  ],
+  "category": "llm",
+  "status": "review",
+  "collected_at": "2026-08-12T09:16:32Z",
+  "analyzed_at": "2026-08-12T09:17:42Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Tue, 11 Aug 2026 10:00:00 GMT",
+    "source_name": "OpenAI Blog",
+    "highlights": [],
+    "score": 5,
+    "score_reason": "该内容具有商业和产品意义，但技术含量较低，对AI研究影响有限。"
+  }
+}

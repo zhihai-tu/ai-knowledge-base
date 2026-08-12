@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260812-008",
+  "title": "Saber denies replacing Rideshare Stimulator&#8217;s writers with ChatGPT",
+  "source_url": "https://www.theverge.com/games/978558/rideshare-stimulator-writer-ai-saber-interactive",
+  "source_type": "rss",
+  "summary": "《The Verge》报道了Saber Interactive关于其游戏《Rideshare Stimulator》的AI使用争议。前首席编剧Stella Sacco在Bluesky上声称，Saber在开发中途用ChatGPT取代了她，且所有乘客语音均为AI生成。然而，Saber CEO Matthew Karch否认这一说法，称“Saber和Unigine都没有用AI取代任何编剧”。Sacco则回应称，要么公司改变了方向，要么未在Steam上披露实情。该游戏由Unigine开发，Saber发行，定位为沉浸式驾驶模拟游戏。事件凸显了游戏行业在AI替代创意人才问题上的透明度和争议，双方各执一词，真相尚待核实。",
+  "tags": [
+    "ChatGPT",
+    "game-dev",
+    "AI-controversy"
+  ],
+  "category": "tool",
+  "status": "review",
+  "collected_at": "2026-08-12T09:16:32Z",
+  "analyzed_at": "2026-08-12T09:17:53Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "2026-08-11T20:39:26-04:00",
+    "source_name": "The Verge (AI)",
+    "highlights": [],
+    "score": 7,
+    "score_reason": "涉及AI在创意产业中的实际应用争议，具有新闻时效性和行业讨论价值，但信息量有限。"
+  }
+}
