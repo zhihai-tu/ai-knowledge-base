@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260813-002",
+  "title": "python's pre-declared constants are kinda weird",
+  "source_url": "https://sebsite.pw/w/20260801-pythonconstants.html",
+  "source_type": "rss",
+  "summary": "文章探讨了Python中预声明常量（如True、False、None等）的设计怪异之处。作者指出这些常量在语言实现中被预先定义，但行为上与其他字面量或标识符存在不一致性，例如它们可以被重新赋值（在旧版本中）、在不同作用域中的处理方式不同，以及编译器对它们的优化方式特殊。文章通过具体代码示例展示了这些常量在语法解析、字节码生成和运行时查找中的特殊地位，并讨论了这种设计带来的困惑与潜在问题。整体而言，这是一篇关于Python语言内部实现细节的技术评论，而非直接涉及AI领域内容。",
+  "tags": [
+    "python",
+    "constants",
+    "language-design"
+  ],
+  "category": "tool",
+  "status": "review",
+  "collected_at": "2026-08-13T09:18:11Z",
+  "analyzed_at": "2026-08-13T09:19:00Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Thu, 13 Aug 2026 00:28:40 -0500",
+    "source_name": "Lobsters AI/ML",
+    "highlights": [],
+    "score": 3,
+    "score_reason": "内容与AI无关，仅涉及编程语言细节，技术深度有限，对AI从业者参考价值低。"
+  }
+}

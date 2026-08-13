@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260813-005",
+  "title": "From assistance to execution: How enterprises put AI to work",
+  "source_url": "https://openai.com/index/how-enterprises-put-ai-to-work",
+  "source_type": "rss",
+  "summary": "OpenAI的研究揭示了企业如何采用智能体AI（agentic AI），并利用ChatGPT和Codex等工具实现从辅助到执行的转变。报告指出，前沿企业正在AI采用方面拉开差距，这些企业不仅将AI用于简单的任务辅助，还将其深度集成到工作流程中，实现自主执行和决策。研究强调了企业采用AI的不同阶段，以及领先企业如何通过战略性地部署智能体系统来获得竞争优势。报告还探讨了AI在企业管理、软件开发等领域的实际应用案例，以及如何通过人机协作提升生产力和创新能力。",
+  "tags": [
+    "enterprise",
+    "agentic-ai",
+    "adoption"
+  ],
+  "category": "agent",
+  "status": "review",
+  "collected_at": "2026-08-13T09:18:12Z",
+  "analyzed_at": "2026-08-13T09:19:15Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Wed, 12 Aug 2026 06:00:00 GMT",
+    "source_name": "OpenAI Blog",
+    "highlights": [],
+    "score": 8,
+    "score_reason": "内容聚焦企业级智能体AI的实践与趋势，具有较高行业洞察价值。"
+  }
+}

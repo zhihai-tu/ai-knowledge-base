@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260813-010",
+  "title": "I hate packaging my software for Linux",
+  "source_url": "https://getfresh.dev/docs/blog/packaging-for-linux/",
+  "source_type": "rss",
+  "summary": "文章作者抱怨为Linux打包软件的繁琐体验。Linux发行版众多，打包格式各异（deb、rpm、AppImage、Flatpak、Snap等），依赖管理复杂，缺乏统一标准，导致开发者需要花费大量精力适配不同发行版和架构。作者可能探讨了现有打包工具的不足，并表达了对简化流程的渴望。这是一篇关于开发者工具链痛点的技术博客，反映了Linux生态碎片化对软件分发的影响，但内容与人工智能技术无直接关联。",
+  "tags": [
+    "packaging",
+    "linux",
+    "developer-experience"
+  ],
+  "category": "tool",
+  "status": "review",
+  "collected_at": "2026-08-13T09:18:13Z",
+  "analyzed_at": "2026-08-13T09:19:34Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Wed, 12 Aug 2026 07:40:12 -0500",
+    "source_name": "Lobsters AI/ML",
+    "highlights": [],
+    "score": 2,
+    "score_reason": "内容为软件打包抱怨，与AI技术无关，仅对工具链生态有间接参考价值。"
+  }
+}

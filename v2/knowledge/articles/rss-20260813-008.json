@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260813-008",
+  "title": "Twitch streamers can now opt out from training Amazon’s AI",
+  "source_url": "https://www.theverge.com/tech/979112/twitch-streamers-can-now-opt-out-from-training-amazons-ai",
+  "source_type": "rss",
+  "summary": "Twitch宣布主播现在可以选择退出，将其内容用于训练亚马逊的生成式AI模型。根据Twitch支持页面，选择退出意味着主播的直播、回放、剪辑、聊天记录以及频道上的图片和文字将不会用于亚马逊AI模型的“未来训练”，这些模型旨在生成或合成文本、音频、图像或视频。然而，字幕和安全工具等“AI支持”功能仍会正常运行。值得注意的是，如果用户在其他主播的直播间参与聊天，则该聊天内容是否用于训练将由该主播的退出偏好决定。这一政策反映了平台在AI训练数据使用上的透明度与用户控制权，但并未完全禁止所有AI功能，仅针对生成式AI的训练环节。对于内容创作者而言，这提供了一定程度的保护，但仍有模糊地带，例如跨直播间聊天的归属问题。该举措可能对直播行业及其他用户生成内容平台的AI政策产生示范效应。",
+  "tags": [
+    "Twitch",
+    "Amazon",
+    "AI-training"
+  ],
+  "category": "training",
+  "status": "review",
+  "collected_at": "2026-08-13T09:18:13Z",
+  "analyzed_at": "2026-08-13T09:19:26Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "2026-08-12T13:29:10-04:00",
+    "source_name": "The Verge (AI)",
+    "highlights": [],
+    "score": 6,
+    "score_reason": "该政策影响直播内容在AI训练中的使用，体现数据主权趋势，但仅针对单一平台，影响范围有限。"
+  }
+}

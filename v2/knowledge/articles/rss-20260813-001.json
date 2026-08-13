@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260813-001",
+  "title": "Someone is running mass vulnerability scans, spoofing AI bots like ClaudeBot",
+  "source_url": "https://knownagents.com/insights",
+  "source_type": "rss",
+  "summary": "这篇报道揭示了一种新型网络安全威胁：攻击者伪装成合法的AI爬虫机器人（如ClaudeBot）进行大规模漏洞扫描。通过伪造AI bot的用户代理，攻击者可以绕过网站的反爬虫防护和访问控制，使扫描行为被误认为是正常的AI数据采集。文章分析了这一现象的规模、技术手法和潜在危害，指出此类活动可能被用于寻找可利用的安全漏洞，进而发起更严重的攻击。同时，它也警示了AI生态系统中信任机制的风险，因为网站通常会对已知AI bot放行。作者建议网站运营者应验证bot身份，而非仅依赖用户代理字符串，并加强日志监控以识别异常行为。该话题在Hacker News上引发广泛讨论，反映了社区对AI bot身份信任和安全边界的关注。",
+  "tags": [
+    "security",
+    "spoofing",
+    "bot"
+  ],
+  "category": "agent",
+  "status": "review",
+  "collected_at": "2026-08-13T09:18:11Z",
+  "analyzed_at": "2026-08-13T09:18:55Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Wed, 12 Aug 2026 14:02:46 +0000",
+    "source_name": "Hacker News Best (AI)",
+    "highlights": [],
+    "score": 7,
+    "score_reason": "揭示了AI agent信任机制中的安全漏洞，具有现实威胁性和讨论热度，但并非全新的技术方向。"
+  }
+}

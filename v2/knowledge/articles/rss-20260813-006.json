@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260813-006",
+  "title": "Introducing OlmoEarth embeddings: Custom embedding exports from OlmoEarth Studio for downstream analysis",
+  "source_url": "https://huggingface.co/blog/allenai/olmoearth-embeddings",
+  "source_type": "rss",
+  "summary": "OlmoEarth是艾伦人工智能研究所推出的地理空间基础模型，该博客介绍了其嵌入导出功能。用户可以通过OlmoEarth Studio自定义生成嵌入向量，并导出用于下游分析任务。该功能支持对卫星和航空影像等地理空间数据进行特征提取，生成的嵌入可用于检索、聚类、分类等场景。博客详细说明了使用流程、API接口以及嵌入的维度与格式，并展示了示例代码。此功能旨在降低地理空间AI应用的门槛，使研究者无需训练完整模型即可利用预训练表示，从而加速遥感领域的分析工作。",
+  "tags": [
+    "embeddings",
+    "geospatial",
+    "olmoearth"
+  ],
+  "category": "tool",
+  "status": "review",
+  "collected_at": "2026-08-13T09:18:13Z",
+  "analyzed_at": "2026-08-13T09:19:18Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Wed, 12 Aug 2026 16:14:36 GMT",
+    "source_name": "Hugging Face Blog",
+    "highlights": [],
+    "score": 8,
+    "score_reason": "该功能实用性强，为地理空间数据分析提供了便利的嵌入导出工具，但创新性相对常规。"
+  }
+}

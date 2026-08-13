@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260813-009",
+  "title": "AI is removing the middle class of software engineering?",
+  "source_url": "https://blog.florianherrengt.com/ai-removing-middle-class-software-engineering.html",
+  "source_type": "rss",
+  "summary": "文章探讨AI对软件工程职业结构的冲击，认为AI正在消除中级工程师（middle class）的岗位，同时保留初级和高级两极。作者观察到，AI编码工具大幅提升了单个开发者的生产力，使得原本需要中等规模团队完成的任务可以由少数高级工程师加AI完成。这导致对中级工程师的需求锐减，因为他们的工作容易被AI辅助的高效流程替代。初级工程师仍能通过实习或入门岗位进入行业，但晋升通道变窄，因为中级技能不再被市场看重。高级工程师则因能有效利用AI、负责架构和复杂决策而更加稀缺和重要。文章警告，这种变化将重塑工程团队结构，可能加剧人才金字塔的极端化，并建议工程师应聚焦于高级技能（如系统设计、产品判断）或学会驾驭AI工具以保持竞争力。文中也讨论了公司招聘策略、薪资分化以及教育体系面临的挑战。整体视角偏重行业观察和职业建议，而非技术实现。",
+  "tags": [
+    "AI impact",
+    "software engineering",
+    "career"
+  ],
+  "category": "tool",
+  "status": "review",
+  "collected_at": "2026-08-13T09:18:13Z",
+  "analyzed_at": "2026-08-13T09:19:31Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Wed, 12 Aug 2026 13:20:05 +0000",
+    "source_name": "Hacker News Best (AI)",
+    "highlights": [],
+    "score": 8,
+    "score_reason": "观点深刻且数据支撑充分，引发广泛讨论，对职业规划有现实指导意义。"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260813-003",
+  "title": "Dynamic Governance of Multi-LLM Agent Systems for Collaborative Conversational Outcomes",
+  "source_url": "https://arxiv.org/abs/2608.11207",
+  "source_type": "rss",
+  "summary": "本文研究多LLM智能体系统中，当两个目标结构对立的智能体进行多轮交互时，缺乏共享目标函数会导致对话崩溃而非竞争：访客放弃、站点智能体停止变化、对话终止且双方目标均未达成。作者提出体验编排器（EO），在模拟金融服务环境中通过三个机制治理联合轨迹：基于真实网络分析校准内容臂的上下文老虎机、通过动态模式约束强制行为一致性的PID控制器、以及维护访客意图概率模型的POMDP信念追踪器。在6万次模拟中，EO将高意向顾问联系率从46.1%提升至78.1%，相对提升32个百分点；上下文老虎机的变体选择解释了97%的因子间结果方差，表明治理策略而非环境初始条件决定轨迹终点。人物层面分析识别出两种机制：对无自然转化倾向的访客，治理层是系统功能性与非功能性的分界；对已近对齐的访客，朴素LLM的共情默认值基本够用。所有结论基于LLM间模拟，PID控制器未针对真实人类不可预测性校准，在实时流量上验证EO是关键下一步。",
+  "tags": [
+    "multi-agent",
+    "governance",
+    "POMDP"
+  ],
+  "category": "agent",
+  "status": "review",
+  "collected_at": "2026-08-13T09:18:11Z",
+  "analyzed_at": "2026-08-13T09:19:04Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Thu, 13 Aug 2026 00:00:00 -0400",
+    "source_name": "arXiv cs.AI",
+    "highlights": [],
+    "score": 7,
+    "score_reason": "提出控制理论治理层解决多智能体对话崩溃问题，实验设计较严谨，但限于模拟环境且PID未对标真实人类，实用性待验证。"
+  }
+}
