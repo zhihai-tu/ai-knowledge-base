@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260814-008",
+  "title": "Microsoft’s Clippy-like Mico character is no longer the face of Copilot",
+  "source_url": "https://www.theverge.com/tech/979871/microsoft-copilot-mico-retired",
+  "source_type": "rss",
+  "summary": "微软宣布将其Copilot语音模式中的情感化黄色斑点形象“Mico”移除，不再作为聊天机器人的界面出现。Mico去年十月推出，由微软AI CEO Mustafa Suleyman主导，旨在为Copilot赋予“身份”，能够实时对用户话语做出表情和动画反应。如今，Mico将被转移到微软的Learn Live平台，声称在那里能有“更多可反应的内容”。这一决定使Mico加入微软多年来退休的虚拟助手行列，如Clippy、Cortana和Rover。此举反映了微软对AI助手交互体验的调整，从单纯的拟人化角色转向更实用的功能导向。不过，这并不意味着Copilot的语音功能消失，只是不再有Mico作为视觉化身。该变化可能源于用户反馈或产品战略调整。",
+  "tags": [
+    "Copilot",
+    "Mico",
+    "Microsoft AI"
+  ],
+  "category": "agent",
+  "status": "review",
+  "collected_at": "2026-08-14T09:12:42Z",
+  "analyzed_at": "2026-08-14T09:14:07Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "2026-08-13T17:42:38-04:00",
+    "source_name": "The Verge (AI)",
+    "highlights": [],
+    "score": 6,
+    "score_reason": "产品界面调整，反映AI助手设计趋势，但技术影响有限，故评分中等。"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260814-003",
+  "title": "Position: Reasoning is a Learnable Rule-Based Process",
+  "source_url": "https://arxiv.org/abs/2608.12325",
+  "source_type": "rss",
+  "summary": "本文是一篇立场论文，针对当前AI推理研究中定义模糊的问题展开讨论。作者指出，生成式AI社区未能对“推理”形成操作性定义，往往忽视逻辑学与可验证自动推理中的历史共识，导致推理评估的构念效度无法验证，阻碍了可信自主推理的量化进展。为此，论文提出基于文献综合的操作性定义，将有效且可靠的推理定位为一种可学习的基于规则的过程，并给出了一套AI推理研究沟通的最佳实践清单。该立场强调推理应具备可验证性，呼吁社区在研究和报告中明确规则性与可学习性，以提升研究的科学严谨性。",
+  "tags": [
+    "reasoning",
+    "rule-based",
+    "evaluation"
+  ],
+  "category": "llm",
+  "status": "review",
+  "collected_at": "2026-08-14T09:12:40Z",
+  "analyzed_at": "2026-08-14T09:13:44Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Fri, 14 Aug 2026 00:00:00 -0400",
+    "source_name": "arXiv cs.AI",
+    "highlights": [],
+    "score": 7,
+    "score_reason": "论文聚焦推理定义与评估方法，对提升研究严谨性有重要价值，但观点性较强且未提供实证验证。"
+  }
+}

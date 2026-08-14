@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260814-002",
+  "title": "I want extern \"fil-c\"",
+  "source_url": "https://domenkozar.com/2026/08/13/i-want-extern-fil-c/",
+  "source_type": "rss",
+  "summary": "本文标题借用 C++ 的 extern \"C\" 语法，提出一个类似 extern \"fil-c\" 的设想，可能是指更灵活的外部文件引用或跨语言链接机制。文章可能探讨了现有编译链接模型的局限性，并期望引入一种更简洁、模块化的方式来处理外部依赖或文件级作用域。由于原始描述仅有评论链接，内容细节有限，但推测属于开发者对编程语言工具链改进的讨论。",
+  "tags": [
+    "extern",
+    "linking",
+    "tooling"
+  ],
+  "category": "tool",
+  "status": "review",
+  "collected_at": "2026-08-14T09:12:40Z",
+  "analyzed_at": "2026-08-14T09:13:40Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Thu, 13 Aug 2026 12:43:13 -0500",
+    "source_name": "Lobsters AI/ML",
+    "highlights": [],
+    "score": 4,
+    "score_reason": "标题有创意但信息不足，无法准确评估技术价值。"
+  }
+}
