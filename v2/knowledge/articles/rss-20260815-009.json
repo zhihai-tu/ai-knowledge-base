@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260815-009",
+  "title": "Google is making private AI practical with homomorphic encryption",
+  "source_url": "https://blog.google/security/how-google-is-making-private-ai-practical-with-homomorphic-encryption/",
+  "source_type": "rss",
+  "summary": "谷歌正在推进同态加密（HE）技术在AI领域的实际应用，旨在解决数据隐私与模型推理之间的矛盾。传统同态加密计算开销巨大，难以用于复杂模型，但谷歌通过优化加密方案、硬件加速和模型架构调整，使加密数据上的推理变得可行。该技术允许在不解密用户数据的情况下运行AI模型，返回加密结果后由用户本地解密，从而保护敏感信息。文章介绍了谷歌在HE上的最新进展，包括更高效的编码方法、针对Transformer架构的优化，以及与学术和工业界的合作。这一突破对于医疗、金融等隐私敏感行业意义重大，使得云端AI服务能够在不暴露原始数据的前提下提供智能分析。尽管仍面临性能瓶颈和工程复杂性挑战，但谷歌的成果标志着私有AI从理论走向实用。评论区的讨论聚焦于HE的实际效率、安全假设以及与传统可信执行环境（TEE）的对比，反映出业界对隐私计算技术路线的关注。",
+  "tags": [
+    "homomorphic-encryption",
+    "privacy",
+    "inference"
+  ],
+  "category": "inference",
+  "status": "review",
+  "collected_at": "2026-08-15T08:34:36Z",
+  "analyzed_at": "2026-08-15T08:36:15Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Fri, 14 Aug 2026 15:43:10 +0000",
+    "source_name": "Hacker News Best (AI)",
+    "highlights": [],
+    "score": 8,
+    "score_reason": "谷歌解决同态加密实用化难题，显著推进私有AI推理落地，但性能挑战仍存，故评8分。"
+  }
+}

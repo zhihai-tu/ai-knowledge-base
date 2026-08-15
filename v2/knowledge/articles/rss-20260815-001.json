@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260815-001",
+  "title": "AI by Hand",
+  "source_url": "https://www.byhand.ai/",
+  "source_type": "rss",
+  "summary": "AI by Hand 是一个互动式教育网站，通过手工绘制和逐步操作的方式，直观展示人工智能核心概念，如神经网络、反向传播、注意力机制等。它旨在帮助学习者和开发者在不依赖代码的情况下，从数学和算法层面深入理解现代 AI 模型的工作原理。该资源在 Hacker News 上获得 287 分和 21 条评论，说明其受到技术社区认可，具有较高的教学价值和启发性。对于希望夯实 AI 基础或可视化理解复杂机制的读者，这是一个实用且友好的工具。",
+  "tags": [
+    "education",
+    "visualization",
+    "neural-networks"
+  ],
+  "category": "tool",
+  "status": "review",
+  "collected_at": "2026-08-15T08:34:35Z",
+  "analyzed_at": "2026-08-15T08:35:32Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Fri, 14 Aug 2026 15:58:59 +0000",
+    "source_name": "Hacker News Best (AI)",
+    "highlights": [],
+    "score": 8,
+    "score_reason": "以直观手工方式解释 AI 核心概念，社区评分高，教学价值突出，但可能缺乏深度代码实践。"
+  }
+}

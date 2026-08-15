@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260815-010",
+  "title": "Firefox is now the last major browser that still supports uBlock Origin",
+  "source_url": "https://www.pcworld.com/article/3212428/firefox-is-now-the-last-major-browser-that-still-supports-ublock-origin.html",
+  "source_type": "rss",
+  "summary": "本文报道了一个关于浏览器生态的重要变化：Firefox 成为唯一仍支持 uBlock Origin 广告拦截扩展的主要浏览器。由于 Google Chrome 等基于 Chromium 的浏览器转向 Manifest V3 扩展规范，限制了广告拦截类扩展的功能，uBlock Origin 在这些浏览器中已无法正常使用。Firefox 坚持支持传统扩展模型，因此成为注重隐私和广告拦截用户的主流选择。这一变化对用户选择和浏览器市场竞争产生影响。",
+  "tags": [
+    "Firefox",
+    "uBlock Origin",
+    "browser"
+  ],
+  "category": "tool",
+  "status": "review",
+  "collected_at": "2026-08-15T08:34:36Z",
+  "analyzed_at": "2026-08-15T08:36:19Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Sat, 15 Aug 2026 00:08:35 -0500",
+    "source_name": "Lobsters AI/ML",
+    "highlights": [],
+    "score": 3,
+    "score_reason": "内容与AI技术关联较弱，主要涉及浏览器扩展生态，作为工具类信息价值有限。"
+  }
+}

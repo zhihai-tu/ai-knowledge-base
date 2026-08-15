@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260815-002",
+  "title": "RISC-V: They Should Have Known Better",
+  "source_url": "https://dmitry.gr/?r=06.%20Thoughts&amp;proj=12.%20RV",
+  "source_type": "rss",
+  "summary": "该文章题为“RISC-V: They Should Have Known Better”，作者在 dmitry.gr 上发帖讨论 RISC-V 指令集架构的设计问题。文章指出 RISC-V 在制定规范时可能忽略了某些历史教训，导致其指令编码、扩展机制或生态存在潜在缺陷。虽然内容核心是 CPU 架构设计与工程决策，并非直接聚焦 AI 算法或模型，但 RISC-V 作为开源硬件指令集，已被广泛应用于 AI 推理芯片、边缘计算和专用加速器设计中。因此，该讨论对 AI 基础设施的硬件选型、芯片定制化设计以及推理性能优化具有间接参考价值。文章引发的评论区讨论（来自 lobste.rs）也反映了开发者和硬件工程师对 RISC-V 实用性的争议。整体而言，内容技术性强，涉及底层架构细节，适合关注 AI 算力与硬件协同的技术人员阅读。",
+  "tags": [
+    "risc-v",
+    "hardware",
+    "cpu"
+  ],
+  "category": "inference",
+  "status": "review",
+  "collected_at": "2026-08-15T08:34:35Z",
+  "analyzed_at": "2026-08-15T08:35:41Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Fri, 14 Aug 2026 14:12:53 -0500",
+    "source_name": "Lobsters AI/ML",
+    "highlights": [],
+    "score": 3,
+    "score_reason": "内容与 AI 间接相关，仅属于底层硬件架构讨论，对 AI 推理有一定参考但缺乏直接技术价值。"
+  }
+}
