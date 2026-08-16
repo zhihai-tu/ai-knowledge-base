@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260816-009",
+  "title": "Why I remain a skeptic",
+  "source_url": "https://blog.jsbarretto.com/post/i-remain-a-skeptic",
+  "source_type": "rss",
+  "summary": "文章标题为《Why I remain a skeptic》，作者在评论区中表达了对当前AI领域主流叙事的持续怀疑态度。文章可能针对大型语言模型（LLM）或相关AI技术的实际能力与宣传差距提出质疑，强调尽管技术发展迅速，但许多看似智能的行为可能只是统计模式匹配，而非真正的理解和推理。作者可能指出当前AI系统在可靠性、可解释性、鲁棒性等方面仍存在根本性缺陷，并认为业界对AGI或替代人类工作的乐观预期缺乏充分证据。作为一种理性反思，文章呼吁保持批判性思维，避免被资本和市场驱动的技术炒作所裹挟，同时不否认AI在某些具体任务上的实用性。总体而言，这是一篇观点性文章，旨在平衡当前AI热浪中的过度乐观情绪。",
+  "tags": [
+    "skepticism",
+    "AI",
+    "LLM"
+  ],
+  "category": "llm",
+  "status": "review",
+  "collected_at": "2026-08-16T08:35:36Z",
+  "analyzed_at": "2026-08-16T08:37:20Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Sat, 15 Aug 2026 08:29:59 -0500",
+    "source_name": "Lobsters AI/ML",
+    "highlights": [],
+    "score": 6,
+    "score_reason": "文章对AI局限性提出合理批判，但缺乏具体案例和深度分析，结合不确定性给中等偏上评分。"
+  }
+}

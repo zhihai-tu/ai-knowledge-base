@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260816-007",
+  "title": "Have a laugh at AI’s expense by roleplaying as a chatbot",
+  "source_url": "https://www.theverge.com/entertainment/980502/roleplay-as-an-ai-chatbot",
+  "source_type": "rss",
+  "summary": "The Verge介绍了一个名为“Your AI Slop Bores Me”的娱乐网站，用户通过角色扮演AI聊天机器人来互相捉弄。网站提供“human”和“LARP as an AI”两个标签页，一方输入请求，另一方扮演AI在150秒内回答，且双方都是真人。它模仿真实LLM的积分机制：请求消耗积分，用户需通过回答他人请求赚取积分，或每两分钟获得一次免费请求。该网站旨在以幽默方式讽刺AI生成的“垃圾内容”，让用户体验AI的思维方式，同时也是一种有趣的社交互动。",
+  "tags": [
+    "roleplay",
+    "AI-parody",
+    "entertainment"
+  ],
+  "category": "tool",
+  "status": "review",
+  "collected_at": "2026-08-16T08:35:36Z",
+  "analyzed_at": "2026-08-16T08:37:08Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "2026-08-15T16:45:00-04:00",
+    "source_name": "The Verge (AI)",
+    "highlights": [],
+    "score": 6,
+    "score_reason": "创意有趣，反映AI文化，但技术含量低，仅作为娱乐工具。"
+  }
+}

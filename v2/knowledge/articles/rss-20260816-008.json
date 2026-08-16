@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260816-008",
+  "title": "Working with AI feels more like leadership than coding",
+  "source_url": "https://allen.bargi.org/notes/working-with-ai-feels-like-leadership/",
+  "source_type": "rss",
+  "summary": "文章探讨了与AI协作编程的体验变化，认为开发者角色正从纯粹编码转向类似领导者的工作模式。作者指出，使用AI时，关键技能不再是逐行编写代码，而是明确目标、拆解任务、评估输出并做出决策，这类似于领导团队中的授权与监督。这种转变要求开发者具备更强的沟通能力、判断力和上下文管理能力，而非传统技术细节。文章结合Hacker News上的讨论，反映了开发者对AI工具带来的工作流程变革的复杂感受——既有生产力提升的兴奋，也有对技能退化和失控风险的担忧。作者认为，适应这种新范式需要重新定义开发者的核心能力，将重心从代码实现转向意图表达和结果验证。整体上，文章为AI时代下的软件工程角色演变提供了独特视角，并引发关于未来工作方式与教育方向的思考。",
+  "tags": [
+    "AI-assisted-coding",
+    "workflow",
+    "leadership"
+  ],
+  "category": "tool",
+  "status": "review",
+  "collected_at": "2026-08-16T08:35:36Z",
+  "analyzed_at": "2026-08-16T08:37:13Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Sat, 15 Aug 2026 10:39:41 +0000",
+    "source_name": "Hacker News Best (AI)",
+    "highlights": [],
+    "score": 8,
+    "score_reason": "观点新颖且具启发性，精准捕捉AI协作带来的角色转变，讨论深度与社区共鸣俱佳。"
+  }
+}

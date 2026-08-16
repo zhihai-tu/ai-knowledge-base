@@ -1,0 +1,28 @@
+{
+  "id": "rss-20260816-010",
+  "title": "Previewing Ultrafast mode: GPT-5.6 Sol at up to 14X the speed",
+  "source_url": "https://openai.com/index/previewing-ultrafast",
+  "source_type": "rss",
+  "summary": "OpenAI 预览了新的 Ultrafast API 服务层，宣称运行 GPT-5.6 Sol 模型的速度可提升高达 14 倍，由 Cerebras 提供硬件支持，每秒最多可输出 750 个 token。这一突破显著降低了大模型推理的延迟，特别适用于实时对话、代码生成、流式输出等对响应速度要求极高的场景。通过专用硬件优化，OpenAI 在保持模型能力的同时大幅提升了吞吐量，这标志着 AI 推理性能又迈上了一个新台阶。该预览服务目前面向开发者开放，未来可能成为 API 产品中的常驻选项，并推动更多实时 AI 应用的落地。",
+  "tags": [
+    "ultrafast",
+    "inference",
+    "cerebras"
+  ],
+  "category": "inference",
+  "status": "review",
+  "collected_at": "2026-08-16T08:35:36Z",
+  "analyzed_at": "2026-08-16T08:37:27Z",
+  "published_at": null,
+  "distribution": {
+    "telegram": false,
+    "feishu": false
+  },
+  "metadata": {
+    "published": "Thu, 13 Aug 2026 10:00:00 GMT",
+    "source_name": "OpenAI Blog",
+    "highlights": [],
+    "score": 8,
+    "score_reason": "14倍加速和750 token/s的吞吐量是重大性能提升，但仍处于预览阶段且依赖特定硬件，实际效果需进一步验证。"
+  }
+}
