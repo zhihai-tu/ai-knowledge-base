@@ -11,22 +11,25 @@
 - ``DASHSCOPE_API_KEY``: 阿里云百炼（Qwen）的 API Key
 - ``OPENAI_API_KEY``: OpenAI 的 API Key
 - ``GLM_API_KEY``: 智谱 GLM（或第三方兼容服务）的 API Key
-- ``GLM_BASE_URL``: 可选，覆盖 GLM 默认 base_url（用于商汤 SenseNova
-  等第三方接入，如 https://token.sensenova.cn/v1）
-- ``GLM_MODEL``: 可选，覆盖 GLM 默认模型名
+- ``QWEN_BASE_URL`` / ``QWEN_MODEL``: 可选，覆盖 qwen 的 base_url / 模型名
+  （用于百炼专属网关等自定义 OpenAI 兼容地址）
+- ``GLM_BASE_URL`` / ``GLM_MODEL``: 可选，覆盖 glm 的 base_url / 模型名
+  （用于商汤 SenseNova https://token.sensenova.cn/v1 等第三方兼容服务）
 
 本模块使用 httpx 直接调用 OpenAI 兼容的 /chat/completions 接口，
-不依赖 openai SDK。所有提供商（DeepSeek / Qwen / OpenAI / GLM）均返回
-统一的 :class:`LLMResponse` 结构。
+不依赖 openai SDK。所有提供商均返回统一的结构。
 
 配置优先级：进程环境变量 ``>`` 项目根目录下的 ``.env`` 文件。
 后者以内置的 :func:`load_dotenv` 加载，无需安装 python-dotenv。
 
+成本追踪：调用方通过 :func:`accumulate_usage` 把每次调用的 :class:`Usage`
+累加进状态中的成本汇总 dict（如 ``state["cost_tracker"]``）。
+
 用法示例::
 
-    from workflows.model_client import quick_chat
+    from workflows.model_client import chat_json
 
-    reply = quick_chat("用一句话介绍你自己。")
+    parsed, usage = chat_json("用一句话介绍你自己，输出 JSON。")
 """
 
 import json
@@ -34,7 +37,6 @@ import logging
 import os
 import re
 import time
-from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Optional
@@ -52,7 +54,8 @@ RETRYABLE_STATUS_CODES = {429, 500, 502, 503, 504}
 # 且对突发速率敏感，需比 5xx 更长的冷却等待。
 RATE_LIMIT_BACKOFF_MULTIPLIER = 5.0
 
-# 各提供商的配置：base_url、默认模型、API Key 环境变量名。
+# 各提供商的配置：base_url、默认模型、API Key 环境变量名，
+# 以及可选的 base_url / 模型名覆盖环境变量（如商汤 SenseNova 等第三方接入）。
 PROVIDER_CONFIGS = {
     "deepseek": {
         "base_url": "https://api.deepseek.com",
@@ -63,6 +66,8 @@ PROVIDER_CONFIGS = {
         "base_url": "https://dashscope-intl.aliyuncs.com/compatible-mode/v1",
         "model": "qwen-plus",
         "api_key_env": "DASHSCOPE_API_KEY",
+        "base_url_env": "QWEN_BASE_URL",
+        "model_env": "QWEN_MODEL",
     },
     "openai": {
         "base_url": "https://api.openai.com/v1",
@@ -73,6 +78,8 @@ PROVIDER_CONFIGS = {
         "base_url": "https://open.bigmodel.cn/api/paas/v4",
         "model": "glm-5.2",
         "api_key_env": "GLM_API_KEY",
+        "base_url_env": "GLM_BASE_URL",
+        "model_env": "GLM_MODEL",
     },
 }
 
@@ -105,101 +112,6 @@ class Usage:
     total_tokens: int = 0
 
 
-class CostTracker:
-    """追踪 LLM 调用的 token 消耗与估算成本。
-
-    每次 API 调用成功后由 :meth:`OpenAICompatibleProvider.chat` 自动记录，
-    Pipeline 结束时可通过 :meth:`report` 输出成本报告。
-
-    成本统一按模型单价（:data:`MODEL_PRICES_USD`）计算，以 USD 展示。
-
-    Attributes:
-        _records: 各 (提供商, 模型) 组合累计的 token 用量。
-        _calls: 各 (提供商, 模型) 组合的调用次数。
-    """
-
-    def __init__(self) -> None:
-        self._records: dict[tuple[str, str], Usage] = {}
-        self._calls: dict[tuple[str, str], int] = {}
-
-    def record(self, usage: Usage, provider: str, model: str) -> None:
-        """记录一次 API 调用的 token 用量。
-
-        Args:
-            usage: 本次调用的 token 用量统计。
-            provider: 提供商名称（deepseek / qwen / openai）。
-            model: 实际使用的模型名。
-        """
-        key = (provider, model)
-        record = self._records.setdefault(
-            key, Usage(prompt_tokens=0, completion_tokens=0, total_tokens=0)
-        )
-        record.prompt_tokens += usage.prompt_tokens
-        record.completion_tokens += usage.completion_tokens
-        record.total_tokens += usage.total_tokens
-        self._calls[key] = self._calls.get(key, 0) + 1
-
-    def cost_usd(self, provider: str, model: str) -> float:
-        """估算某个 (提供商, 模型) 组合的累计成本（USD）。
-
-        Args:
-            provider: 提供商名称。
-            model: 模型名，须在 :data:`MODEL_PRICES_USD` 中登记。
-
-        Returns:
-            估算成本（美元）；该组合无调用记录时返回 0。
-        """
-        record = self._records.get((provider, model))
-        if record is None:
-            return 0.0
-        input_price, output_price = MODEL_PRICES_USD.get(model, (0.0, 0.0))
-        return (
-            record.prompt_tokens / 1_000_000 * input_price
-            + record.completion_tokens / 1_000_000 * output_price
-        )
-
-    def report(self, provider: Optional[str] = None) -> None:
-        """打印成本报告。
-
-        按模型分行、按提供商汇总，成本以 USD 展示。
-
-        Args:
-            provider: 仅报告该提供商；缺省报告所有记录过的提供商。
-        """
-        logger.info("===== LLM 成本报告 =====")
-        keys = [k for k in self._records if provider is None or k[0] == provider]
-        if not keys:
-            logger.info("（无任何已记录的调用）")
-            logger.info("========================")
-            return
-        by_provider: dict[str, dict[str, tuple]] = {}
-        for prov, model in sorted(keys):
-            by_provider.setdefault(prov, {})[model] = (
-                self._records[(prov, model)],
-                self._calls[(prov, model)],
-            )
-        grand_usd = 0.0
-        for prov, models in sorted(by_provider.items()):
-            provider_usd = 0.0
-            for model, (record, calls) in sorted(models.items()):
-                usd = self.cost_usd(prov, model)
-                provider_usd += usd
-                grand_usd += usd
-                logger.info(
-                    "[%s/%s] 调用 %d 次: 输入 %d tokens, 输出 %d tokens, 估算成本 %.6f USD",
-                    prov, model, calls,
-                    record.prompt_tokens, record.completion_tokens,
-                    usd,
-                )
-            logger.info("  %s 提供商合计: %.6f USD",
-                        prov, provider_usd)
-        logger.info("全部合计: %.6f USD", grand_usd)
-        logger.info("========================")
-
-
-tracker = CostTracker()
-
-
 @dataclass
 class LLMResponse:
     """统一的 LLM 响应。
@@ -217,26 +129,34 @@ class LLMResponse:
     finish_reason: Optional[str] = None
 
 
-class LLMProvider(ABC):
-    """LLM 提供商抽象基类。
+class LLMProvider:
+    """基于 OpenAI 兼容 /chat/completions 接口的 LLM 提供商实现。
 
-    子类需实现 :meth:`chat`，向各自后端发起对话请求并返回
-    统一的 :class:`LLMResponse`。
+    适用于 DeepSeek、Qwen（百炼）、OpenAI、GLM 等提供兼容接口的服务。
+    通过 :func:`create_provider` 统一创建。
     """
 
-    def __init__(self, api_key: str, base_url: str, model: str) -> None:
+    def __init__(
+        self,
+        api_key: str,
+        base_url: str,
+        model: str,
+        provider_name: Optional[str] = None,
+    ) -> None:
         """初始化提供商实例。
 
         Args:
             api_key: 提供商 API Key。
             base_url: OpenAI 兼容接口的基础地址。
             model: 使用的模型名称。
+            provider_name: 提供商名称（deepseek / qwen / openai / glm），
+                用于成本追踪与成本键生成（见 :func:`accumulate_usage`）。
         """
         self._api_key = api_key
         self.base_url = base_url.rstrip("/")
         self.model = model
+        self.provider_name = provider_name
 
-    @abstractmethod
     def chat(
         self,
         messages: list[dict[str, str]],
@@ -258,41 +178,6 @@ class LLMProvider(ABC):
             httpx.HTTPStatusError: 服务端返回非 2xx 状态码。
             httpx.RequestError: 网络请求失败或超时。
         """
-
-
-class OpenAICompatibleProvider(LLMProvider):
-    """基于 OpenAI 兼容 /chat/completions 接口的实现。
-
-    适用于 DeepSeek、Qwen（百炼）、OpenAI 等提供兼容接口的服务。
-    每次调用成功后自动将 token 用量记录到全局 :data:`tracker`。
-    """
-
-    def __init__(
-        self,
-        api_key: str,
-        base_url: str,
-        model: str,
-        provider_name: Optional[str] = None,
-    ) -> None:
-        """初始化提供商实例。
-
-        Args:
-            api_key: 提供商 API Key。
-            base_url: OpenAI 兼容接口的基础地址。
-            model: 使用的模型名称。
-            provider_name: 提供商名称（deepseek / qwen / openai），
-                用于成本追踪；为 None 时不记录。
-        """
-        super().__init__(api_key, base_url, model)
-        self.provider_name = provider_name
-
-    def chat(
-        self,
-        messages: list[dict[str, str]],
-        temperature: float = 0.7,
-        max_tokens: Optional[int] = None,
-    ) -> LLMResponse:
-        """发起一次对话请求，见 :meth:`LLMProvider.chat`。"""
         payload: dict = {
             "model": self.model,
             "messages": messages,
@@ -319,8 +204,6 @@ class OpenAICompatibleProvider(LLMProvider):
             completion_tokens=usage_data.get("completion_tokens", 0),
             total_tokens=usage_data.get("total_tokens", 0),
         )
-        if self.provider_name:
-            tracker.record(usage, self.provider_name, self.model)
         logger.info(
             "LLM 调用完成: model=%s, prompt=%d, completion=%d, finish=%s",
             self.model,
@@ -368,6 +251,10 @@ def create_provider(
 ) -> LLMProvider:
     """根据环境变量创建默认提供商实例。
 
+    base_url / model 优先级：显式参数 > 提供商专属覆盖环境变量
+    （如 ``QWEN_BASE_URL``、``GLM_MODEL``，用于百炼专属网关、商汤 SenseNova
+    等第三方 OpenAI 兼容服务）> 默认配置。
+
     Args:
         name: 提供商名称（deepseek/qwen/openai/glm），默认读取
             环境变量 ``LLM_PROVIDER``，再缺省为 deepseek。
@@ -397,23 +284,21 @@ def create_provider(
             f"无法创建 {provider_name} 提供商"
         )
 
-    # qwen 支持通过环境变量 QWEN_BASE_URL / QWEN_MODEL 覆盖默认值
-    # （用于百炼专属网关等自定义 OpenAI 兼容地址），不影响其他提供商。
-    if provider_name == "qwen":
-        base_url = base_url or os.getenv("QWEN_BASE_URL") or config["base_url"]
-        model = model or os.getenv("QWEN_MODEL") or config["model"]
+    base_url = (
+        base_url
+        or os.getenv(config.get("base_url_env") or "")
+        or config["base_url"]
+    )
+    model = (
+        model
+        or os.getenv(config.get("model_env") or "")
+        or config["model"]
+    )
 
-    # glm 支持通过环境变量 GLM_BASE_URL / GLM_MODEL 覆盖默认值，
-    # 用于商汤 SenseNova（https://token.sensenova.cn/v1）等第三方
-    # 提供的 glm 模型 OpenAI 兼容服务，不影响官方默认地址。
-    if provider_name == "glm":
-        base_url = base_url or os.getenv("GLM_BASE_URL") or config["base_url"]
-        model = model or os.getenv("GLM_MODEL") or config["model"]
-
-    return OpenAICompatibleProvider(
+    return LLMProvider(
         api_key=api_key,
-        base_url=base_url or config["base_url"],
-        model=model or config["model"],
+        base_url=base_url,
+        model=model,
         provider_name=provider_name,
     )
 
@@ -473,26 +358,6 @@ def chat_with_retry(
         time.sleep(delay)
 
 
-def estimate_tokens(text: str) -> int:
-    """估算文本的 token 数量。
-
-    CJK 字符（中文、日文、韩文）按 1 token 计，其余字符按 0.25 token 计，
-    适用于大部分 LLM 的通用 tokenizer。
-
-    Args:
-        text: 待估算的文本。
-
-    Returns:
-        估算的 token 数。
-    """
-    if not text:
-        return 0
-    total = 0.0
-    for ch in text:
-        total += 1.0 if ord(ch) >= 0x2E80 else 0.25
-    return int(total)
-
-
 def calculate_cost(model: str, prompt_tokens: int, completion_tokens: int) -> float:
     """按 USD 计算一次调用的费用。
 
@@ -515,50 +380,6 @@ def calculate_cost(model: str, prompt_tokens: int, completion_tokens: int) -> fl
         )
     input_price, output_price = price
     return prompt_tokens / 1_000_000 * input_price + completion_tokens / 1_000_000 * output_price
-
-
-def response_cost(model: str, response: LLMResponse) -> float:
-    """根据响应中的用量统计计算费用（USD）。
-
-    Args:
-        model: 模型名称。
-        response: LLM 响应。
-
-    Returns:
-        费用（美元）。
-    """
-    return calculate_cost(model, response.usage.prompt_tokens, response.usage.completion_tokens)
-
-
-def quick_chat(
-    prompt: str,
-    system: Optional[str] = None,
-    provider: Optional[LLMProvider] = None,
-    temperature: float = 0.7,
-    max_tokens: Optional[int] = None,
-) -> str:
-    """一句话调用 LLM，返回文本内容。
-
-    Args:
-        prompt: 用户输入。
-        system: 可选的系统提示词。
-        provider: 提供商实例，默认按环境变量创建。
-        temperature: 采样温度。
-        max_tokens: 输出最大 token 数。
-
-    Returns:
-        模型返回的文本内容。
-    """
-    messages: list[dict[str, str]] = []
-    if system:
-        messages.append({"role": "system", "content": system})
-    messages.append({"role": "user", "content": prompt})
-
-    target = provider or create_provider()
-    response = chat_with_retry(
-        target, messages, temperature=temperature, max_tokens=max_tokens
-    )
-    return response.content
 
 
 def _parse_json_text(text: str) -> tuple[Any, Optional[str]]:
@@ -647,24 +468,22 @@ def accumulate_usage(cost_tracker: dict, usage: Usage, provider: LLMProvider) ->
             "cost_usd": 0.0,
         },
     )
-    input_price, output_price = MODEL_PRICES_USD.get(model, (0.0, 0.0))
     entry["prompt_tokens"] += usage.prompt_tokens
     entry["completion_tokens"] += usage.completion_tokens
     entry["total_tokens"] += usage.total_tokens
     entry["calls"] += 1
-    entry["cost_usd"] += (
-        usage.prompt_tokens / 1_000_000 * input_price
-        + usage.completion_tokens / 1_000_000 * output_price
-    )
+    try:
+        entry["cost_usd"] += calculate_cost(
+            model, usage.prompt_tokens, usage.completion_tokens
+        )
+    except ValueError:
+        logger.warning("模型 %s 未登记价格，本次成本按 0 计", model)
     return merged
 
 
 def main() -> None:
-    """模块自测：验证工具函数，并在配置了 API Key 时做真实调用。"""
+    """模块自测：验证成本计算，并在配置了 API Key 时做真实调用。"""
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
-
-    sample = "中文文本估算示例，用于验证 token 估算。Hello world, this is an English sentence."
-    logger.info("估算 token 数: %d (原文 %d 字符)", estimate_tokens(sample), len(sample))
 
     usage = Usage(prompt_tokens=1000, completion_tokens=200, total_tokens=1200)
     for model in MODEL_PRICES_USD:
@@ -680,11 +499,14 @@ def main() -> None:
     logger.info("提供商: %s, 模型: %s", provider.base_url, provider.model)
     messages = [{"role": "user", "content": "请用一句话介绍你自己。"}]
     response = chat_with_retry(provider, messages)
+    cost = calculate_cost(
+        response.model, response.usage.prompt_tokens, response.usage.completion_tokens
+    )
     logger.info(
         "本次调用: %d in / %d out tokens, 成本 $%.6f",
         response.usage.prompt_tokens,
         response.usage.completion_tokens,
-        response_cost(provider.model, response),
+        cost,
     )
     logger.info("回复: %s", response.content)
 

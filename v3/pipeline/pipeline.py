@@ -28,7 +28,8 @@ import httpx
 import yaml
 
 from model_client import (
-    create_provider, chat_with_retry, load_dotenv, LLMProvider, tracker,
+    create_provider, chat_with_retry, load_dotenv, LLMProvider,
+    accumulate_usage, Usage,
 )
 
 logger = logging.getLogger(__name__)
@@ -287,8 +288,11 @@ def _extract_json(text: str) -> dict[str, Any]:
         raise
 
 
-def analyze_item(provider: LLMProvider, item: dict[str, Any]) -> dict[str, Any]:
-    """调用 LLM 生成摘要 / 标签 / 分类 / 评分，失败时返回未分析条目。"""
+def analyze_item(provider: LLMProvider, item: dict[str, Any]) -> tuple[dict[str, Any], Usage | None]:
+    """调用 LLM 生成摘要 / 标签 / 分类 / 评分，失败时返回未分析条目。
+
+    返回 (条目, 本次调用 Usage)；调用失败时 usage 为 None。
+    """
     user_prompt = (
         f"请分析以下 AI 相关内容并输出 JSON：\n\n"
         f"标题: {item.get('title')}\n"
@@ -305,7 +309,7 @@ def analyze_item(provider: LLMProvider, item: dict[str, Any]) -> dict[str, Any]:
         analysis = _extract_json(resp.content)
     except Exception as exc:
         logger.warning("条目 %s 分析失败: %s", item.get("id"), exc)
-        return item
+        return item, None
 
     item["summary"] = str(analysis.get("summary") or item.get("summary") or "").strip()
     tags = analysis.get("tags") or []
@@ -318,7 +322,7 @@ def analyze_item(provider: LLMProvider, item: dict[str, Any]) -> dict[str, Any]:
     item["metadata"]["score_reason"] = str(analysis.get("score_reason") or "").strip()
     item["analyzed_at"] = _now_iso()
     item["status"] = "review"
-    return item
+    return item, resp.usage
 
 
 # ── Step 3: 整理 ──────────────────────────────────────────────────
@@ -487,9 +491,15 @@ def main(argv: list[str] | None = None) -> None:
                 save_raw(RAW_DIR, subset, source)
 
     # Step 2: 分析
+    analyzed: list[dict[str, Any]] = []
+    cost_tracker: dict = {}
     try:
         provider = create_provider(name=args.provider)
-        analyzed = [analyze_item(provider, item) for item in collected]
+        for item in collected:
+            analyzed_item, usage = analyze_item(provider, item)
+            analyzed.append(analyzed_item)
+            if usage is not None:
+                cost_tracker = accumulate_usage(cost_tracker, usage, provider)
     except RuntimeError as exc:
         logger.warning("未配置 API Key，跳过分析步骤: %s", exc)
         analyzed = collected
@@ -503,7 +513,19 @@ def main(argv: list[str] | None = None) -> None:
     logger.info("流水线完成: 采集 %d 条，分析 %d 条，整理 %d 条，保存 %d 条",
                 len(collected), len(analyzed), len(organized), saved)
 
-    tracker.report()
+    if cost_tracker:
+        logger.info("===== LLM 成本报告 =====")
+        grand_usd = 0.0
+        for key, v in sorted(cost_tracker.items()):
+            grand_usd += v.get("cost_usd", 0.0)
+            logger.info(
+                "[%s] 调用 %d 次: 输入 %d tokens, 输出 %d tokens, 估算成本 %.6f USD",
+                key, v.get("calls", 0),
+                v.get("prompt_tokens", 0), v.get("completion_tokens", 0),
+                v.get("cost_usd", 0.0),
+            )
+        logger.info("全部合计: %.6f USD", grand_usd)
+        logger.info("========================")
 
 
 if __name__ == "__main__":

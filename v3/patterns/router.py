@@ -29,9 +29,9 @@ from datetime import datetime
 from pathlib import Path
 
 from workflows.model_client import (
+    calculate_cost,
     chat_with_retry,
     create_provider,
-    response_cost,
 )
 
 logger = logging.getLogger(__name__)
@@ -88,7 +88,9 @@ def _llm_call(
     response = chat_with_retry(
         _get_provider(), messages, temperature=temperature
     )
-    return response.content, response_cost(response.model, response)
+    return response.content, calculate_cost(
+        response.model, response.usage.prompt_tokens, response.usage.completion_tokens
+    )
 
 
 def _strip_prefixes(query: str, prefixes: tuple[str, ...]) -> str:

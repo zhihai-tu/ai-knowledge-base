@@ -20,7 +20,6 @@ import textwrap
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from workflows.model_client import tracker
 from workflows.nodes import analyze_node, collect_node, organize_node, save_node
 from workflows.reviewer import review_node
 from workflows.state import KBState
@@ -100,4 +99,3 @@ if __name__ == "__main__":
                 else:
                     print(f"  {key}: {value}")
     print()
-    tracker.report()
