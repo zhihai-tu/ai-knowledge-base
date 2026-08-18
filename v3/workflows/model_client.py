@@ -6,13 +6,17 @@
 
 通过环境变量选择模型提供商：
 
-- ``LLM_PROVIDER``: deepseek（默认）| qwen | openai
+- ``LLM_PROVIDER``: deepseek（默认）| qwen | openai | glm
 - ``DEEPSEEK_API_KEY``: DeepSeek 的 API Key
 - ``DASHSCOPE_API_KEY``: 阿里云百炼（Qwen）的 API Key
 - ``OPENAI_API_KEY``: OpenAI 的 API Key
+- ``GLM_API_KEY``: 智谱 GLM（或第三方兼容服务）的 API Key
+- ``GLM_BASE_URL``: 可选，覆盖 GLM 默认 base_url（用于商汤 SenseNova
+  等第三方接入，如 https://token.sensenova.cn/v1）
+- ``GLM_MODEL``: 可选，覆盖 GLM 默认模型名
 
 本模块使用 httpx 直接调用 OpenAI 兼容的 /chat/completions 接口，
-不依赖 openai SDK。所有提供商（DeepSeek / Qwen / OpenAI）均返回
+不依赖 openai SDK。所有提供商（DeepSeek / Qwen / OpenAI / GLM）均返回
 统一的 :class:`LLMResponse` 结构。
 
 配置优先级：进程环境变量 ``>`` 项目根目录下的 ``.env`` 文件。
@@ -25,13 +29,15 @@
     reply = quick_chat("用一句话介绍你自己。")
 """
 
+import json
 import logging
 import os
+import re
 import time
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Optional
+from typing import Any, Optional
 
 import httpx
 
@@ -42,6 +48,9 @@ DEFAULT_TIMEOUT = 60.0
 MAX_RETRIES = 3
 BASE_RETRY_DELAY = 1.0
 RETRYABLE_STATUS_CODES = {429, 500, 502, 503, 504}
+# 429（限流）时退避时间乘数：部分服务（如商汤 SenseNova）无 Retry-After 头，
+# 且对突发速率敏感，需比 5xx 更长的冷却等待。
+RATE_LIMIT_BACKOFF_MULTIPLIER = 5.0
 
 # 各提供商的配置：base_url、默认模型、API Key 环境变量名。
 PROVIDER_CONFIGS = {
@@ -60,10 +69,16 @@ PROVIDER_CONFIGS = {
         "model": "gpt-4o-mini",
         "api_key_env": "OPENAI_API_KEY",
     },
+    "glm": {
+        "base_url": "https://open.bigmodel.cn/api/paas/v4",
+        "model": "glm-5.2",
+        "api_key_env": "GLM_API_KEY",
+    },
 }
 
 # 各模型价格（USD / 1M tokens），取值 (输入价, 输出价)。
 # 数据为 2026-07 官方公布价格，使用前请核对官方最新价目。
+# glm-5.2 价格为第三方资料参考值（约 $1.40/$4.40），待核对官方价目。
 MODEL_PRICES_USD = {
     "deepseek-v4-flash": (0.14, 0.28),
     "deepseek-v4-pro": (0.435, 0.87),
@@ -71,6 +86,7 @@ MODEL_PRICES_USD = {
     "qwen3.7-plus": (0.28, 1.11),
     "gpt-4o-mini": (0.15, 0.60),
     "gpt-4o": (2.50, 10.00),
+    "glm-5.2": (1.40, 4.40),
 }
 
 
@@ -353,7 +369,7 @@ def create_provider(
     """根据环境变量创建默认提供商实例。
 
     Args:
-        name: 提供商名称（deepseek/qwen/openai），默认读取
+        name: 提供商名称（deepseek/qwen/openai/glm），默认读取
             环境变量 ``LLM_PROVIDER``，再缺省为 deepseek。
         model: 覆盖默认模型。
         base_url: 覆盖默认接口地址。
@@ -386,6 +402,13 @@ def create_provider(
     if provider_name == "qwen":
         base_url = base_url or os.getenv("QWEN_BASE_URL") or config["base_url"]
         model = model or os.getenv("QWEN_MODEL") or config["model"]
+
+    # glm 支持通过环境变量 GLM_BASE_URL / GLM_MODEL 覆盖默认值，
+    # 用于商汤 SenseNova（https://token.sensenova.cn/v1）等第三方
+    # 提供的 glm 模型 OpenAI 兼容服务，不影响官方默认地址。
+    if provider_name == "glm":
+        base_url = base_url or os.getenv("GLM_BASE_URL") or config["base_url"]
+        model = model or os.getenv("GLM_MODEL") or config["model"]
 
     return OpenAICompatibleProvider(
         api_key=api_key,
@@ -434,6 +457,8 @@ def chat_with_retry(
             if not retryable or last_attempt:
                 raise
             delay = BASE_RETRY_DELAY * (2**attempt)
+            if exc.response.status_code == 429:
+                delay *= RATE_LIMIT_BACKOFF_MULTIPLIER
         except httpx.RequestError as exc:
             last_error = str(exc)
             if attempt >= max_retries - 1:
@@ -534,6 +559,104 @@ def quick_chat(
         target, messages, temperature=temperature, max_tokens=max_tokens
     )
     return response.content
+
+
+def _parse_json_text(text: str) -> tuple[Any, Optional[str]]:
+    """解析模型输出中的 JSON，容忍代码块标记与前后噪声，返回 (对象, 错误信息)。"""
+    text = (text or "").strip()
+    if text.startswith("```"):
+        text = re.sub(r"^```[a-zA-Z]*\n?|\n?```$", "", text).strip()
+    try:
+        return json.loads(text), None
+    except json.JSONDecodeError:
+        pass
+    start, end = text.find("{"), text.rfind("}")
+    if -1 < start < end:
+        try:
+            return json.loads(text[start : end + 1]), None
+        except json.JSONDecodeError as exc:
+            return None, str(exc)
+    return None, "未找到 JSON 对象"
+
+
+def chat_json(
+    prompt: str,
+    system: Optional[str] = None,
+    temperature: float = 0.7,
+    provider: Optional[LLMProvider] = None,
+    max_retries: int = MAX_RETRIES,
+) -> tuple[Any, Usage]:
+    """调用 LLM 并解析 JSON，返回 (解析后的对象, 本次用量)。
+
+    Args:
+        prompt: 用户输入。
+        system: 可选的系统提示词。
+        temperature: 采样温度。
+        provider: 提供商实例，默认按环境变量创建。
+        max_retries: 总尝试次数。
+
+    Returns:
+        (解析后的 JSON 对象, Usage)。
+
+    Raises:
+        ValueError: 模型未输出合法 JSON 对象。
+        httpx.HTTPStatusError: 服务端返回不可重试的状态码，或重试次数已用尽。
+        httpx.RequestError: 重试次数已用尽仍网络失败。
+    """
+    messages: list[dict[str, str]] = []
+    if system:
+        messages.append({"role": "system", "content": system})
+    messages.append({"role": "user", "content": prompt})
+
+    target = provider or create_provider()
+    response = chat_with_retry(
+        target, messages, temperature=temperature, max_retries=max_retries
+    )
+    parsed, err = _parse_json_text(response.content)
+    if isinstance(parsed, (dict, list)):
+        return parsed, response.usage
+    raise ValueError(f"LLM 未输出合法 JSON: {err or '非对象'}")
+
+
+def accumulate_usage(cost_tracker: dict, usage: Usage, provider: LLMProvider) -> dict:
+    """把一次调用的 token 用量并入成本汇总 dict，返回并入后的新 dict。
+
+    以 ``{provider_name}/{model}`` 为键累计（provider_name 为空时退化为模型名），
+    值为 ``{"prompt_tokens", "completion_tokens", "total_tokens", "calls", "cost_usd"}``。
+    模型不在价格表中时 cost_usd 按 0 计（不抛错）。
+
+    Args:
+        cost_tracker: state 中的成本汇总 dict（或 {}）。
+        usage: 本次调用的用量。
+        provider: 提供商实例，用于生成键与价格查找。
+
+    Returns:
+        并入本次用量后的新 dict。
+    """
+    name = provider.provider_name or ""
+    model = provider.model
+    key = f"{name}/{model}" if name else model
+    merged = {k: dict(v) for k, v in (cost_tracker or {}).items()}
+    entry = merged.setdefault(
+        key,
+        {
+            "prompt_tokens": 0,
+            "completion_tokens": 0,
+            "total_tokens": 0,
+            "calls": 0,
+            "cost_usd": 0.0,
+        },
+    )
+    input_price, output_price = MODEL_PRICES_USD.get(model, (0.0, 0.0))
+    entry["prompt_tokens"] += usage.prompt_tokens
+    entry["completion_tokens"] += usage.completion_tokens
+    entry["total_tokens"] += usage.total_tokens
+    entry["calls"] += 1
+    entry["cost_usd"] += (
+        usage.prompt_tokens / 1_000_000 * input_price
+        + usage.completion_tokens / 1_000_000 * output_price
+    )
+    return merged
 
 
 def main() -> None:

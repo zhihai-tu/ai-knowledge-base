@@ -14,11 +14,15 @@
 
 from langgraph.graph import END, StateGraph
 
-import sys
 import os
+import sys
+import textwrap
+
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from workflows.nodes import analyze_node, collect_node, organize_node, review_node, save_node
+from workflows.model_client import tracker
+from workflows.nodes import analyze_node, collect_node, organize_node, save_node
+from workflows.reviewer import review_node
 from workflows.state import KBState
 
 
@@ -53,11 +57,47 @@ def build_graph():
     return graph.compile()
 
 
+def _show_review_feedback(feedback: str) -> None:
+    """把 review_feedback 分段多行展示（按 | 分段，宽度 78 悬挂缩进）。"""
+    for part in (feedback or "").split(" | "):
+        part = part.strip()
+        if not part:
+            continue
+        print(textwrap.fill(
+            part, width=78,
+            initial_indent="    - ", subsequent_indent="      ",
+        ))
+
+
+def _show_cost(cost: dict) -> None:
+    """按 (provider/model) 分行展示成本汇总。"""
+    for key, v in (cost or {}).items():
+        print(f"    {key}: calls={v.get('calls', 0)} "
+              f"in={v.get('prompt_tokens', 0)} out={v.get('completion_tokens', 0)} "
+              f"$={v.get('cost_usd', 0):.6f}")
+
+
 if __name__ == "__main__":
     app = build_graph()
+    first_block = True
     for step, outputs in enumerate(app.stream({"iteration": 0}), start=1):
         for node, update in outputs.items():
-            if update:
-                print(f"--- step {step} | {node} ---")
-                for key, value in update.items():
-                    print(f"  {key}: {value if not isinstance(value, list) else len(value)} 条")
+            if not update:
+                continue
+            if not first_block:
+                print()
+            first_block = False
+            print(f"--- step {step} | {node} 完成 ---")
+            for key, value in update.items():
+                if key == "cost_tracker":
+                    print(f"  cost_tracker:")
+                    _show_cost(value)
+                elif key == "review_feedback":
+                    print(f"  review_feedback:")
+                    _show_review_feedback(str(value))
+                elif isinstance(value, list):
+                    print(f"  {key}: {len(value)} 条")
+                else:
+                    print(f"  {key}: {value}")
+    print()
+    tracker.report()

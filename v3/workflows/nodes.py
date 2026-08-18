@@ -26,7 +26,12 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from patterns.router import rebuild_index
-from workflows.model_client import chat_with_retry, create_provider
+from workflows.model_client import (
+    Usage,
+    accumulate_usage,
+    chat_with_retry,
+    create_provider,
+)
 from workflows.state import KBState
 
 logger = logging.getLogger(__name__)
@@ -34,6 +39,10 @@ logger = logging.getLogger(__name__)
 GITHUB_API = "https://api.github.com/search/repositories"
 GITHUB_QUERY = "AI OR LLM OR agent"
 COLLECT_LIMIT = 10
+# 相邻两条 LLM 分析请求的间隔（秒）：平滑请求速率，规避服务端
+# 突发速率限流（如商汤 SenseNova 对 glm-5.2 的 BurstRate 429）。
+# 对限流更严的服务可调大该值。
+ANALYZE_INTERVAL_SECONDS = 2.0
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 ARTICLES_DIR = PROJECT_ROOT / "knowledge" / "articles"
@@ -234,13 +243,21 @@ def collect_node(state: KBState) -> dict:
         print(f"[CollectNode] 采集失败: {exc}")
         sources = []
     print(f"[CollectNode] 采集完成: {len(sources)} 条")
+    for s in sources:
+        stars = s.get("stars")
+        suffix = f" (⭐{stars})" if stars else ""
+        print(f"  └ {s.get('title')}{suffix}")
     return {"sources": sources}
 
 
 # ── analyze_node: LLM 生成中文摘要 / 标签 / 评分 ───────────────────
 
-def _analyze_one(source: dict) -> dict | None:
-    """对单条 source 调用 LLM 生成分析报告；失败时降级为低分条目（会被过滤）。"""
+def _analyze_one(source: dict) -> tuple[dict | None, Usage | None]:
+    """对单条 source 调用 LLM 生成分析报告；失败时降级为 (None, usage)。
+
+    返回 (分析报告 dict, 本次调用 Usage)；Usage 用于累计到 state 成本，
+    解析失败但已消耗 tokens 时 usage 依然有效。
+    """
     user = (
         "请分析以下 GitHub AI 项目并输出 JSON：\n\n"
         f"标题: {source.get('title')}\n"
@@ -251,16 +268,25 @@ def _analyze_one(source: dict) -> dict | None:
         f"原始描述: {source.get('summary') or '（无）'}"
     )
     try:
-        raw = _llm_chat(ANALYZE_SYSTEM, user, temperature=0.3)
+        response = chat_with_retry(
+            _get_provider(),
+            [
+                {"role": "system", "content": ANALYZE_SYSTEM},
+                {"role": "user", "content": user},
+            ],
+            temperature=0.3,
+        )
     except Exception as exc:  # noqa: BLE001
         logger.warning("条目 %s 分析调用失败: %s", source.get("source_url"), exc)
-        return None
+        return None, None
+    usage = response.usage
+    raw = response.content
 
     parsed, err = _parse_json(raw)
     if not isinstance(parsed, dict):
         logger.warning("条目 %s 分析输出非法 JSON: %s",
                        source.get("source_url"), err or "非对象")
-        return None
+        return None, usage
 
     raw_score = parsed.get("score")
     if isinstance(raw_score, bool) or not isinstance(raw_score, (int, float)):
@@ -284,22 +310,36 @@ def _analyze_one(source: dict) -> dict | None:
         "score": score,
         "score_reason": str(parsed.get("score_reason") or "").strip(),
         "analyzed_at": _now_iso(),
-    }
+    }, usage
 
 
 def analyze_node(state: KBState) -> dict:
-    """节点 2：用 LLM 对每条 source 生成中文摘要、标签、评分，更新 analyses。"""
+    """节点 2：用 LLM 对每条 source 生成中文摘要、标签、评分，更新 analyses。
+
+    逐条调用并实时打印进度（glm 等推理模型单次响应可能耗时数十秒，
+    避免看起来像卡死）。相邻请求间隔 ANALYZE_INTERVAL_SECONDS 平滑速率。
+    每次调用的 token 用量累计进 ``state.cost_tracker``。
+    """
     sources = state.get("sources") or []
+    cost_tracker = state.get("cost_tracker") or {}
     print(f"[AnalyzeNode] 对 {len(sources)} 条数据调用 LLM 分析...")
     analyses = []
-    for source in sources:
-        analysis = _analyze_one(source)
+    for i, source in enumerate(sources):
+        if i > 0:
+            time.sleep(ANALYZE_INTERVAL_SECONDS)
+        title = source.get("title") or source.get("source_url")
+        print(f"[AnalyzeNode] 分析 {i + 1}/{len(sources)}: {title} ...", flush=True)
+        analysis, usage = _analyze_one(source)
+        if usage is not None:
+            cost_tracker = accumulate_usage(cost_tracker, usage, _get_provider())
         if analysis is None:
+            print(f"  └ 失败（限流/解析错误），已跳过")
             continue
         analyses.append(analysis)
+        print(f"  └ score={analysis['score']}", flush=True)
         logger.info("分析完成: %s score=%s", analysis["source_url"], analysis["score"])
     print(f"[AnalyzeNode] 分析完成: {len(analyses)}/{len(sources)} 条")
-    return {"analyses": analyses}
+    return {"analyses": analyses, "cost_tracker": cost_tracker}
 
 
 # ── organize_node: 过滤低分 + 去重 + 按反馈修正 ────────────────────

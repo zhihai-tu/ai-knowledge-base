@@ -8,6 +8,11 @@ V3（初始化）：基于 V2 拷贝代码骨架，将在 V2 基础上引入多 
 
 ## 已完成
 
+- 2026-08-18：glm 提供商接入：`model_client.py` 新增 `glm` 提供商（官方默认 `https://open.bigmodel.cn/api/paas/v4`，模型 `glm-5.2`，`GLM_API_KEY`），支持 `GLM_BASE_URL` / `GLM_MODEL` 环境变量覆盖（商汤 SenseNova `https://token.sensenova.cn/v1` 第三方接入）；`glm-5.2` 价格登记 MODEL_PRICES_USD（约 $1.40/$4.40，第三方参考值待核对官方价目）。已验证：配置加载、覆盖逻辑、SenseNova 真实调用（单条 200 OK；graph 全流程 analyze 6/10 成功、review 通过）。
+- 2026-08-18：SenseNova 429 突发限流适配：`model_client.py` 对 429 退避时间 ×5（5s/10s，原 1s/2s），`nodes.py` analyze 相邻请求间隔 `ANALYZE_INTERVAL_SECONDS=2s` 平滑请求速率。根因确认：SenseNova 返回 `Throttling.BurstRate`（"scale requests more smoothly over time"），无 Retry-After 头，属短期突发限流，冷却约 1 分钟后单条请求恢复。已验证：修复后 429 退避生效，10 条分析中 6 条成功（glm-5.2 限流仍严，可调大间隔提升成功率）。
+- 2026-08-18：analyze 阶段实时进度输出：逐条打印「分析 X/10: title ...」+ score/失败结果（flush=True），解决 glm-5.2 推理模型响应慢、串行调用时无中间输出导致的「看似卡死」困惑。已验证：假 LLM 用例下 3 条进度逐条打印、失败提示、汇总行正确。
+- 2026-08-18：graph 运行体验优化四项：① analyze 每次调用 usage 累计进 `state.cost_tracker`（此前只累计 review，成本被低估）；② reviewer 审核全部 analyses（撤销 REVIEW_LIMIT=5 前 5 条限制，输出「审核 8/8 条」）；③ collect 逐条打印仓库明细（title + ⭐stars）；④ graph `__main__` 输出美化（review_feedback 分段悬挂缩进、cost_tracker 按模型分行）+ 末尾 `tracker.report()` 输出含全部节点的完整成本报告。已验证：假 LLM 用例 analyze 3 条 cost_tracker calls=3、reviewer 审核 8/8、`_show_review_feedback`/`_show_cost` 排版正确，`python3 -m py_compile` 通过。真实 qwen 调用端到端同样走通（10/10 分析、审核 8.30 分、保存 10 篇）。
+- 2026-08-18：graph 阶段块标题语义明确化：`--- step X | node ---`（LangGraph stream 在节点完成后 yield，语义含糊）改为 `--- step X | node 完成 ---`，并加阶段间空行分隔。已验证：`py_compile` 通过，模拟输出阶段块带空行与「完成」字样。
 - 2026-08-11：多 Agent 路由首个模块落地 `patterns/router.py`（两层意图分类 + 三处理器）；LLM 调用统一入口迁移至 `workflows/model_client.py`，`pipeline/model_client.py` 改为向后兼容 re-export 层。已验证：关键词路由、GitHub 中文搜索（quote 编码）、LLM 分类兜底、general_chat、兼容层导入。
 - 2026-08-11：knowledge_query 改为从 `knowledge/articles/index.json` 检索（`_load_articles()`），新增 `rebuild_index()` 与 `--rebuild-index` 入口；index 已从 131 篇真实文章生成。已验证：`搜一下 agent` / `查一下 rag` 均可命中并按 score 排序。
 - 2026-08-11：knowledge_query 关键词无命中时回退到 LLM 直读知识库全文回答（`_llm_knowledge_answer()`），不做分词；句子式查询（如「搜索最近的 AI Agent 框架」）可正常得到基于知识库内容的回答。已验证：关键词路径零成本直配、句子式查询走 LLM 兜底。
@@ -23,6 +28,7 @@ V3（初始化）：基于 V2 拷贝代码骨架，将在 V2 基础上引入多 
 ## 进行中
 
 - LangGraph 工作流节点落地 `workflows/nodes.py`：5 个纯函数节点（collect→analyze→organize→review→save）已实现，评分沿用 1-10（与现有库一致，过滤线 6 分、审核通过线 7 分），节点逻辑经 monkeypatch（假 GitHub API + 假 LLM）验证通过。待办：真实 LLM 端到端验证。
+- 审核节点独立模块 `workflows/reviewer.py`：新增 `review_node`（审核对象改为 `state["analyses"]`，5 维度加权评分 摘要25%/深度25%/相关20%/原创15%/格式15%，加权总分由代码重算、≥7.0 通过，审核全部 analyses，temperature=0.1，LLM 调用失败自动通过）；`graph.py` 已切换到该节点（`workflows/nodes.py` 旧 review_node 保留未删）；`model_client.py` 新增 `chat_json`（返回 (parsed_json, usage)）与 `accumulate_usage`（并入 state 成本汇总 dict）。已验证：monkeypatch 全分支（PASS/FAIL/强制通过/LLM失败/缺scores/空analyses/分数钳制/成本累计），`build_graph()` 编译通过，真实 qwen 调用端到端审核通过。另注：用户描述依赖中含 `plan` 字段，但 `KBState` 无此字段且 8 条需求均未用到，未添加。
 - LangGraph 编排 `workflows/graph.py`：StateGraph(KBState) 组装 collect→analyze→organize→review 线性边，review 后按 `review_passed` 条件分支（True→save→END，False→organize 重做），`build_graph()` 返回编译后 app，`__main__` 流式打印每节点关键输出。已验证（stub 节点替换 graph 模块引用）：PASS 分支顺序 collect→analyze→organize→review→save；FAIL 分支 collect→analyze→organize→review→organize→review→save 重做循环正常。
 
 ## 待办

@@ -11,7 +11,7 @@
 - 统一由 `workflows/model_client.py`（`workflows.model_client`）提供 LLM 调用（httpx 直连 OpenAI 兼容接口，不依赖 openai SDK）。`pipeline/model_client.py` 仅为向后兼容的 re-export 层，新代码一律从 `workflows.model_client` 导入。
 - 多 Agent 路由模块 `patterns/router.py` 提供 `route(query)` 统一入口：两层意图分类（关键词快速匹配 → LLM 兜底），分发给 github_search（GitHub Search API，`urllib.parse.quote` 编码查询参数）/ knowledge_query（扫描 `knowledge/articles/*.json` 关键词检索）/ general_chat（`quick_chat`）三个处理器。
 - 配置存于项目根目录 `.env`（模板见 `.env.example`），受 `.gitignore` 保护，禁止提交真实 Key。
-- 优先级：进程环境变量 > `.env`。变量：`LLM_PROVIDER`（deepseek/qwen/openai，默认 deepseek）、`DEEPSEEK_API_KEY`、`DASHSCOPE_API_KEY`、`OPENAI_API_KEY`、`LOG_LEVEL`（DEBUG/INFO/WARNING/ERROR，默认 INFO）。qwen 提供商额外支持 `QWEN_BASE_URL`（百炼专属网关 OpenAI 兼容地址，覆盖默认公共版）与 `QWEN_MODEL`（模型名覆盖）。流水线支持 `--provider` 参数指定提供商（`pipeline.py` 传入 `create_provider(name=...)`）。
+- 优先级：进程环境变量 > `.env`。变量：`LLM_PROVIDER`（deepseek/qwen/openai/glm，默认 deepseek）、`DEEPSEEK_API_KEY`、`DASHSCOPE_API_KEY`、`OPENAI_API_KEY`、`GLM_API_KEY`、`LOG_LEVEL`（DEBUG/INFO/WARNING/ERROR，默认 INFO）。qwen 提供商额外支持 `QWEN_BASE_URL`（百炼专属网关 OpenAI 兼容地址，覆盖默认公共版）与 `QWEN_MODEL`（模型名覆盖）。glm 提供商额外支持 `GLM_BASE_URL`（默认官方 `https://open.bigmodel.cn/api/paas/v4`；可用商汤 SenseNova `https://token.sensenova.cn/v1` 等第三方 OpenAI 兼容服务覆盖）与 `GLM_MODEL`（模型名覆盖，默认 glm-5.2）。流水线支持 `--provider` 参数指定提供商（`pipeline.py` 传入 `create_provider(name=...)`）。
 - 新增模型价格只登记到 `MODEL_PRICES_USD`（USD / 1M tokens）；成本统一按模型单价计算 USD，不做汇率换算（`CostTracker` 以 (provider, model) 键记录并输出 USD 报告）。
 
 ## 知识条目 JSON 格式
