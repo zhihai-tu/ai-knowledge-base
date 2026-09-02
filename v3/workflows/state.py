@@ -5,8 +5,9 @@ LangGraph ``StateGraph`` 中流转的全部字段。各节点按「报告式通�
 读写状态：字段是结构化摘要（可序列化的结构化报告），而不是未经加工的
 原始数据，避免在节点间搬运大段原文。
 
-典型流水线: collect → analyze → organize → review（Supervisor 审核；
-不通过且 ``iteration < MAX_ITERATIONS`` 时带反馈重做，最多 3 轮）。
+典型流水线: collect → analyze → organize → review → revise 审核重做循环；
+未通过且 ``iteration < MAX_ITERATIONS`` 时按反馈改写 analyses 后重巡，
+达到上限仍未通过时由 human_flag 人工介入（异常终点）。
 
 用法示例::
 
@@ -71,8 +72,16 @@ class KBState(TypedDict):
     iteration: int
     """当前审核循环次数。
 
-    从 0 开始递增，上限 :data:`MAX_ITERATIONS`（3）。达到上限仍未通过时
-    强制结束并附带警告。
+    从 0 开始递增，上限 :data:`MAX_ITERATIONS`（3）。未通过且
+    ``iteration < MAX_ITERATIONS`` 时回 revise 重做；达到上限仍未通过时
+    由路由转向 human_flag 人工介入（异常终点），不再强制通过。
+    """
+
+    needs_human_review: bool
+    """是否需要人工介入。
+
+    布尔值；审核循环超过上限时由 HumanFlag 节点置为 True，作为异常终点
+    标记（问题条目已写到 knowledge/pending_review/，不进入主知识库）。
     """
 
     cost_tracker: dict[str, Any]

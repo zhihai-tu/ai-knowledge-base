@@ -28,7 +28,7 @@ from workflows.model_client import (
     chat_json,
     create_provider,
 )
-from workflows.state import KBState, MAX_ITERATIONS
+from workflows.state import KBState
 
 logger = logging.getLogger(__name__)
 
@@ -111,9 +111,9 @@ def _weighted_overall(scores: dict) -> dict[str, float]:
 def review_node(state: KBState) -> dict:
     """节点 4：对 analyses 做 5 维度加权审核；LLM 失败自动通过。
 
-    - 加权总分 ``>= PASS_SCORE`` 判定通过，未通过时 iteration 递增供重做循环；
-      通过或强制通过时保持当前值。
-    - ``iteration >= MAX_ITERATIONS`` 时强制通过，避免重做死循环。
+    - 加权总分 ``>= PASS_SCORE`` 判定通过，未通过时 iteration 递增供重做循环。
+    - 循环出口由 graph 路由控制：``iteration < MAX_ITERATIONS`` 时回 revise
+      重做，``iteration >= MAX_ITERATIONS`` 仍未通过时进入 human_flag 人工介入。
     - 调用失败 / 输出缺少 scores 时自动通过（不阻塞流程）。
     """
     iteration = state.get("iteration", 0)
@@ -124,15 +124,6 @@ def review_node(state: KBState) -> dict:
         f"[ReviewNode] 5维度加权审核（iteration={iteration}，"
         f"审核 {len(target)}/{len(analyses)} 条）..."
     )
-
-    if iteration >= MAX_ITERATIONS:
-        print("[ReviewNode] 已达最大审核轮次，强制通过。")
-        return {
-            "review_passed": True,
-            "review_feedback": "已达最大审核轮次，强制通过。",
-            "iteration": iteration,
-            "cost_tracker": base_tracker,
-        }
 
     if not target:
         print("[ReviewNode] 无条目待审核，通过。")

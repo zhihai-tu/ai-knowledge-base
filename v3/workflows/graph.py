@@ -1,8 +1,13 @@
 """LangGraph 工作流编排。
 
-组装 collect → analyze → organize → review → save 流水线；review 之后按
-``review_passed`` 条件分支：True 进入 save 结束，False 带反馈回到 organize
-重做（配合 nodes.py 的审核重做循环与强制通过机制）。
+组装 collect → analyze → organize → review 流水线；review 之后按
+``route_after_review`` 三路分支：
+
+- 通过（review_passed=True）→ save 结束
+- 未通过且 ``iteration < MAX_ITERATIONS`` → revise 按反馈改写 analyses 后
+  回到 review（形成审核重做循环）
+- 未通过且 ``iteration >= MAX_ITERATIONS`` → human_flag 写入
+  pending_review/ 人工介入（异常终点）
 
 用法::
 
@@ -20,14 +25,20 @@ import textwrap
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+from workflows.human_flag import human_flag_node
 from workflows.nodes import analyze_node, collect_node, organize_node, save_node
 from workflows.reviewer import review_node
-from workflows.state import KBState
+from workflows.reviser import revise_node
+from workflows.state import KBState, MAX_ITERATIONS
 
 
-def _review_router(state: KBState) -> str:
-    """review 之后的下一步：通过则保存，否则回到 organize 修正。"""
-    return "save" if state.get("review_passed") else "organize"
+def route_after_review(state: KBState) -> str:
+    """review 之后的三路分支：通过 → save；未通过且未超限 → revise；未通过已达上限 → human_flag。"""
+    if state.get("review_passed"):
+        return "save"
+    if (state.get("iteration") or 0) < MAX_ITERATIONS:
+        return "revise"
+    return "human_flag"
 
 
 def build_graph():
@@ -38,6 +49,8 @@ def build_graph():
     graph.add_node("analyze", analyze_node)
     graph.add_node("organize", organize_node)
     graph.add_node("review", review_node)
+    graph.add_node("revise", revise_node)
+    graph.add_node("human_flag", human_flag_node)
     # graph.add_node("review", review_node_test)
     graph.add_node("save", save_node)
 
@@ -46,9 +59,11 @@ def build_graph():
     graph.add_edge("organize", "review")
     graph.add_conditional_edges(
         "review",
-        _review_router,
-        {"save": "save", "organize": "organize"},
+        route_after_review,
+        {"save": "save", "revise": "revise", "human_flag": "human_flag"},
     )
+    graph.add_edge("revise", "review")
+    graph.add_edge("human_flag", END)
     graph.add_edge("save", END)
 
     graph.set_entry_point("collect")
