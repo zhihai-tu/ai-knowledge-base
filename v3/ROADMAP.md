@@ -8,6 +8,9 @@ V3（初始化）：基于 V2 拷贝代码骨架，将在 V2 基础上引入多 
 
 ## 已完成
 
+- 2026-09-08：按用户授权将 `.env` 的 `LLM_MODEL=K3-256k` 修正为 `k3-256k`，逐字节确认其余内容（含密钥）未变，解除模型 ID 大小写引起的 401。`chat()` 新增可选 `temperature` 参数，默认 1.0 兼容当前 Kimi Code K3，其他支持调温的模型可显式传参，原样传至 HTTP 请求体。已验证：MockTransport 检查默认 1.0 与显式 0.0/0.3/1.0 均准确传递；用户指定的本地命令 1 passed / 4 skipped，完整命令 `python -m pytest tests/eval_test.py -m slow` 无临时环境覆盖真实 4 passed / 1 deselected（42.55 秒）。
+- 2026-09-08：评估命令调整：`python -m pytest tests/eval_test.py -v` 默认仅本地检查（1 passed / 4 skipped，验证零 LLM 调用），`python -m pytest tests/eval_test.py -m slow` 显式运行四项真实评估。修复 `chat()` 文本封装温度为 1.0，解决 K3 对原默认 0.7 返回的 `invalid temperature: only 1 is allowed for this model`。临时进程覆盖 `LLM_MODEL=k3-256k` 后真实评估 4 passed / 1 deselected，耗时 44.35 秒，含三类分析及 Judge ≥5；缺密钥时四项均跳过，消息构造、温度与返回值检查通过。模型 ID 大小写已按后续授权修正，见后续验证。
+- 2026-09-08：新增 `tests/eval_test.py`：dotenv 加载根目录配置、屏蔽未知标记警告，三类场景使用范围断言，LLM-as-Judge 要求 1-10 分且 ≥5，真实调用标记 `slow`，缺密钥自动跳过；本地结构测试不调用 LLM。补齐 `workflows/model_client.py` 的 `chat(prompt, system=...) -> (text, usage)` 薄封装，沿用现有客户端与重试。初次已验证：本地结构检查 1 passed / 4 deselected；空密钥 1 passed / 4 skipped；模拟响应下 5 passed、共 4 次调用，并确认缺摘要/关键词、负面高相关度及不合格 Judge 分数会失败；chat 消息构造、用量返回及异常传播检查通过。后续真实验证及命令变更见上条。
 - 2026-09-08：统一 `.env` 与 `.env.example` 的 LLM 变量注释，使用供应商无关的字段说明，并在 AGENTS.md 约定切换供应商只修改配置值。已验证：修改前后两份配置文件非注释内容摘要一致，配置值及密钥未变。
 - 2026-09-08：Kimi Code 配置准备完成：`.env` 与 `.env.example` 切换为 `kimi-code` / `https://api.kimi.com/coding/v1` / `kimi-for-coding`，保留用户的密钥行；AGENTS.md 记录配置与会员计费边界，复用原 OpenAI 兼容客户端。已验证：现有 Anaconda Python + httpx 下加载配置、目标请求地址、模型字段及 chat_json 解析（离线 MockTransport），`.env` 仍被 Git 忽略。待用户维护 Kimi Code 密钥后验证真实调用；当前未登记套餐 token 单价，成本警告及 0 值不代表免费或实际账单。官方参考：https://www.kimi.com/code/docs/kimi-code/models.html 。
 - 2026-09-08：`tests/cost_guard.py` 自检改为输出每项测试的实际调用次数、总成本、按节点成本、预算状态、超限结果与预警比例；原有成本累计、预警阈值与超限异常断言保持不变。已验证：`python3 tests/cost_guard.py` 通过。
@@ -52,9 +55,11 @@ V3（初始化）：基于 V2 拷贝代码骨架，将在 V2 基础上引入多 
 
 ## 阻塞
 
-- （无）
+- （无；2026-09-08 的模型 ID 大小写问题已按用户授权修正。）
 
 ## 最近验证
 
+- 2026-09-08：持久化修正后的原始命令验证：`python -m pytest tests/eval_test.py -v` 本地 1 passed / 4 skipped；`python -m pytest tests/eval_test.py -m slow` 真实 4 passed / 1 deselected（42.55 秒），含 Judge ≥5；HTTP 模拟验证可调温度原样传递，`git diff --check` 通过。
+- 2026-09-08：默认 `python -m pytest tests/eval_test.py -v`：1 passed / 4 skipped，确认没有 LLM 调用；`LLM_MODEL=k3-256k python -m pytest tests/eval_test.py -m slow --tb=short -x`：真实 4 passed / 1 deselected（44.35 秒），无 `PytestUnknownMarkWarning`；语法与 `git diff --check` 通过。范围为模型内容分析，不覆盖采集入库端到端流程。
 - 2026-09-02：planner/plan 全链路 mock 验证：三档策略边界与参数、环境变量默认与空串回落、collect limit 传递、organize 阈值映射三分支、reviewer 低分 → iteration 递增 → human_flag 出口、route_after_review 三分支、`build_graph()` 编译。
 - 2026-08-11：V3 目录初始化，代码骨架自 V2 拷贝完成（pipeline / hooks / mcp_knowledge_server.py / 配置文件）。

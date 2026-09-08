@@ -348,6 +348,20 @@ def chat_with_retry(
         time.sleep(delay)
 
 
+def chat(
+    prompt: str,
+    system: Optional[str] = None,
+    temperature: float = 1.0,
+) -> tuple[str, Usage]:
+    """返回 (文本, 本次用量)，温度默认 1.0，可按目标模型支持范围调整。"""
+    messages: list[dict[str, str]] = []
+    if system:
+        messages.append({"role": "system", "content": system})
+    messages.append({"role": "user", "content": prompt})
+    response = chat_with_retry(create_provider(), messages, temperature=temperature)
+    return response.content, response.usage
+
+
 def calculate_cost(model: str, prompt_tokens: int, completion_tokens: int) -> float:
     """按 USD 计算一次调用的费用。
 
