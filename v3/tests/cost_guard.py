@@ -165,29 +165,53 @@ class CostGuard:
 
 def _test_cost_tracking() -> None:
     guard = CostGuard()
-    guard.record("analyze", {"prompt_tokens": 500_000, "completion_tokens": 250_000})
-    assert guard.total_prompt_tokens == 500_000
-    assert guard.total_cost_yuan == 1.0
+    guard.record("collect", {"prompt_tokens": 200, "completion_tokens": 0})
+    guard.record("analyze", {"prompt_tokens": 0, "completion_tokens": 2_000})
+    guard.record("review", {"prompt_tokens": 100, "completion_tokens": 2_000})
+    assert guard.total_prompt_tokens == 300
+    assert guard.total_cost_yuan == 0.0083
+
+    report = guard.get_report()
+    node_costs = {
+        name: node["total_cost_yuan"] for name, node in report["nodes"].items()
+    }
+    status = guard.check()
+    print("=== 测试 1：成本追踪 ===")
+    print(f"  调用次数: {len(guard.records)}")
+    print(f"  总成本: ¥{guard.total_cost_yuan:.4f}")
+    print(f"  按节点: {node_costs}")
+    print(f"  预算状态: {status['status']}")
 
 
 def _test_budget_exceeded() -> None:
     guard = CostGuard(budget_yuan=0.1)
     guard.record("review", {"prompt_tokens": 100_000, "completion_tokens": 100_000})
+    print("\n=== 测试 2：预算超限 ===")
     try:
         guard.check()
     except BudgetExceededError:
+        print(
+            "  预算超限检测通过: 成本已超出预算！"
+            f"当前: ¥{guard.total_cost_yuan:.4f}, 预算: ¥{guard.budget_yuan:.2f}"
+        )
         return
     raise AssertionError("check() 应在预算超限时抛出 BudgetExceededError")
 
 
 def _test_alert_threshold() -> None:
     guard = CostGuard(budget_yuan=1.0, alert_threshold=0.8)
-    guard.record("analyze", {"prompt_tokens": 800_000, "completion_tokens": 0})
-    assert guard.check()["status"] == "warning"
+    guard.record("analyze", {"prompt_tokens": 900_000, "completion_tokens": 0})
+    status = guard.check()
+    assert status["status"] == "warning"
+    print("\n=== 测试 3：预警阈值 ===")
+    print(
+        f"  预警状态: {status['status']} — "
+        f"[预警] 成本已达预算的 {status['usage_ratio']:.0%}！"
+    )
 
 
 if __name__ == "__main__":
     _test_cost_tracking()
     _test_budget_exceeded()
     _test_alert_threshold()
-    print("CostGuard self-tests passed")
+    print("\n所有测试通过！")

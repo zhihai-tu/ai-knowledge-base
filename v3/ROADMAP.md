@@ -10,6 +10,7 @@ V3（初始化）：基于 V2 拷贝代码骨架，将在 V2 基础上引入多 
 
 - 2026-09-08：统一 `.env` 与 `.env.example` 的 LLM 变量注释，使用供应商无关的字段说明，并在 AGENTS.md 约定切换供应商只修改配置值。已验证：修改前后两份配置文件非注释内容摘要一致，配置值及密钥未变。
 - 2026-09-08：Kimi Code 配置准备完成：`.env` 与 `.env.example` 切换为 `kimi-code` / `https://api.kimi.com/coding/v1` / `kimi-for-coding`，保留用户的密钥行；AGENTS.md 记录配置与会员计费边界，复用原 OpenAI 兼容客户端。已验证：现有 Anaconda Python + httpx 下加载配置、目标请求地址、模型字段及 chat_json 解析（离线 MockTransport），`.env` 仍被 Git 忽略。待用户维护 Kimi Code 密钥后验证真实调用；当前未登记套餐 token 单价，成本警告及 0 值不代表免费或实际账单。官方参考：https://www.kimi.com/code/docs/kimi-code/models.html 。
+- 2026-09-08：`tests/cost_guard.py` 自检改为输出每项测试的实际调用次数、总成本、按节点成本、预算状态、超限结果与预警比例；原有成本累计、预警阈值与超限异常断言保持不变。已验证：`python3 tests/cost_guard.py` 通过。
 - 2026-09-02：新增 `tests/cost_guard.py` 多 Agent 人民币预算守卫：`CostRecord` 记录单次调用；`CostGuard` 累计输入/输出 token 与成本，提供 80% 预警、超预算异常、按节点成本报告及 JSON 保存；模块自检覆盖成本累计、预警阈值与超限异常。已验证：`python3 tests/cost_guard.py` 通过。
 - 2026-09-02：补充 `glm-5.3-flash` 成本价格：按 Z.AI 官方价格页当前 5 折促销价登记为输入 `$0.075`、输出 `$0.25` / 1M tokens，并注明 2026-09-09 24:00（UTC+8）促销截止时间及原价；已通过 `calculate_cost()` 回归验证。
 - 2026-09-02：统一 LLM 供应商配置：`workflows/model_client.py` 改为只读取 `LLM_PROVIDER`、`LLM_API_KEY`、`LLM_BASE_URL`、`LLM_MODEL`，删除供应商专属 API Key/base URL/model 环境变量；`PROVIDER_DEFAULTS` 仅保留常用供应商默认值，未知 OpenAI 兼容供应商可直接通过通用配置接入；同步更新 `pipeline/model_client.py` re-export、`.env.example` 和本文件说明。已验证：两个模块 `py_compile` 通过，隔离配置测试覆盖通用配置、已知供应商默认值、未知供应商、缺少通用配置和兼容导出；使用 uv 隔离环境对智谱 `glm-5.3-flash` 完成真实 `chat_with_retry()` 与 `chat_json()` 调用，返回正常。
