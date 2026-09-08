@@ -5,9 +5,10 @@ LangGraph ``StateGraph`` 中流转的全部字段。各节点按「报告式通�
 读写状态：字段是结构化摘要（可序列化的结构化报告），而不是未经加工的
 原始数据，避免在节点间搬运大段原文。
 
-典型流水线: collect → analyze → organize → review → revise 审核重做循环；
-未通过且 ``iteration < MAX_ITERATIONS`` 时按反馈改写 analyses 后重巡，
-达到上限仍未通过时由 human_flag 人工介入（异常终点）。
+典型流水线: plan → collect → analyze → organize → review → revise 审核
+重做循环；未通过且 ``iteration < plan.max_iterations``（无 plan 时默认
+3）时按反馈改写 analyses 后重审，达到上限仍未通过时转 human_flag 人工
+介入（异常终点）。
 
 用法示例::
 
@@ -19,15 +20,22 @@ LangGraph ``StateGraph`` 中流转的全部字段。各节点按「报告式通�
 
 from typing import Any, TypedDict
 
-# 审核重做循环的上限轮次（0 起，最多重做 3 次）。
-MAX_ITERATIONS = 3
-
 
 class KBState(TypedDict):
-    """采集 → 分析 → 整理 → 审核 流水线的共享状态。
+    """规划 → 采集 → 分析 → 整理 → 审核 流水线的共享状态。
 
     LangGraph StateGraph 中，各节点返回本次要更新的字段，LangGraph
     默认以覆盖（overwrite）方式合并进共享状态。
+    """
+
+    plan: dict
+    """Planner 节点输出的执行策略（结构化摘要）。
+
+    由 planner_node 以 ``{"plan": {...}}`` 写入，下游 collector /
+    organizer / reviewer 通过 ``state["plan"]`` 读取并按策略执行。
+    字段：``tier``（lite/standard/full）、``target_count``、
+    ``per_source_limit``、``relevance_threshold``、``max_iterations``、
+    ``rationale``（选档理由），见 workflows/planner.py。
     """
 
     sources: list[dict[str, Any]]
@@ -65,15 +73,15 @@ class KBState(TypedDict):
     review_passed: bool
     """审核是否通过。
 
-    布尔值；True 时工作流结束，False 且 ``iteration < MAX_ITERATIONS``
-    时进入下一轮重做。
+    布尔值；True 时进入 save 结束，False 且未达
+    ``plan.max_iterations`` 时进入下一轮重做。
     """
 
     iteration: int
     """当前审核循环次数。
 
-    从 0 开始递增，上限 :data:`MAX_ITERATIONS`（3）。未通过且
-    ``iteration < MAX_ITERATIONS`` 时回 revise 重做；达到上限仍未通过时
+    从 0 开始递增，上限取 ``state["plan"]["max_iterations"]``（无 plan
+    时默认 3）。未通过且未达上限时回 revise 重做；达到上限仍未通过时
     由路由转向 human_flag 人工介入（异常终点），不再强制通过。
     """
 

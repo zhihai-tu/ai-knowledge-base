@@ -6,15 +6,10 @@
 
 通过环境变量选择模型提供商：
 
-- ``LLM_PROVIDER``: deepseek（默认）| qwen | openai | glm
-- ``DEEPSEEK_API_KEY``: DeepSeek 的 API Key
-- ``DASHSCOPE_API_KEY``: 阿里云百炼（Qwen）的 API Key
-- ``OPENAI_API_KEY``: OpenAI 的 API Key
-- ``GLM_API_KEY``: 智谱 GLM（或第三方兼容服务）的 API Key
-- ``QWEN_BASE_URL`` / ``QWEN_MODEL``: 可选，覆盖 qwen 的 base_url / 模型名
-  （用于百炼专属网关等自定义 OpenAI 兼容地址）
-- ``GLM_BASE_URL`` / ``GLM_MODEL``: 可选，覆盖 glm 的 base_url / 模型名
-  （用于商汤 SenseNova https://token.sensenova.cn/v1 等第三方兼容服务）
+- ``LLM_PROVIDER``: 供应商名称，默认 ``deepseek``，仅用于标识和成本统计
+- ``LLM_API_KEY``: 当前供应商的 API Key
+- ``LLM_BASE_URL``: 当前供应商的 OpenAI 兼容 API 基础地址
+- ``LLM_MODEL``: 当前供应商的模型名称
 
 本模块使用 httpx 直接调用 OpenAI 兼容的 /chat/completions 接口，
 不依赖 openai SDK。所有提供商均返回统一的结构。
@@ -54,38 +49,30 @@ RETRYABLE_STATUS_CODES = {429, 500, 502, 503, 504}
 # 且对突发速率敏感，需比 5xx 更长的冷却等待。
 RATE_LIMIT_BACKOFF_MULTIPLIER = 5.0
 
-# 各提供商的配置：base_url、默认模型、API Key 环境变量名，
-# 以及可选的 base_url / 模型名覆盖环境变量（如商汤 SenseNova 等第三方接入）。
-PROVIDER_CONFIGS = {
+# 常用提供商的默认值。新增 OpenAI 兼容供应商时无需修改此表，
+# 直接通过 LLM_BASE_URL / LLM_MODEL 配置即可。
+PROVIDER_DEFAULTS = {
     "deepseek": {
         "base_url": "https://api.deepseek.com",
         "model": "deepseek-v4-flash",
-        "api_key_env": "DEEPSEEK_API_KEY",
     },
     "qwen": {
         "base_url": "https://dashscope-intl.aliyuncs.com/compatible-mode/v1",
         "model": "qwen-plus",
-        "api_key_env": "DASHSCOPE_API_KEY",
-        "base_url_env": "QWEN_BASE_URL",
-        "model_env": "QWEN_MODEL",
     },
     "openai": {
         "base_url": "https://api.openai.com/v1",
         "model": "gpt-4o-mini",
-        "api_key_env": "OPENAI_API_KEY",
     },
     "glm": {
         "base_url": "https://open.bigmodel.cn/api/paas/v4",
         "model": "glm-5.2",
-        "api_key_env": "GLM_API_KEY",
-        "base_url_env": "GLM_BASE_URL",
-        "model_env": "GLM_MODEL",
     },
 }
 
 # 各模型价格（USD / 1M tokens），取值 (输入价, 输出价)。
-# 数据为 2026-07 官方公布价格，使用前请核对官方最新价目。
-# glm-5.2 价格为第三方资料参考值（约 $1.40/$4.40），待核对官方价目。
+# 使用前请核对官方最新价目；glm-5.3-flash 当前为 5 折促销价，
+# 促销截止 2026-09-09 24:00（UTC+8），原价为 $0.15/$0.50。
 MODEL_PRICES_USD = {
     "deepseek-v4-flash": (0.14, 0.28),
     "deepseek-v4-pro": (0.435, 0.87),
@@ -94,6 +81,7 @@ MODEL_PRICES_USD = {
     "gpt-4o-mini": (0.15, 0.60),
     "gpt-4o": (2.50, 10.00),
     "glm-5.2": (1.40, 4.40),
+    "glm-5.3-flash": (0.075, 0.25),
 }
 
 
@@ -249,15 +237,14 @@ def create_provider(
     model: Optional[str] = None,
     base_url: Optional[str] = None,
 ) -> LLMProvider:
-    """根据环境变量创建默认提供商实例。
+    """根据通用环境变量创建 OpenAI 兼容提供商实例。
 
-    base_url / model 优先级：显式参数 > 提供商专属覆盖环境变量
-    （如 ``QWEN_BASE_URL``、``GLM_MODEL``，用于百炼专属网关、商汤 SenseNova
-    等第三方 OpenAI 兼容服务）> 默认配置。
+    API Key 统一读取 ``LLM_API_KEY``。base_url / model 优先级为：
+    显式参数 > 通用环境变量 > 常用提供商默认值。未知提供商也允许使用，
+    但必须通过 ``LLM_BASE_URL`` 和 ``LLM_MODEL`` 显式配置。
 
     Args:
-        name: 提供商名称（deepseek/qwen/openai/glm），默认读取
-            环境变量 ``LLM_PROVIDER``，再缺省为 deepseek。
+        name: 提供商名称，默认读取环境变量 ``LLM_PROVIDER``，再缺省为 deepseek。
         model: 覆盖默认模型。
         base_url: 覆盖默认接口地址。
 
@@ -265,35 +252,38 @@ def create_provider(
         配置好的 LLMProvider 实例。
 
     Raises:
-        ValueError: 提供商名称不支持。
-        RuntimeError: 未设置对应的 API Key 环境变量。
+        RuntimeError: 未设置 ``LLM_API_KEY``、``LLM_BASE_URL`` 或 ``LLM_MODEL``。
     """
     load_dotenv()
     provider_name = (name or os.getenv("LLM_PROVIDER", DEFAULT_PROVIDER)).lower()
-    if provider_name not in PROVIDER_CONFIGS:
-        raise ValueError(
-            f"不支持的提供商 '{provider_name}'，"
-            f"可选: {', '.join(PROVIDER_CONFIGS)}"
-        )
-
-    config = PROVIDER_CONFIGS[provider_name]
-    api_key = os.getenv(config["api_key_env"])
+    config = PROVIDER_DEFAULTS.get(provider_name, {})
+    api_key = os.getenv("LLM_API_KEY")
     if not api_key:
         raise RuntimeError(
-            f"未设置环境变量 {config['api_key_env']}，"
+            "未设置环境变量 LLM_API_KEY，"
             f"无法创建 {provider_name} 提供商"
         )
 
     base_url = (
         base_url
-        or os.getenv(config.get("base_url_env") or "")
-        or config["base_url"]
+        or os.getenv("LLM_BASE_URL")
+        or config.get("base_url")
     )
     model = (
         model
-        or os.getenv(config.get("model_env") or "")
-        or config["model"]
+        or os.getenv("LLM_MODEL")
+        or config.get("model")
     )
+    if not base_url:
+        raise RuntimeError(
+            "未设置环境变量 LLM_BASE_URL，"
+            f"无法创建未知提供商 {provider_name}"
+        )
+    if not model:
+        raise RuntimeError(
+            "未设置环境变量 LLM_MODEL，"
+            f"无法创建未知提供商 {provider_name}"
+        )
 
     return LLMProvider(
         api_key=api_key,

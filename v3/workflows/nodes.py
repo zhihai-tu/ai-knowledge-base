@@ -1,12 +1,13 @@
-"""LangGraph 工作流的 5 个节点函数。
+"""LangGraph 工作流的 4 个节点函数。
 
-流水线: collect → analyze → organize → review → save
+本模块覆盖 collect → analyze → organize → save；review 节点独立在
+workflows/reviewer.py（五维度加权审核）。
 
 每个节点是纯函数: 接收 :class:`workflows.state.KBState`，返回 dict
 （部分状态更新，LangGraph 以覆盖方式合并回共享状态）。
 
-审核重做循环: 审核不通过且 ``iteration < MAX_ITERATIONS`` 时，带反馈回到
-organize 重做；``iteration >= FORCE_PASS_ITERATION`` 时强制通过，避免死循环。
+审核重做循环: 审核不通过且未达 ``plan.max_iterations`` 上限时，带反馈
+修正后重新审核；循环出口由 graph 路由控制（见 workflows/graph.py）。
 
 用法示例::
 
@@ -38,7 +39,7 @@ logger = logging.getLogger(__name__)
 
 GITHUB_API = "https://api.github.com/search/repositories"
 GITHUB_QUERY = "AI OR LLM OR agent"
-COLLECT_LIMIT = 10
+COLLECT_LIMIT = 10  # 无 plan 时的默认采集数量（正常由 plan.per_source_limit 提供）
 # 相邻两条 LLM 分析请求的间隔（秒）：平滑请求速率，规避服务端
 # 突发速率限流（如商汤 SenseNova 对 glm-5.2 的 BurstRate 429）。
 # 对限流更严的服务可调大该值。
@@ -47,11 +48,8 @@ ANALYZE_INTERVAL_SECONDS = 2.0
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 ARTICLES_DIR = PROJECT_ROOT / "knowledge" / "articles"
 
-# 评分体系：analyze / review 均使用 1-10 分值，与现有 knowledge/articles
-# 的 metadata.score 及 index.json 保持一致。
-MIN_ACCEPT_SCORE = 6       # organize 过滤线：低于该分值的条目丢弃
-PASS_REVIEW_SCORE = 7      # review 通过线：overall_score >= 该值才通过
-FORCE_PASS_ITERATION = 2   # iteration >= 2 强制通过（配合 MAX_ITERATIONS=3）
+# 评分体系：analyze 使用 1-10 分值，与现有 knowledge/articles
+# 的 metadata.score 及 index.json 保持一致（review 通过线见 reviewer.py）。
 
 VALID_CATEGORIES = {"llm", "agent", "rag", "inference", "training", "tool"}
 ID_PATTERN = re.compile(r"^[a-zA-Z][a-zA-Z0-9_-]*-\d{8}-\d{3}$")
@@ -72,21 +70,6 @@ REVISE_SYSTEM = (
     "要求：保留全部条目与每个条目的 id / source_url 不变，只修改内容"
     "（summary / tags / category / metadata.score 等），结构与字段名不变。\n"
     "只输出修正后的完整 JSON 数组，不要任何额外文字。"
-)
-
-REVIEW_SYSTEM = (
-    "你是知识库质量审核员。请从以下四个维度评审给定的知识条目，每项 1-10 分：\n"
-    "1. summary_quality 摘要质量：准确、清晰、完整（150-300字）；\n"
-    "2. tag_accuracy 标签准确性：标签贴切、数量得当；\n"
-    "3. category_reasonableness 分类合理性：分类属于 llm|agent|rag|"
-    "inference|training|tool；\n"
-    "4. consistency 一致性：条目字段自洽（评分与摘要相符等）。\n"
-    "overall_score = 四个维度平均分。\n"
-    "只输出一个 JSON 对象，不要任何额外文字：\n"
-    '{"passed": true或false, "overall_score": 1到10之间的数, '
-    '"feedback": "具体改进建议(中文)", '
-    '"scores": {"summary_quality": 8, "tag_accuracy": 7, '
-    '"category_reasonableness": 9, "consistency": 8}}'
 )
 
 _provider = None
@@ -165,7 +148,7 @@ def _next_seq(prefix: str, date_str: str) -> int:
 
 # ── collect_node: 调用 GitHub Search API 采集 ──────────────────────
 
-def _fetch_github_search() -> dict:
+def _fetch_github_search(limit: int) -> dict:
     """请求 GitHub Search API，返回 JSON 数据。
 
     先按系统配置经代理请求；连接级失败（TLS/超时）时回退直连，
@@ -174,7 +157,7 @@ def _fetch_github_search() -> dict:
     """
     query = urllib.parse.urlencode(
         {"q": GITHUB_QUERY, "sort": "stars", "order": "desc",
-         "per_page": COLLECT_LIMIT}
+         "per_page": limit}
     )
     url = f"{GITHUB_API}?{query}"
     headers = {
@@ -208,9 +191,9 @@ def _fetch_github_search() -> dict:
     raise last_error  # type: ignore[misc]
 
 
-def _collect_github() -> list[dict]:
+def _collect_github(limit: int) -> list[dict]:
     """把 GitHub Search API 返回的仓库整理为 sources 报告列表。"""
-    data = _fetch_github_search()
+    data = _fetch_github_search(limit)
     sources = []
     collected_at = _now_iso()
     for repo in data.get("items", []):
@@ -234,10 +217,17 @@ def _collect_github() -> list[dict]:
 
 
 def collect_node(state: KBState) -> dict:
-    """节点 1：调用 GitHub Search API 采集 AI 相关仓库，更新 sources。"""
-    print(f"[CollectNode] 调用 GitHub Search API 采集「{GITHUB_QUERY}」相关仓库...")
+    """节点 1：调用 GitHub Search API 采集 AI 相关仓库，更新 sources。
+
+    采集数量读 ``state["plan"]["per_source_limit"]``，无 plan 时默认
+    :data:`COLLECT_LIMIT`。
+    """
+    plan = state.get("plan", {}) or {}
+    limit = int(plan.get("per_source_limit", COLLECT_LIMIT))
+    print(f"[CollectNode] 调用 GitHub Search API 采集「{GITHUB_QUERY}」"
+          f"相关仓库（limit={limit}）...")
     try:
-        sources = _collect_github()
+        sources = _collect_github(limit)
     except Exception as exc:  # noqa: BLE001
         logger.warning("GitHub 采集失败: %s", exc)
         print(f"[CollectNode] 采集失败: {exc}")
@@ -389,18 +379,21 @@ def _load_existing_urls() -> set[str]:
     return urls
 
 
-def _build_articles(analyses: list[dict]) -> list[dict]:
-    """从分析报告构建文章列表：过滤低分（< MIN_ACCEPT_SCORE）+ 按 URL 去重。
+def _build_articles(analyses: list[dict], min_score: float) -> list[dict]:
+    """从分析报告构建文章列表：过滤低分（< min_score）+ 按 URL 去重。
 
-    去重范围覆盖当前批次内 + 历史已收录（跨批次），避免热门仓库重复入库。
+    min_score 由 organize_node 从 plan.relevance_threshold（0-1）映射而来
+    （×10 对齐 1-10 评分体系）。去重范围覆盖当前批次内 + 历史已收录
+    （跨批次），避免热门仓库重复入库。
     """
     seen_urls: set[str] = _load_existing_urls()
     seq = _next_seq("github", _today_str())
     articles = []
     for a in analyses:
         score = _to_float(a.get("score"))
-        if score is not None and score < MIN_ACCEPT_SCORE:
-            logger.info("过滤低分条目: %s score=%s", a.get("source_url"), score)
+        if score is not None and score < min_score:
+            logger.info("过滤低分条目: %s score=%s (< %s)",
+                        a.get("source_url"), score, min_score)
             continue
         url = a.get("source_url")
         if not url or url in seen_urls:
@@ -456,12 +449,17 @@ def _revise_articles(articles: list[dict], feedback: str) -> list[dict]:
 def organize_node(state: KBState) -> dict:
     """节点 3：过滤低分、按 URL 去重；有审核反馈时调用 LLM 定向修正。
 
-    首轮（iteration==0 或无反馈）从 analyses 整体重建 articles；
-    重做轮（iteration>0 且 review_feedback 非空）对现有 articles 修正后整体写回。
+    首轮（iteration==0 或无反馈）从 analyses 整体重建 articles；重做轮
+    （iteration>0 且 review_feedback 非空）对现有 articles 修正后整体写回。
+    过滤线读 ``state["plan"]["relevance_threshold"]``（0-1，无 plan 时默认
+    0.5），×10 映射到 1-10 评分体系。
     """
     iteration = state.get("iteration", 0)
     feedback = (state.get("review_feedback") or "").strip()
     current = state.get("articles") or []
+    plan = state.get("plan", {}) or {}
+    relevance_threshold = float(plan.get("relevance_threshold", 0.5))
+    min_score = round(relevance_threshold * 10)
     print(f"[OrganizeNode] iteration={iteration}")
 
     if iteration > 0 and feedback and current:
@@ -469,93 +467,12 @@ def organize_node(state: KBState) -> dict:
         articles = _revise_articles(current, feedback)
     else:
         existing = len(_load_existing_urls())
-        print(f"[OrganizeNode] 过滤低分(<{MIN_ACCEPT_SCORE}) + 按 URL 去重"
+        print(f"[OrganizeNode] 过滤低分(<{min_score}，"
+              f"relevance_threshold={relevance_threshold}) + 按 URL 去重"
               f"（含 {existing} 条历史已收录）...")
-        articles = _build_articles(state.get("analyses") or [])
+        articles = _build_articles(state.get("analyses") or [], min_score)
     print(f"[OrganizeNode] 整理完成: {len(articles)} 条")
     return {"articles": articles}
-
-
-# ── review_node: LLM 四维度审核 ────────────────────────────────────
-
-def _review_articles(articles: list[dict]) -> dict:
-    """调用 LLM 做四维度审核，返回 {"passed", "overall_score", "feedback"}。
-
-    passed 以 overall_score >= PASS_REVIEW_SCORE 为准，与 LLM 输出保持一致。
-    """
-    if not articles:
-        return {"passed": True, "overall_score": 0.0, "feedback": "无条目待审核。"}
-    user = (
-        "请审核以下知识条目：\n"
-        f"{json.dumps(articles, ensure_ascii=False, indent=2)}"
-    )
-    try:
-        raw = _llm_chat(REVIEW_SYSTEM, user, temperature=0.0)
-    except Exception as exc:  # noqa: BLE001
-        logger.warning("ReviewNode 审核调用失败: %s", exc)
-        return {"passed": False, "overall_score": 0.0,
-                "feedback": f"审核调用失败: {exc}"}
-
-    parsed, err = _parse_json(raw)
-    if not isinstance(parsed, dict):
-        return {"passed": False, "overall_score": 0.0,
-                "feedback": f"审核输出非法 JSON: {err or '非对象'}"}
-
-    overall = _to_float(parsed.get("overall_score"), default=0.0)
-    overall = max(1.0, min(10.0, overall))
-    feedback = str(parsed.get("feedback") or "").strip() or "无反馈"
-    return {"passed": overall >= PASS_REVIEW_SCORE, "overall_score": overall,
-            "feedback": feedback}
-
-
-def review_node(state: KBState) -> dict:
-    """节点 4：LLM 四维度评分；iteration >= FORCE_PASS_ITERATION 时强制通过。
-
-    未通过时 iteration 递增，供重做循环使用；通过或强制通过时保持当前值。
-    """
-    iteration = state.get("iteration", 0)
-    articles = state.get("articles") or []
-    print(f"[ReviewNode] 四维度审核（iteration={iteration}, {len(articles)} 条）...")
-
-    if iteration >= FORCE_PASS_ITERATION:
-        print("[ReviewNode] 已达最大审核轮次，强制通过。")
-        return {
-            "review_passed": True,
-            "review_feedback": "已达最大审核轮次，强制通过。",
-            "iteration": iteration,
-        }
-
-    result = _review_articles(articles)
-    print(
-        f"[ReviewNode] overall_score={result['overall_score']:.3f} "
-        f"passed={result['passed']}"
-    )
-    return {
-        "review_passed": result["passed"],
-        "review_feedback": result["feedback"],
-        "iteration": iteration if result["passed"] else iteration + 1,
-    }
-
-
-def review_node_test(state: KBState) -> dict:
-    """临时测试版节点 4：模拟审核循环（验证后会删除）。
-
-    前 2 次强制返回 review_passed: False；iteration >= 2（第 3 次）返回 True。
-    每次给出不同 feedback，并打印当前 iteration 与 review_passed。
-    """
-    iteration = state.get("iteration", 0)
-    if iteration < 2:
-        passed = False
-        feedback = ["摘要过于简短", "标签不够精准"][iteration]
-    else:
-        passed = True
-        feedback = "整体质量合格，审核通过。"
-    print(f"[ReviewNode] iteration={iteration}, review_passed={passed}")
-    return {
-        "review_passed": passed,
-        "review_feedback": feedback,
-        "iteration": iteration if passed else iteration + 1,
-    }
 
 
 # ── save_node: 写入 articles 目录并更新 index.json ─────────────────

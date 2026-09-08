@@ -1,13 +1,12 @@
 """LangGraph 工作流编排。
 
-组装 collect → analyze → organize → review 流水线；review 之后按
+组装 plan → collect → analyze → organize → review 流水线；review 之后按
 ``route_after_review`` 三路分支：
 
 - 通过（review_passed=True）→ save 结束
-- 未通过且 ``iteration < MAX_ITERATIONS`` → revise 按反馈改写 analyses 后
-  回到 review（形成审核重做循环）
-- 未通过且 ``iteration >= MAX_ITERATIONS`` → human_flag 写入
-  pending_review/ 人工介入（异常终点）
+- 未通过且 ``iteration < plan.max_iterations``（无 plan 时默认 3）→
+  revise 按反馈改写 analyses 后回到 review（形成审核重做循环）
+- 未通过且达到上限 → human_flag 写入 pending_review/ 人工介入（异常终点）
 
 用法::
 
@@ -29,14 +28,19 @@ from workflows.human_flag import human_flag_node
 from workflows.nodes import analyze_node, collect_node, organize_node, save_node
 from workflows.reviewer import review_node
 from workflows.reviser import revise_node
-from workflows.state import KBState, MAX_ITERATIONS
+from workflows.planner import planner_node
+from workflows.state import KBState
 
 
 def route_after_review(state: KBState) -> str:
-    """review 之后的三路分支：通过 → save；未通过且未超限 → revise；未通过已达上限 → human_flag。"""
+    """review 之后的三路分支：通过 → save；未通过且 ``iteration <
+    plan.max_iterations``（无 plan 默认 3）→ revise；达上限 → human_flag。"""
+    plan = state.get("plan", {}) or {}
+    max_iter = int(plan.get("max_iterations", 3))
+    iteration = state.get("iteration", 0)
     if state.get("review_passed"):
         return "save"
-    if (state.get("iteration") or 0) < MAX_ITERATIONS:
+    if iteration < max_iter:
         return "revise"
     return "human_flag"
 
@@ -45,15 +49,16 @@ def build_graph():
     """构建并编译 LangGraph 工作流，返回可调用的编译后 app。"""
     graph = StateGraph(KBState)
 
+    graph.add_node("plan", planner_node)
     graph.add_node("collect", collect_node)
     graph.add_node("analyze", analyze_node)
     graph.add_node("organize", organize_node)
     graph.add_node("review", review_node)
     graph.add_node("revise", revise_node)
     graph.add_node("human_flag", human_flag_node)
-    # graph.add_node("review", review_node_test)
     graph.add_node("save", save_node)
 
+    graph.add_edge("plan", "collect")
     graph.add_edge("collect", "analyze")
     graph.add_edge("analyze", "organize")
     graph.add_edge("organize", "review")
@@ -66,7 +71,7 @@ def build_graph():
     graph.add_edge("human_flag", END)
     graph.add_edge("save", END)
 
-    graph.set_entry_point("collect")
+    graph.set_entry_point("plan")
 
     return graph.compile()
 

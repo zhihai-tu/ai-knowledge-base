@@ -1,0 +1,290 @@
+{
+  "timestamp": "2026-08-24-124452",
+  "iterations_used": 3,
+  "last_feedback": "整体加权分 8.70/10（通过线 9.0）| 各维度: summary_quality=9.0, technical_depth=8.0, relevance=9.5, originality=7.5, formatting=9.5 | 模型反馈: 1. 摘要质量整体优秀，字数均严格控制在150-300字之间，表达清晰完整。2. 技术深度方面，对于提示词工程类项目（如skills、karpathy-skills），可进一步补充其在上下文注入、AST解析或IDE插件集成等底层技术实现上的细节，以提升技术硬核度。3. 原创性方面，部分项目的总结与评分理由存在句式同质化现象（如频繁使用“极大降低了...门槛”、“具有极高的...价值”），建议采用更多样化的表述以突出每个项目的独特性。4. 格式规范方面表现完美，category和tags均严格符合要求，继续保持。",
+  "analyses": [
+    {
+      "source_id": "https://github.com/openclaw/openclaw",
+      "title": "openclaw/openclaw",
+      "source_url": "https://github.com/openclaw/openclaw",
+      "source_type": "github",
+      "collected_at": "2026-08-24T12:31:29Z",
+      "stars": 387304,
+      "language": "TypeScript",
+      "author": "openclaw",
+      "topics": [
+        "ai",
+        "assistant",
+        "crustacean",
+        "molty",
+        "openclaw",
+        "own-your-data",
+        "personal"
+      ],
+      "summary": "OpenClaw 是一款基于 TypeScript 开发的跨平台个人 AI 助手，全面支持所有主流操作系统与设备。其核心价值在于强调数据自主权，让用户在享受前沿 AI 便利的同时，能够完全掌控并保护个人隐私数据。项目以独特的龙虾文化为社区特色，提供高度可定制、隐私友好的本地化 AI 体验，致力于打破生态壁垒，成为用户真正专属、安全且无缝衔接全平台的智能助理。",
+      "tags": [
+        "personal-assistant",
+        "privacy",
+        "cross-platform"
+      ],
+      "category": "agent",
+      "score": 9,
+      "score_reason": "极高的社区关注度与跨平台隐私AI助手定位完美契合当前数据自主权的核心需求。",
+      "analyzed_at": "2026-08-24T12:32:00Z"
+    },
+    {
+      "source_id": "https://github.com/obra/superpowers",
+      "title": "obra/superpowers",
+      "source_url": "https://github.com/obra/superpowers",
+      "source_type": "github",
+      "collected_at": "2026-08-24T12:31:29Z",
+      "stars": 276893,
+      "language": "Shell",
+      "author": "obra",
+      "topics": [
+        "ai",
+        "brainstorming",
+        "coding",
+        "obra",
+        "sdlc",
+        "skills",
+        "subagent-driven-development",
+        "superpowers"
+      ],
+      "summary": "该项目是一个智能体技能框架与软件开发方法论，旨在通过子智能体驱动开发重塑软件开发生命周期。它提供了一套切实可行的智能体技能体系，将复杂的编码、头脑风暴和开发任务分解并分配给专门的子智能体执行。结合Shell脚本与自动化工具，该框架不仅规范了AI辅助编程的流程，还显著提升了多智能体协同开发的效率与可靠性，为开发者提供了一套真正落地且高效的AI原生软件开发范式。",
+      "tags": [
+        "agent",
+        "software-development",
+        "multi-agent"
+      ],
+      "category": "agent",
+      "score": 8,
+      "score_reason": "提供了一套切实可行的子智能体驱动开发方法论与技能框架，有效提升了AI辅助软件开发的工程化与协同效率。",
+      "analyzed_at": "2026-08-24T12:32:44Z"
+    },
+    {
+      "source_id": "https://github.com/affaan-m/ECC",
+      "title": "affaan-m/ECC",
+      "source_url": "https://github.com/affaan-m/ECC",
+      "source_type": "github",
+      "collected_at": "2026-08-24T12:31:29Z",
+      "stars": 242777,
+      "language": "JavaScript",
+      "author": "affaan-m",
+      "topics": [
+        "ai-agents",
+        "anthropic",
+        "claude",
+        "claude-code",
+        "developer-tools",
+        "llm",
+        "mcp",
+        "productivity"
+      ],
+      "summary": "ECC 是一个专为 Claude Code、Codex、Cursor 等主流 AI 编程助手打造的代理性能优化系统。该项目通过引入技能、本能、记忆和安全等核心模块，全面增强 AI 代理的执行效率、上下文保持与任务处理能力。它采用研究优先的开发理念，旨在解决 AI 编码工具在复杂长上下文任务中的性能瓶颈，为开发者提供更智能、高效且安全的代码生成与辅助开发体验，是提升当前 AI 编程工具综合表现的重要增强框架。",
+      "tags": [
+        "ai-agents",
+        "developer-tools",
+        "mcp"
+      ],
+      "category": "agent",
+      "score": 8,
+      "score_reason": "针对主流AI编程助手提供全面的代理性能优化与记忆安全增强，极具实用价值与生态潜力。",
+      "analyzed_at": "2026-08-24T12:33:15Z"
+    },
+    {
+      "source_id": "https://github.com/NousResearch/hermes-agent",
+      "title": "NousResearch/hermes-agent",
+      "source_url": "https://github.com/NousResearch/hermes-agent",
+      "source_type": "github",
+      "collected_at": "2026-08-24T12:31:29Z",
+      "stars": 235448,
+      "language": "Python",
+      "author": "NousResearch",
+      "topics": [
+        "ai",
+        "ai-agent",
+        "ai-agents",
+        "anthropic",
+        "chatgpt",
+        "claude",
+        "claude-code",
+        "codex",
+        "hermes",
+        "hermes-agent",
+        "llm",
+        "nous-research",
+        "openai"
+      ],
+      "summary": "hermes-agent 是由 NousResearch 推出的具备持续成长能力的开源 AI 智能体框架。项目以“The agent that grows with you”为核心理念，旨在打造伴随用户需求不断进化的智能助手。它深度集成 OpenAI、Anthropic 等主流大模型生态，支持多模型协同。其核心亮点在于引入动态记忆与工具学习机制，使 Agent 能在交互中积累经验、自主扩展能力边界，实现个性化与长期陪伴。该项目为开发者提供了高度可扩展的 Agent 基础设施，大幅降低了构建具备长期记忆和自我进化能力的 AI 应用门槛，具有极高的生态价值。",
+      "tags": [
+        "AI-Agent",
+        "LLM",
+        "Continuous-Learning"
+      ],
+      "category": "agent",
+      "score": 9,
+      "score_reason": "NousResearch推出的多模型Agent框架，主打持续学习与个性化成长，极具开源生态影响力。",
+      "analyzed_at": "2026-08-24T12:33:44Z"
+    },
+    {
+      "source_id": "https://github.com/mattpocock/skills",
+      "title": "mattpocock/skills",
+      "source_url": "https://github.com/mattpocock/skills",
+      "source_type": "github",
+      "collected_at": "2026-08-24T12:31:29Z",
+      "stars": 234809,
+      "language": "Shell",
+      "author": "mattpocock",
+      "topics": [],
+      "summary": "该项目由知名TypeScript专家Matt Pocock开源，分享了他个人.agents目录中用于指导AI编程助手的高质量“技能”（Skills）与系统提示词集合。这些技能专为真实工程场景设计，涵盖了代码编写、重构、审查以及TypeScript最佳实践等方面。其核心价值在于将顶尖开发者的工程经验转化为AI可理解的指令，帮助开发者显著提升Cursor、Copilot等AI辅助编程工具的输出质量与效率，是AI编程时代的实战指南。",
+      "tags": [
+        "prompt-engineering",
+        "ai-coding",
+        "agent-skills"
+      ],
+      "category": "agent",
+      "score": 9,
+      "score_reason": "顶级专家分享的实战级AI编程助手提示词集合，极具工程指导意义与极高的实用价值。",
+      "analyzed_at": "2026-08-24T12:34:08Z"
+    },
+    {
+      "source_id": "https://github.com/multica-ai/andrej-karpathy-skills",
+      "title": "multica-ai/andrej-karpathy-skills",
+      "source_url": "https://github.com/multica-ai/andrej-karpathy-skills",
+      "source_type": "github",
+      "collected_at": "2026-08-24T12:31:29Z",
+      "stars": 206137,
+      "language": null,
+      "author": "multica-ai",
+      "topics": [],
+      "summary": "该项目提供了一个名为 CLAUDE.md 的单文件提示词配置，旨在优化 Claude Code 的编程行为。其核心内容提炼自 AI 领域顶尖专家 Andrej Karpathy 对大语言模型编码常见陷阱的深刻观察与总结。通过设定明确的编码规范、逻辑约束和避坑指南，该文件能有效减少 AI 生成代码时的幻觉、冗余及低级错误，显著提升代码质量与开发效率。作为开发者使用 Claude Code 时的系统级行为准则，它以极低的接入成本实现了 AI 辅助编程体验的越级提升，具有极高的实用价值与社区指导意义。",
+      "tags": [
+        "prompt-engineering",
+        "coding-assistant",
+        "developer-tools"
+      ],
+      "category": "tool",
+      "score": 9,
+      "score_reason": "提炼自顶级AI专家的编程避坑经验，以极简的提示词文件大幅提升AI代码生成质量，实用性与社区影响力极高。",
+      "analyzed_at": "2026-08-24T12:34:38Z"
+    },
+    {
+      "source_id": "https://github.com/n8n-io/n8n",
+      "title": "n8n-io/n8n",
+      "source_url": "https://github.com/n8n-io/n8n",
+      "source_type": "github",
+      "collected_at": "2026-08-24T12:31:29Z",
+      "stars": 202247,
+      "language": "TypeScript",
+      "author": "n8n-io",
+      "topics": [
+        "ai",
+        "apis",
+        "automation",
+        "cli",
+        "data-flow",
+        "development",
+        "integration-framework",
+        "integrations",
+        "ipaas",
+        "low-code",
+        "low-code-platform",
+        "mcp",
+        "mcp-client",
+        "mcp-server",
+        "n8n",
+        "no-code",
+        "self-hosted",
+        "typescript",
+        "workflow",
+        "workflow-automation"
+      ],
+      "summary": "n8n 是一款极受欢迎的公平代码工作流自动化平台，其核心亮点在于原生集成了强大的 AI 能力。它允许用户通过可视化界面结合自定义代码，轻松构建复杂的 AI 工作流和智能体。平台支持自托管与云端部署，提供 400 多种第三方应用集成，并引入了 MCP 协议支持，极大降低了 AI 应用落地与系统集成的门槛，是构建企业级 AI 自动化流程的顶级工具。",
+      "tags": [
+        "workflow-automation",
+        "ai-agent",
+        "low-code"
+      ],
+      "category": "agent",
+      "score": 9,
+      "score_reason": "拥有超20万Star，是生态最繁荣、集成最丰富的支持原生AI能力的低代码工作流自动化平台。",
+      "analyzed_at": "2026-08-24T12:35:23Z"
+    },
+    {
+      "source_id": "https://github.com/anomalyco/opencode",
+      "title": "anomalyco/opencode",
+      "source_url": "https://github.com/anomalyco/opencode",
+      "source_type": "github",
+      "collected_at": "2026-08-24T12:31:29Z",
+      "stars": 200865,
+      "language": "TypeScript",
+      "author": "anomalyco",
+      "topics": [],
+      "summary": "opencode 是一个备受瞩目的开源 AI 编码代理项目，旨在为开发者提供强大且完全开源的智能编程助手。基于 TypeScript 构建，该项目利用大语言模型的能力，实现代码生成、上下文理解、自动化重构及多文件协同编辑等高级编码任务。作为闭源 AI 编程工具的强力开源替代品，opencode 赋予开发者极高的数据隐私控制权和模型自定义能力。其超过 20 万的 Star 数彰显了其在开发者社区的巨大影响力，推动了 AI 辅助编程向开放、透明和可定制的方向发展，是构建下一代智能开发工作流的核心基础设施。",
+      "tags": [
+        "coding-agent",
+        "developer-tools",
+        "open-source"
+      ],
+      "category": "agent",
+      "score": 9,
+      "score_reason": "作为拥有超20万Star的顶级开源编码代理，它极大推动了AI辅助编程工具的开源化与民主化，具有极高的工程与社区价值。",
+      "analyzed_at": "2026-08-24T12:35:59Z"
+    },
+    {
+      "source_id": "https://github.com/ultraworkers/claw-code",
+      "title": "ultraworkers/claw-code",
+      "source_url": "https://github.com/ultraworkers/claw-code",
+      "source_type": "github",
+      "collected_at": "2026-08-24T12:31:29Z",
+      "stars": 195113,
+      "language": "Rust",
+      "author": "ultraworkers",
+      "topics": [],
+      "summary": "该项目是一个完全由AI Agent自主开发和维护的博物馆展览系统，使用Rust语言结合Gajae-Code/LazyCodex框架构建。其最大亮点在于实现了“零人类干预”的软件生命周期管理，从代码编写到持续维护均由Agent独立完成。这不仅是对AI Agent在复杂工程（如Rust）中自主编程能力的极限测试，也为未来完全自治的软件系统提供了极具价值的实验范本。高达19万的Star数反映了开源社区对AI自主开发模式的极大热情与关注，标志着Agent技术从辅助工具向独立开发者演进的重要里程碑。",
+      "tags": [
+        "autonomous-agent",
+        "ai-coding",
+        "rust"
+      ],
+      "category": "agent",
+      "score": 9,
+      "score_reason": "项目实现了零人类干预的AI全自主软件开发与维护，概念极具前瞻性且社区关注度极高。",
+      "analyzed_at": "2026-08-24T12:36:29Z"
+    },
+    {
+      "source_id": "https://github.com/Significant-Gravitas/AutoGPT",
+      "title": "Significant-Gravitas/AutoGPT",
+      "source_url": "https://github.com/Significant-Gravitas/AutoGPT",
+      "source_type": "github",
+      "collected_at": "2026-08-24T12:31:29Z",
+      "stars": 186847,
+      "language": "Python",
+      "author": "Significant-Gravitas",
+      "topics": [
+        "agentic-ai",
+        "agents",
+        "ai",
+        "artificial-intelligence",
+        "autonomous-agents",
+        "claude",
+        "gpt",
+        "llama-api",
+        "llm",
+        "openai",
+        "python"
+      ],
+      "summary": "AutoGPT 是开源界最具影响力的自主 AI 代理项目之一。它允许用户设定宏观目标，AI 会自动将其分解为子任务，并自主调用外部工具（如网页搜索、代码执行、文件读写等）进行迭代执行，直至完成目标。该项目极大地降低了使用复杂 AI 的门槛，推动了 AI Agent 概念的普及与生态发展，是探索大模型自主决策与任务规划能力的里程碑式应用，真正践行了让 AI 普及的愿景。",
+      "tags": [
+        "agent",
+        "autonomous-ai",
+        "llm"
+      ],
+      "category": "agent",
+      "score": 9,
+      "score_reason": "作为自主AI代理领域的先驱与现象级项目，极大推动了Agent生态发展，具有极高的里程碑意义。",
+      "analyzed_at": "2026-08-24T12:37:10Z"
+    }
+  ]
+}

@@ -10,7 +10,9 @@ organize 节点之后才存在）。评分维度与权重：
 - formatting 格式规范: 15%
 
 加权总分由代码重算（不信任模型算术），``>= 7.0`` 判定通过；审核全部
-analyses；LLM 调用失败时自动通过，不阻塞流水线。
+analyses；LLM 调用失败时自动通过，不阻塞流水线。重做循环出口由 graph
+路由控制：未通过且 ``iteration < plan.max_iterations``（无 plan 时默认
+3）回 revise，达到上限转 human_flag 人工介入。
 
 用法示例::
 
@@ -112,8 +114,8 @@ def review_node(state: KBState) -> dict:
     """节点 4：对 analyses 做 5 维度加权审核；LLM 失败自动通过。
 
     - 加权总分 ``>= PASS_SCORE`` 判定通过，未通过时 iteration 递增供重做循环。
-    - 循环出口由 graph 路由控制：``iteration < MAX_ITERATIONS`` 时回 revise
-      重做，``iteration >= MAX_ITERATIONS`` 仍未通过时进入 human_flag 人工介入。
+    - 循环出口由 graph 路由控制（读 ``plan.max_iterations``），节点只负责
+      评审与 iteration 递增，不强制通过。
     - 调用失败 / 输出缺少 scores 时自动通过（不阻塞流程）。
     """
     iteration = state.get("iteration", 0)

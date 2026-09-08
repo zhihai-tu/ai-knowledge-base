@@ -1,0 +1,11 @@
+{
+  "timestamp": "2026-08-18-085952",
+  "iterations_used": 3,
+  "last_feedback": "整体加权分 3.00/10（通过线 7.0）| 各维度: summary_quality=3.0, technical_depth=3.0, relevance=3.0, originality=3.0, formatting=3.0 | 模型反馈: 质量差",
+  "analyses": [
+    {
+      "source_id": "a",
+      "summary": "x"
+    }
+  ]
+}
