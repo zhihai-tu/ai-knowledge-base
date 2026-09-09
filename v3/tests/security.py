@@ -1,4 +1,4 @@
-"""Agent 安全组件（纯标准库，未自动接入现有流水线）。
+"""Agent 安全组件（纯标准库，已接入 collect 输入检查及 organize/save 输出脱敏）。
 
 运行自测：python tests/security.py
 sanitize_input/filter_output 返回 (文本, 告警或检测列表)；secure_input/secure_output

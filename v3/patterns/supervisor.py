@@ -22,6 +22,7 @@ import logging
 import os
 import re
 import sys
+from dataclasses import asdict
 
 # `python patterns/supervisor.py` 直接运行时，sys.path[0] 是 patterns/，
 # 需把项目根目录加入 sys.path 才能导入同级 workflows 包。
@@ -29,7 +30,8 @@ sys.path.insert(
     0, os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 )
 
-from workflows.model_client import chat_with_retry, create_provider
+from tests.cost_guard import BudgetExceededError
+from workflows.model_client import chat, chat_with_retry, create_provider, get_cost_guard
 
 logger = logging.getLogger(__name__)
 
@@ -112,6 +114,10 @@ def _run_worker(task: str, entries: list[dict]) -> str:
         messages.append({"role": "user", "content": "\n\n".join(redo_parts)})
 
     response = chat_with_retry(_get_provider(), messages, temperature=0.4)
+    # 保留 Worker 的多消息上下文，直接使用同一守卫记账一次。
+    cost_guard = get_cost_guard()
+    cost_guard.record("worker", asdict(response.usage), response.model)
+    cost_guard.check()
     return response.content
 
 
@@ -119,19 +125,17 @@ def _run_supervisor(task: str, worker_text: str) -> dict:
     """调用 Supervisor 审核 Worker 报告，返回规范化的评审结果。"""
     prompt = f"任务：{task}\n\nWorker 提交的分析报告：\n{worker_text}"
     try:
-        response = chat_with_retry(
-            _get_provider(),
-            [
-                {"role": "system", "content": SUPERVISOR_SYSTEM},
-                {"role": "user", "content": prompt},
-            ],
-            temperature=0.0,
+        text, _usage = chat(
+            prompt, system=SUPERVISOR_SYSTEM, temperature=0.0,
+            provider=_get_provider(), node_name="supervisor",
         )
+    except BudgetExceededError:
+        raise
     except Exception as exc:  # noqa: BLE001
         logger.warning("Supervisor 调用失败: %s", exc)
         return _synthetic_review(f"Supervisor 审核调用失败: {exc}")
 
-    review, err = _parse_json(response.content)
+    review, err = _parse_json(text)
     if not isinstance(review, dict):
         return _synthetic_review(f"Supervisor 输出非法 JSON: {err or '非对象'}")
     score = review.get("score")
@@ -202,6 +206,8 @@ def supervisor(task: str, max_retries: int = 3) -> dict:
         attempt = len(entries) + 1
         try:
             worker_text = _run_worker(task, entries)
+        except BudgetExceededError:
+            raise
         except Exception as exc:  # noqa: BLE001
             logger.warning("Worker 调用失败（第 %d 次）: %s", attempt, exc)
             worker_text = ""

@@ -10,6 +10,7 @@
 - ``LLM_API_KEY``: 当前供应商的 API Key
 - ``LLM_BASE_URL``: 当前供应商的 OpenAI 兼容 API 基础地址
 - ``LLM_MODEL``: 当前供应商的模型名称
+- ``BUDGET_YUAN``: 累计人民币预算，默认 1.0 元，首次创建预算守卫时读取
 
 本模块使用 httpx 直接调用 OpenAI 兼容的 /chat/completions 接口，
 不依赖 openai SDK。所有提供商均返回统一的结构。
@@ -32,13 +33,27 @@ import logging
 import os
 import re
 import time
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any, Optional
 
 import httpx
 
+from tests.cost_guard import CostGuard
+
 logger = logging.getLogger(__name__)
+
+_cost_guard: Optional[CostGuard] = None
+
+
+def get_cost_guard() -> CostGuard:
+    """首次读取预算配置创建守卫，后续调用复用同一实例。"""
+    global _cost_guard
+    if _cost_guard is None:
+        load_dotenv()
+        _cost_guard = CostGuard(budget_yuan=float(os.getenv("BUDGET_YUAN", "1.0")))
+    return _cost_guard
+
 
 DEFAULT_PROVIDER = "deepseek"
 DEFAULT_TIMEOUT = 60.0
@@ -82,6 +97,7 @@ MODEL_PRICES_USD = {
     "gpt-4o": (2.50, 10.00),
     "glm-5.2": (1.40, 4.40),
     "glm-5.3-flash": (0.075, 0.25),
+    "k3-256k": (3.00, 15.00),  # Kimi Code K3 模型，价格来源：https://platform.kimi.ai
 }
 
 
@@ -166,6 +182,9 @@ class LLMProvider:
             httpx.HTTPStatusError: 服务端返回非 2xx 状态码。
             httpx.RequestError: 网络请求失败或超时。
         """
+        # Kimi Code K3 模型只接受 temperature=1.0
+        if self.provider_name == "kimi-code":
+            temperature = 1.0
         payload: dict = {
             "model": self.model,
             "messages": messages,
@@ -352,13 +371,27 @@ def chat(
     prompt: str,
     system: Optional[str] = None,
     temperature: float = 1.0,
+    node_name: str = "unknown",
+    *,
+    provider: Optional[LLMProvider] = None,
+    max_retries: int = MAX_RETRIES,
 ) -> tuple[str, Usage]:
-    """返回 (文本, 本次用量)，温度默认 1.0，可按目标模型支持范围调整。"""
+    """返回 (文本, 本次用量)，按节点记账后超预算抛出 BudgetExceededError。
+
+    温度默认 1.0，可按目标模型支持范围调整；provider 与 max_retries
+    供 chat_json 透传既有调用配置。
+    """
     messages: list[dict[str, str]] = []
     if system:
         messages.append({"role": "system", "content": system})
     messages.append({"role": "user", "content": prompt})
-    response = chat_with_retry(create_provider(), messages, temperature=temperature)
+    response = chat_with_retry(
+        provider or create_provider(), messages,
+        temperature=temperature, max_retries=max_retries,
+    )
+    cost_guard = get_cost_guard()
+    cost_guard.record(node_name, asdict(response.usage), response.model)
+    cost_guard.check()
     return response.content, response.usage
 
 
@@ -410,6 +443,7 @@ def chat_json(
     temperature: float = 0.7,
     provider: Optional[LLMProvider] = None,
     max_retries: int = MAX_RETRIES,
+    node_name: str = "unknown",
 ) -> tuple[Any, Usage]:
     """调用 LLM 并解析 JSON，返回 (解析后的对象, 本次用量)。
 
@@ -419,27 +453,24 @@ def chat_json(
         temperature: 采样温度。
         provider: 提供商实例，默认按环境变量创建。
         max_retries: 总尝试次数。
+        node_name: 成本归属节点，默认 unknown。
 
     Returns:
         (解析后的 JSON 对象, Usage)。
 
     Raises:
+        BudgetExceededError: 累计成本超过人民币预算。
         ValueError: 模型未输出合法 JSON 对象。
         httpx.HTTPStatusError: 服务端返回不可重试的状态码，或重试次数已用尽。
         httpx.RequestError: 重试次数已用尽仍网络失败。
     """
-    messages: list[dict[str, str]] = []
-    if system:
-        messages.append({"role": "system", "content": system})
-    messages.append({"role": "user", "content": prompt})
-
-    target = provider or create_provider()
-    response = chat_with_retry(
-        target, messages, temperature=temperature, max_retries=max_retries
+    text, usage = chat(
+        prompt, system=system, temperature=temperature, node_name=node_name,
+        provider=provider, max_retries=max_retries,
     )
-    parsed, err = _parse_json_text(response.content)
+    parsed, err = _parse_json_text(text)
     if isinstance(parsed, (dict, list)):
-        return parsed, response.usage
+        return parsed, usage
     raise ValueError(f"LLM 未输出合法 JSON: {err or '非对象'}")
 
 

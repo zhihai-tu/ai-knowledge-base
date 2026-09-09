@@ -17,6 +17,17 @@
 - 配置存于项目根目录 `.env`（模板见 `.env.example`），受 `.gitignore` 保护，禁止提交真实 Key。
 - 优先级：进程环境变量 > `.env`。LLM 统一使用 `LLM_PROVIDER`（默认 deepseek，仅作供应商标识）、`LLM_API_KEY`、`LLM_BASE_URL`、`LLM_MODEL`；常用供应商的 base URL 和模型有内置默认值，未知的 OpenAI 兼容供应商需显式设置后两者。另有 `LOG_LEVEL`（DEBUG/INFO/WARNING/ERROR，默认 INFO）。流水线支持 `--provider` 参数指定供应商标识（`pipeline.py` 传入 `create_provider(name=...)`）。
 - 新增模型价格只登记到 `MODEL_PRICES_USD`（USD / 1M tokens）；成本统一按模型单价计算 USD，不做汇率换算。调用方通过 `accumulate_usage` 把每次调用 `Usage` 累加进成本汇总 dict（如 `state["cost_tracker"]`），键为 `provider/model`，输出 USD 报告。
+- `chat()` 与 `chat_json()` 共用懒加载的 `tests.cost_guard.CostGuard`，首次读取 `BUDGET_YUAN`（默认 1.0 元）；按 `node_name`（默认 `unknown`）记录成功调用用量后立即检查预算，超限向调用方抛出 `BudgetExceededError`。人民币预算沿用 CostGuard 自身单价，与既有 USD 汇总独立；`chat_json()` 透传原有 provider、重试参数与 node_name 给 `chat()`，不重复记账。
+- 业务 LLM 调用必须标记节点名并接入同一预算守卫；业务降级处理应先用 `except BudgetExceededError: raise` 放行超预算异常，禁止继续审核、重做或保存知识条目。Supervisor 的 Worker 为保留原有多消息上下文，继续使用 `chat_with_retry()`，成功后显式向 `get_cost_guard()` 记账并检查一次；其他业务调用使用 `chat()` / `chat_json()`。
+- `workflows/graph.py` 的命令行入口在 `finally` 中打印累计调用次数、人民币成本与按节点成本，并将当前 CostGuard 报告写入项目根目录下的 `knowledge/cost-report.json`（每次覆盖为最新报告，路径不随启动目录改变）；正常结束或超预算退出均收尾，原异常继续向上抛出。
+
+## 安全模块与验证
+
+- `tests/security.py` 存放用户要求的纯标准库安全组件，四类自测保留在文件内的 `__main__` 入口；运行 `python tests/security.py`，不额外维护独立测试文件。
+- `workflows/nodes.py` 的 collect 在外部数据进入 sources、日志及 LLM 之前，对每条来源的全部字符串值（含嵌套列表/对象）执行输入检查与清洗。每条来源合计最多 10000 字符，使用固定内部 client_id `workflow:collect` 计入共享限流一次；注入或超长条目跳过并审计，不输出拒绝内容，限流异常向上抛出、中止流程。当前实际采集源为 GitHub；以后接入同一 collect 的 RSS/arXiv 数据也必须经过此入口。
+- organize 返回前对最终 articles 的全部字符串值（含嵌套 metadata/列表）调用 `secure_output` 脱敏并审计，覆盖首轮构建、反馈修正及普通失败回退；保持字典键和非字符串类型，不修改传入状态。`_save_articles` 在每条文章校验及打开目标文件前再次执行相同脱敏，防止绕过 organize 或后续内容变更；安全处理失败向上抛出，不写入该条目、不继续更新索引。此接入不代表 analyze 原始响应或 review/revise 输入已独立设有安全入口。
+- `sanitize_input` 返回清洗文本与告警；`secure_input` 对命中注入、超长输入及限流请求抛出异常。`secure_output` 默认掩码 PII。PII 检测结果只含类型和原文位置，不返回敏感原值。
+- 限流器与审计器线程安全、内存有界，仅作用于单进程；审计输入输出只保存元数据，导出显式指定路径且不覆盖已有文件。正则属于启发式检测，不能保证消除注入或识别全部 PII；生产部署仍需工具权限隔离、共享限流与持久化审计。
 
 ## 知识条目 JSON 格式
 

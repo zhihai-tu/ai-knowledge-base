@@ -27,10 +27,17 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from patterns.router import rebuild_index
+from tests.cost_guard import BudgetExceededError
+from tests.security import (
+    SecurityViolationError,
+    sanitize_input,
+    secure_input,
+    secure_output,
+)
 from workflows.model_client import (
     Usage,
     accumulate_usage,
-    chat_with_retry,
+    chat,
     create_provider,
 )
 from workflows.state import KBState
@@ -85,15 +92,11 @@ def _get_provider():
 
 def _llm_chat(system: str, user: str, temperature: float = 0.0) -> str:
     """调用 LLM 返回文本内容，复用 model_client 的用量追踪与重试。"""
-    response = chat_with_retry(
-        _get_provider(),
-        [
-            {"role": "system", "content": system},
-            {"role": "user", "content": user},
-        ],
-        temperature=temperature,
+    text, _usage = chat(
+        user, system=system, temperature=temperature,
+        provider=_get_provider(), node_name="organize",
     )
-    return response.content
+    return text
 
 
 def _parse_json(text: str) -> tuple[object | None, str | None]:
@@ -147,6 +150,30 @@ def _next_seq(prefix: str, date_str: str) -> int:
 
 
 # ── collect_node: 调用 GitHub Search API 采集 ──────────────────────
+
+def _map_text_values(value, transform):
+    """转换 JSON 结构中的字符串值，保留键与非字符串类型，不修改原对象。"""
+    if isinstance(value, str):
+        return transform(value)
+    if isinstance(value, list):
+        return [_map_text_values(item, transform) for item in value]
+    if isinstance(value, dict):
+        return {key: _map_text_values(item, transform) for key, item in value.items()}
+    return value
+
+
+def _secure_source(source: dict) -> dict:
+    """按来源计一次限流，检查原始文本后逐字段清洗，避免 JSON 转义隐藏控制字符。"""
+    texts = []
+
+    def collect_text(text: str) -> str:
+        texts.append(text)
+        return text
+
+    _map_text_values(source, collect_text)
+    secure_input("\n".join(texts), client_id="workflow:collect")
+    return _map_text_values(source, lambda text: sanitize_input(text)[0])
+
 
 def _fetch_github_search(limit: int) -> dict:
     """请求 GitHub Search API，返回 JSON 数据。
@@ -220,8 +247,10 @@ def collect_node(state: KBState) -> dict:
     """节点 1：调用 GitHub Search API 采集 AI 相关仓库，更新 sources。
 
     采集数量读 ``state["plan"]["per_source_limit"]``，无 plan 时默认
-    :data:`COLLECT_LIMIT`。
+    :data:`COLLECT_LIMIT`。外部文本在写入 sources/日志前清洗，注入或
+    超长条目拒绝；限流异常向上抛出，不交给采集失败降级处理。
     """
+    print("--- collect 开始 ---")
     plan = state.get("plan", {}) or {}
     limit = int(plan.get("per_source_limit", COLLECT_LIMIT))
     print(f"[CollectNode] 调用 GitHub Search API 采集「{GITHUB_QUERY}」"
@@ -232,18 +261,26 @@ def collect_node(state: KBState) -> dict:
         logger.warning("GitHub 采集失败: %s", exc)
         print(f"[CollectNode] 采集失败: {exc}")
         sources = []
+    safe_sources = []
+    for source in sources:
+        try:
+            safe_sources.append(_secure_source(source))
+        except SecurityViolationError:
+            logger.warning("CollectNode 跳过被安全策略拒绝的条目（注入或超长）")
+    sources = safe_sources
     print(f"[CollectNode] 采集完成: {len(sources)} 条")
     for s in sources:
         stars = s.get("stars")
         suffix = f" (⭐{stars})" if stars else ""
         print(f"  └ {s.get('title')}{suffix}")
+    print("--- collect 完成 ---")
     return {"sources": sources}
 
 
 # ── analyze_node: LLM 生成中文摘要 / 标签 / 评分 ───────────────────
 
 def _analyze_one(source: dict) -> tuple[dict | None, Usage | None]:
-    """对单条 source 调用 LLM 生成分析报告；失败时降级为 (None, usage)。
+    """对单条 source 调用 LLM 生成分析报告；普通失败降级，超预算向上抛出。
 
     返回 (分析报告 dict, 本次调用 Usage)；Usage 用于累计到 state 成本，
     解析失败但已消耗 tokens 时 usage 依然有效。
@@ -258,19 +295,15 @@ def _analyze_one(source: dict) -> tuple[dict | None, Usage | None]:
         f"原始描述: {source.get('summary') or '（无）'}"
     )
     try:
-        response = chat_with_retry(
-            _get_provider(),
-            [
-                {"role": "system", "content": ANALYZE_SYSTEM},
-                {"role": "user", "content": user},
-            ],
-            temperature=0.3,
+        raw, usage = chat(
+            user, system=ANALYZE_SYSTEM, temperature=0.3,
+            provider=_get_provider(), node_name="analyze",
         )
+    except BudgetExceededError:
+        raise
     except Exception as exc:  # noqa: BLE001
         logger.warning("条目 %s 分析调用失败: %s", source.get("source_url"), exc)
         return None, None
-    usage = response.usage
-    raw = response.content
 
     parsed, err = _parse_json(raw)
     if not isinstance(parsed, dict):
@@ -310,6 +343,7 @@ def analyze_node(state: KBState) -> dict:
     避免看起来像卡死）。相邻请求间隔 ANALYZE_INTERVAL_SECONDS 平滑速率。
     每次调用的 token 用量累计进 ``state.cost_tracker``。
     """
+    print("--- analyze 开始 ---")
     sources = state.get("sources") or []
     cost_tracker = state.get("cost_tracker") or {}
     print(f"[AnalyzeNode] 对 {len(sources)} 条数据调用 LLM 分析...")
@@ -329,6 +363,7 @@ def analyze_node(state: KBState) -> dict:
         print(f"  └ score={analysis['score']}", flush=True)
         logger.info("分析完成: %s score=%s", analysis["source_url"], analysis["score"])
     print(f"[AnalyzeNode] 分析完成: {len(analyses)}/{len(sources)} 条")
+    print("--- analyze 完成 ---")
     return {"analyses": analyses, "cost_tracker": cost_tracker}
 
 
@@ -418,6 +453,8 @@ def _revise_articles(articles: list[dict], feedback: str) -> list[dict]:
     )
     try:
         raw = _llm_chat(REVISE_SYSTEM, user, temperature=0.3)
+    except BudgetExceededError:
+        raise
     except Exception as exc:  # noqa: BLE001
         logger.warning("OrganizeNode 修正调用失败，保留原条目: %s", exc)
         return articles
@@ -452,8 +489,10 @@ def organize_node(state: KBState) -> dict:
     首轮（iteration==0 或无反馈）从 analyses 整体重建 articles；重做轮
     （iteration>0 且 review_feedback 非空）对现有 articles 修正后整体写回。
     过滤线读 ``state["plan"]["relevance_threshold"]``（0-1，无 plan 时默认
-    0.5），×10 映射到 1-10 评分体系。
+    0.5），×10 映射到 1-10 评分体系。所有分支在返回前统一对字符串值
+    做 PII 脱敏与审计，包含嵌套 metadata 和列表。
     """
+    print("--- organize 开始 ---")
     iteration = state.get("iteration", 0)
     feedback = (state.get("review_feedback") or "").strip()
     current = state.get("articles") or []
@@ -471,7 +510,9 @@ def organize_node(state: KBState) -> dict:
               f"relevance_threshold={relevance_threshold}) + 按 URL 去重"
               f"（含 {existing} 条历史已收录）...")
         articles = _build_articles(state.get("analyses") or [], min_score)
+    articles = _map_text_values(articles, lambda text: secure_output(text)[0])
     print(f"[OrganizeNode] 整理完成: {len(articles)} 条")
+    print("--- organize 完成 ---")
     return {"articles": articles}
 
 
@@ -494,10 +535,11 @@ def _validate_article(item: dict) -> list[str]:
 
 
 def _save_articles(articles: list[dict]) -> int:
-    """把文章逐个写入 knowledge/articles/{id}.json，未通过校验的跳过。"""
+    """逐条脱敏、校验后写盘；校验失败跳过，安全处理失败则抛出且不打开目标文件。"""
     ARTICLES_DIR.mkdir(parents=True, exist_ok=True)
     saved = 0
     for item in articles:
+        item = _map_text_values(item, lambda text: secure_output(text)[0])
         errors = _validate_article(item)
         if errors:
             logger.warning("条目 %s 未通过校验，跳过: %s",
@@ -513,9 +555,11 @@ def _save_articles(articles: list[dict]) -> int:
 
 def save_node(state: KBState) -> dict:
     """节点 5：将 articles 写入 knowledge/articles/，并重建 index.json 索引。"""
+    print("--- save 开始 ---")
     articles = state.get("articles") or []
     print(f"[SaveNode] 写入 {len(articles)} 篇文章到 knowledge/articles/ ...")
     saved = _save_articles(articles)
     rebuild_index()
     print(f"[SaveNode] 已保存 {saved} 篇，并更新 index.json")
+    print("--- save 完成 ---")
     return {}

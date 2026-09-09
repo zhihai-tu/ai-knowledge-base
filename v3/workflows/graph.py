@@ -1,12 +1,24 @@
 """LangGraph 工作流编排。
 
-组装 plan → collect → analyze → organize → review 流水线；review 之后按
-``route_after_review`` 三路分支：
+节点连边与 ``build_graph()`` 一致（START 表示入口）::
 
-- 通过（review_passed=True）→ save 结束
-- 未通过且 ``iteration < plan.max_iterations``（无 plan 时默认 3）→
-  revise 按反馈改写 analyses 后回到 review（形成审核重做循环）
-- 未通过且达到上限 → human_flag 写入 pending_review/ 人工介入（异常终点）
+    START -> plan -> collect -> analyze -> organize -> review
+                                                        |
+                                                        +-- [1] -> save -> END
+                                                        |
+                                                        +-- [2] -> revise -> review
+                                                        |
+                                                        +-- [3] -> human_flag -> END
+
+review 的出边由 ``route_after_review`` 选择，每次只走一条：
+
+- [1] 审核通过（review_passed 为真）时进入 save，再到 END；优先于次数判断。
+- [2] 审核未通过且 ``iteration < max_iterations`` 时进入 revise，随后直接
+  回到同一个 review 节点再次审核，形成循环，不重新经过 analyze 或 organize。
+- [3] 审核未通过且 ``iteration >= max_iterations`` 时进入 human_flag，
+  标记人工介入后到 END；此分支不经过 save。
+
+``max_iterations`` 取自 ``plan.max_iterations``，未提供时默认 3。
 
 用法::
 
@@ -21,10 +33,12 @@ from langgraph.graph import END, StateGraph
 import os
 import sys
 import textwrap
+from pathlib import Path
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from workflows.human_flag import human_flag_node
+from workflows.model_client import get_cost_guard
 from workflows.nodes import analyze_node, collect_node, organize_node, save_node
 from workflows.reviewer import review_node
 from workflows.reviser import revise_node
@@ -96,26 +110,40 @@ def _show_cost(cost: dict) -> None:
               f"$={v.get('cost_usd', 0):.6f}")
 
 
+from tests.cost_guard import BudgetExceededError
+
 if __name__ == "__main__":
-    app = build_graph()
-    first_block = True
-    for step, outputs in enumerate(app.stream({"iteration": 0}), start=1):
-        for node, update in outputs.items():
-            if not update:
-                continue
-            if not first_block:
-                print()
-            first_block = False
-            print(f"--- step {step} | {node} 完成 ---")
-            for key, value in update.items():
-                if key == "cost_tracker":
-                    print(f"  cost_tracker:")
-                    _show_cost(value)
-                elif key == "review_feedback":
-                    print(f"  review_feedback:")
-                    _show_review_feedback(str(value))
-                elif isinstance(value, list):
-                    print(f"  {key}: {len(value)} 条")
-                else:
-                    print(f"  {key}: {value}")
-    print()
+    try:
+        app = build_graph()
+        first_block = True
+        for step, outputs in enumerate(app.stream({"iteration": 0}), start=1):
+            for node, update in outputs.items():
+                if not first_block:
+                    print()
+                first_block = False
+                if not update:
+                    continue
+                for key, value in update.items():
+                    if key == "cost_tracker":
+                        print(f"  cost_tracker:")
+                        _show_cost(value)
+                    elif key == "review_feedback":
+                        print(f"  review_feedback:")
+                        _show_review_feedback(str(value))
+                    elif isinstance(value, list):
+                        print(f"  {key}: {len(value)} 条")
+                    else:
+                        print(f"  {key}: {value}")
+    except BudgetExceededError as exc:
+        print(f"\n[CostGuard] ⚠️ {str(exc).rstrip('。')}，流程已中止。")
+        sys.exit(1)
+    finally:
+        guard = get_cost_guard()
+        report = guard.get_report()
+        total_calls = len(report["records"])
+        cost_by_node = {
+            name: node["total_cost_yuan"] for name, node in report["nodes"].items()
+        }
+        print(f"\n[CostGuard] 总调用 {total_calls} 次 · 总成本 ¥{report['total_cost_yuan']:.6f}")
+        print(f"[CostGuard] 按节点：{cost_by_node}")
+        guard.save_report(Path(__file__).resolve().parents[1] / "knowledge" / "cost-report.json")

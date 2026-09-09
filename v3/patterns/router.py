@@ -28,9 +28,10 @@ from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
 
+from tests.cost_guard import BudgetExceededError
 from workflows.model_client import (
     calculate_cost,
-    chat_with_retry,
+    chat,
     create_provider,
 )
 
@@ -78,18 +79,17 @@ def _get_provider():
 
 
 def _llm_call(
-    prompt: str, system: str | None = None, temperature: float = 0.7
+    prompt: str, system: str | None = None, temperature: float = 0.7,
+    node_name: str = "unknown",
 ) -> tuple[str, float]:
     """调用 LLM 并返回 (内容, 本次成本 USD)，复用 model_client 的用量追踪。"""
-    messages: list[dict[str, str]] = []
-    if system:
-        messages.append({"role": "system", "content": system})
-    messages.append({"role": "user", "content": prompt})
-    response = chat_with_retry(
-        _get_provider(), messages, temperature=temperature
+    provider = _get_provider()
+    text, usage = chat(
+        prompt, system=system, temperature=temperature,
+        provider=provider, node_name=node_name,
     )
-    return response.content, calculate_cost(
-        response.model, response.usage.prompt_tokens, response.usage.completion_tokens
+    return text, calculate_cost(
+        provider.model, usage.prompt_tokens, usage.completion_tokens
     )
 
 
@@ -140,7 +140,11 @@ def _llm_route(query: str) -> tuple[str, str | None, str | None, float, str | No
     )
     prompt = f"判断下面问题的意图并按要求输出：\n{query}\n\n"
     try:
-        reply, cost = _llm_call(prompt, system=system, temperature=0.0)
+        reply, cost = _llm_call(
+            prompt, system=system, temperature=0.0, node_name="router_classify"
+        )
+    except BudgetExceededError:
+        raise
     except Exception as exc:  # noqa: BLE001
         logger.warning("LLM 分类失败，回退 general_chat: %s", exc)
         return INTENT_GENERAL, None, str(exc), 0.0, None
@@ -340,7 +344,9 @@ def _llm_knowledge_answer(query: str) -> tuple[str, float]:
     )
     prompt = f"知识库内容如下：\n{context}\n\n用户问题：{query}"
     try:
-        return _llm_call(prompt, system=system)
+        return _llm_call(prompt, system=system, node_name="knowledge_query")
+    except BudgetExceededError:
+        raise
     except Exception as exc:  # noqa: BLE001
         return f"知识库中未找到与「{query}」相关的内容（LLM 兜底失败: {exc}）。", 0.0
 
@@ -405,7 +411,9 @@ def _handle_knowledge_query(query: str) -> str:
 def _handle_general_chat(query: str) -> str:
     """直接调用 LLM 回答。"""
     try:
-        content, cost = _llm_call(query)
+        content, cost = _llm_call(query, node_name="general_chat")
+    except BudgetExceededError:
+        raise
     except Exception as exc:  # noqa: BLE001
         return f"调用 LLM 失败: {exc}", {
             "type": "general", "llm_cost": 0.0, "llm_calls": 0,

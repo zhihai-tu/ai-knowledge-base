@@ -28,9 +28,10 @@ import httpx
 import yaml
 
 from model_client import (
-    create_provider, chat_with_retry, load_dotenv, LLMProvider,
+    create_provider, chat, load_dotenv, LLMProvider,
     accumulate_usage, Usage,
 )
+from tests.cost_guard import BudgetExceededError
 
 logger = logging.getLogger(__name__)
 
@@ -289,7 +290,7 @@ def _extract_json(text: str) -> dict[str, Any]:
 
 
 def analyze_item(provider: LLMProvider, item: dict[str, Any]) -> tuple[dict[str, Any], Usage | None]:
-    """调用 LLM 生成摘要 / 标签 / 分类 / 评分，失败时返回未分析条目。
+    """调用 LLM 生成摘要 / 标签 / 分类 / 评分，普通失败返回原条目，超预算抛出。
 
     返回 (条目, 本次调用 Usage)；调用失败时 usage 为 None。
     """
@@ -300,13 +301,13 @@ def analyze_item(provider: LLMProvider, item: dict[str, Any]) -> tuple[dict[str,
         f"原始描述: {item.get('summary') or '（无）'}"
     )
     try:
-        resp = chat_with_retry(
-            provider,
-            [{"role": "system", "content": ANALYZE_SYSTEM},
-             {"role": "user", "content": user_prompt}],
-            temperature=0.3,
+        text, usage = chat(
+            user_prompt, system=ANALYZE_SYSTEM, temperature=0.3,
+            provider=provider, node_name="pipeline_analyze",
         )
-        analysis = _extract_json(resp.content)
+        analysis = _extract_json(text)
+    except BudgetExceededError:
+        raise
     except Exception as exc:
         logger.warning("条目 %s 分析失败: %s", item.get("id"), exc)
         return item, None
@@ -322,7 +323,7 @@ def analyze_item(provider: LLMProvider, item: dict[str, Any]) -> tuple[dict[str,
     item["metadata"]["score_reason"] = str(analysis.get("score_reason") or "").strip()
     item["analyzed_at"] = _now_iso()
     item["status"] = "review"
-    return item, resp.usage
+    return item, usage
 
 
 # ── Step 3: 整理 ──────────────────────────────────────────────────
@@ -500,6 +501,8 @@ def main(argv: list[str] | None = None) -> None:
             analyzed.append(analyzed_item)
             if usage is not None:
                 cost_tracker = accumulate_usage(cost_tracker, usage, provider)
+    except BudgetExceededError:
+        raise
     except RuntimeError as exc:
         logger.warning("未配置 API Key，跳过分析步骤: %s", exc)
         analyzed = collected

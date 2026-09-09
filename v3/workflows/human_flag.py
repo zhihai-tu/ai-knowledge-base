@@ -34,6 +34,7 @@ def human_flag_node(state: KBState) -> dict:
     iteration = state.get("iteration", 0)
     feedback = state.get("review_feedback") or ""
 
+    print("--- human_flag 开始 ---")
     print(f"[HumanFlag] ⚠️ 达到 {iteration} 次审核仍未通过")
     print(f"[HumanFlag] 最后反馈: {feedback[:200]}")
 
@@ -55,4 +56,5 @@ def human_flag_node(state: KBState) -> dict:
         )
 
     print(f"[HumanFlag] 已保存到 {filepath}")
+    print("--- human_flag 完成 ---")
     return {"needs_human_review": True}

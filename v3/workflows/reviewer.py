@@ -10,7 +10,7 @@ organize 节点之后才存在）。评分维度与权重：
 - formatting 格式规范: 15%
 
 加权总分由代码重算（不信任模型算术），``>= 7.0`` 判定通过；审核全部
-analyses；LLM 调用失败时自动通过，不阻塞流水线。重做循环出口由 graph
+analyses；普通 LLM 调用失败时自动通过，超预算异常向上抛出。重做循环出口由 graph
 路由控制：未通过且 ``iteration < plan.max_iterations``（无 plan 时默认
 3）回 revise，达到上限转 human_flag 人工介入。
 
@@ -24,6 +24,7 @@ analyses；LLM 调用失败时自动通过，不阻塞流水线。重做循环�
 import json
 import logging
 
+from tests.cost_guard import BudgetExceededError
 from workflows.model_client import (
     LLMProvider,
     accumulate_usage,
@@ -111,17 +112,18 @@ def _weighted_overall(scores: dict) -> dict[str, float]:
 
 
 def review_node(state: KBState) -> dict:
-    """节点 4：对 analyses 做 5 维度加权审核；LLM 失败自动通过。
+    """节点 4：对 analyses 做 5 维度加权审核；普通 LLM 失败自动通过，超预算抛出。
 
     - 加权总分 ``>= PASS_SCORE`` 判定通过，未通过时 iteration 递增供重做循环。
     - 循环出口由 graph 路由控制（读 ``plan.max_iterations``），节点只负责
       评审与 iteration 递增，不强制通过。
-    - 调用失败 / 输出缺少 scores 时自动通过（不阻塞流程）。
+    - 普通调用失败 / 输出缺少 scores 时自动通过；超预算异常向上抛出。
     """
     iteration = state.get("iteration", 0)
     analyses = state.get("analyses") or []
     base_tracker = state.get("cost_tracker") or {}
     target = analyses
+    print("--- review 开始 ---")
     print(
         f"[ReviewNode] 5维度加权审核（iteration={iteration}，"
         f"审核 {len(target)}/{len(analyses)} 条）..."
@@ -143,10 +145,14 @@ def review_node(state: KBState) -> dict:
             system=REVIEW_SYSTEM,
             temperature=REVIEW_TEMPERATURE,
             provider=provider,
+            node_name="review",
         )
+    except BudgetExceededError:
+        raise
     except Exception as exc:  # noqa: BLE001
         logger.warning("ReviewNode 审核调用失败，自动通过: %s", exc)
         print(f"[ReviewNode] 审核调用失败，自动通过: {exc}")
+        print("--- review 完成 ---")
         return {
             "review_passed": True,
             "review_feedback": f"审核调用失败，自动通过: {exc}",
@@ -159,6 +165,7 @@ def review_node(state: KBState) -> dict:
     if not isinstance(scores, dict) or not scores:
         logger.warning("ReviewNode 审核输出缺少 scores，自动通过")
         print("[ReviewNode] 审核输出缺少 scores，自动通过。")
+        print("--- review 完成 ---")
         return {
             "review_passed": True,
             "review_feedback": "审核输出缺少 scores 字段，自动通过。",
@@ -179,6 +186,7 @@ def review_node(state: KBState) -> dict:
         + (f" | 模型反馈: {model_feedback}" if model_feedback else "")
     )
     print(f"[ReviewNode] 加权总分 {overall:.2f}/10 passed={passed}")
+    print("--- review 完成 ---")
     return {
         "review_passed": passed,
         "review_feedback": feedback,

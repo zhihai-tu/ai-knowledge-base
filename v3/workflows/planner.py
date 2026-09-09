@@ -70,6 +70,7 @@ def plan_strategy(target_count: int | None = None) -> dict:
 
 def planner_node(state: KBState) -> dict:
     """节点 0：规划采集策略，返回 ``{"plan": plan}`` 写入共享状态。"""
+    print("--- plan 开始 ---")
     plan = plan_strategy()
     print(
         f"[PlannerNode] tier={plan['tier']} target={plan['target_count']} "
@@ -77,4 +78,5 @@ def planner_node(state: KBState) -> dict:
         f"relevance_threshold={plan['relevance_threshold']} "
         f"max_iterations={plan['max_iterations']}"
     )
+    print("--- plan 完成 ---")
     return {"plan": plan}

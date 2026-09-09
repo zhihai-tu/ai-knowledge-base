@@ -15,6 +15,7 @@ temperature=0.4 允许创造性改写；analyses 或 feedback 为空时跳过
 import json
 import logging
 
+from tests.cost_guard import BudgetExceededError
 from workflows.model_client import (
     LLMProvider,
     accumulate_usage,
@@ -79,7 +80,7 @@ def revise_node(state: KBState) -> dict:
 
     - analyses 或 review_feedback 为空时跳过（返回 ``{}``）。
     - temperature=0.4 允许创造性改写。
-    - 调用失败或输出非法时保留原 analyses，不阻塞流程。
+    - 普通调用失败或输出非法时保留原 analyses；超预算异常向上抛出。
     - token 用量累计进 ``state.cost_tracker``。
     """
     analyses = state.get("analyses") or []
@@ -88,6 +89,7 @@ def revise_node(state: KBState) -> dict:
         print("[ReviseNode] analyses 或反馈为空，跳过修订。")
         return {}
 
+    print("--- revise 开始 ---")
     print(f"[ReviseNode] 根据审核反馈改写 {len(analyses)} 条分析...")
     provider = _get_provider()
     base_tracker = state.get("cost_tracker") or {}
@@ -97,18 +99,24 @@ def revise_node(state: KBState) -> dict:
             system=REVISE_SYSTEM,
             temperature=REVISE_TEMPERATURE,
             provider=provider,
+            node_name="revise",
         )
+    except BudgetExceededError:
+        raise
     except Exception as exc:  # noqa: BLE001
         logger.warning("ReviseNode 修订调用失败，保留原 analyses: %s", exc)
         print(f"[ReviseNode] 修订调用失败，保留原 analyses: {exc}")
+        print("--- revise 完成 ---")
         return {"analyses": analyses, "cost_tracker": base_tracker}
     tracker = accumulate_usage(base_tracker, usage, provider)
 
     if not isinstance(improved, list):
         logger.warning("ReviseNode 修订输出非法，保留原 analyses")
         print("[ReviseNode] 修订输出非法，保留原 analyses。")
+        print("--- revise 完成 ---")
         return {"analyses": analyses, "cost_tracker": tracker}
 
     result = _merge_improved(analyses, improved)
     print(f"[ReviseNode] 修订完成: {len(result)} 条")
+    print("--- revise 完成 ---")
     return {"analyses": result, "cost_tracker": tracker}
